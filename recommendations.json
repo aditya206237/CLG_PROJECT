@@ -1,0 +1,282 @@
+{
+  "py_prog": [
+    {
+      "title": "Python for Data Science & AI",
+      "provider": "IBM Industry Certification",
+      "type": "certification",
+      "duration": "4 weeks",
+      "url": "https://coursera.org"
+    },
+    {
+      "title": "Advanced Python Systems & Automation",
+      "provider": "NPTEL / IIT Madras",
+      "type": "course",
+      "duration": "8 weeks",
+      "url": "https://nptel.ac.in"
+    }
+  ],
+  "js_prog": [
+    {
+      "title": "Modern Full-Stack JavaScript Bootcamp",
+      "provider": "Industry Partner Workshop",
+      "type": "workshop",
+      "duration": "3 weeks",
+      "url": "#"
+    },
+    {
+      "title": "JavaScript ES6+ Deep Dive",
+      "provider": "freeCodeCamp",
+      "type": "course",
+      "duration": "20 hours",
+      "url": "https://freecodecamp.org"
+    }
+  ],
+  "html_css": [
+    {
+      "title": "Responsive Web Design Masterclass",
+      "provider": "freeCodeCamp",
+      "type": "course",
+      "duration": "15 hours",
+      "url": "https://freecodecamp.org"
+    }
+  ],
+  "sql_db": [
+    {
+      "title": "Relational Database Design & SQL Optimization",
+      "provider": "Oracle Academy Program",
+      "type": "certification",
+      "duration": "5 weeks",
+      "url": "#"
+    },
+    {
+      "title": "PostgreSQL for Developers & Analysts",
+      "provider": "Udemy",
+      "type": "course",
+      "duration": "12 hours",
+      "url": "https://udemy.com"
+    }
+  ],
+  "git_vcs": [
+    {
+      "title": "Git & GitHub Collaboration Workflow",
+      "provider": "GitHub Campus Program",
+      "type": "workshop",
+      "duration": "1 week",
+      "url": "https://github.com"
+    }
+  ],
+  "docker_container": [
+    {
+      "title": "Docker & Kubernetes Container Architecture",
+      "provider": "Red Hat Academy",
+      "type": "certification",
+      "duration": "4 weeks",
+      "url": "#"
+    }
+  ],
+  "cloud_basics": [
+    {
+      "title": "AWS Cloud Practitioner Industry Essentials",
+      "provider": "AWS Academy Partner",
+      "type": "certification",
+      "duration": "6 weeks",
+      "url": "https://aws.amazon.com"
+    }
+  ],
+  "rest_api": [
+    {
+      "title": "Designing & Securing Production REST APIs",
+      "provider": "Postman Student Expert Program",
+      "type": "workshop",
+      "duration": "2 weeks",
+      "url": "https://postman.com"
+    }
+  ],
+  "linux_bash": [
+    {
+      "title": "Linux Command Line & Shell Scripting",
+      "provider": "Linux Foundation Academy",
+      "type": "course",
+      "duration": "3 weeks",
+      "url": "https://linuxfoundation.org"
+    }
+  ],
+  "data_struct": [
+    {
+      "title": "Data Structures & Algorithmic Problem Solving",
+      "provider": "IIT Bombay / NPTEL",
+      "type": "course",
+      "duration": "12 weeks",
+      "url": "https://nptel.ac.in"
+    }
+  ],
+  "software_arch": [
+    {
+      "title": "Enterprise Software Architecture & Design Patterns",
+      "provider": "Microsoft Learn Industry Track",
+      "type": "certification",
+      "duration": "6 weeks",
+      "url": "https://learn.microsoft.com"
+    }
+  ],
+  "testing_qa": [
+    {
+      "title": "Automated Testing & QA Engineering",
+      "provider": "Industry QA Mentorship",
+      "type": "mentorship",
+      "duration": "4 weeks",
+      "url": "#"
+    }
+  ],
+  "machine_learning": [
+    {
+      "title": "Machine Learning Specialization",
+      "provider": "DeepLearning.AI / Stanford",
+      "type": "course",
+      "duration": "8 weeks",
+      "url": "https://coursera.org"
+    },
+    {
+      "title": "Applied ML for Healthcare & Ayush Analytics",
+      "provider": "AIIA Industry Collaboration",
+      "type": "workshop",
+      "duration": "2 weeks",
+      "url": "#"
+    }
+  ],
+  "data_viz": [
+    {
+      "title": "Data Visualization & Dashboard Engineering",
+      "provider": "Tableau Academic Partner",
+      "type": "certification",
+      "duration": "4 weeks",
+      "url": "#"
+    }
+  ],
+  "stat_analysis": [
+    {
+      "title": "Statistical Inference & Hypothesis Testing",
+      "provider": "NPTEL / IIT Kanpur",
+      "type": "course",
+      "duration": "8 weeks",
+      "url": "https://nptel.ac.in"
+    }
+  ],
+  "data_wrangling": [
+    {
+      "title": "Pandas Data Cleaning & Feature Engineering",
+      "provider": "Kaggle Learn Track",
+      "type": "course",
+      "duration": "10 hours",
+      "url": "https://kaggle.com"
+    }
+  ],
+  "seo_opt": [
+    {
+      "title": "Technical & Content SEO Strategy",
+      "provider": "HubSpot Academy",
+      "type": "certification",
+      "duration": "3 weeks",
+      "url": "https://academy.hubspot.com"
+    }
+  ],
+  "sem_ppc": [
+    {
+      "title": "Google Ads Search & PPC Campaign Management",
+      "provider": "Google Skillshop",
+      "type": "certification",
+      "duration": "2 weeks",
+      "url": "https://skillshop.withgoogle.com"
+    }
+  ],
+  "content_strat": [
+    {
+      "title": "Strategic Copywriting & Brand Communication",
+      "provider": "Digital Marketing Industry Mentorship",
+      "type": "mentorship",
+      "duration": "4 weeks",
+      "url": "#"
+    }
+  ],
+  "social_media_mkt": [
+    {
+      "title": "Social Media Marketing & Campaign Analytics",
+      "provider": "Meta Certified Digital Marketer",
+      "type": "certification",
+      "duration": "4 weeks",
+      "url": "#"
+    }
+  ],
+  "email_mkt": [
+    {
+      "title": "Email Automation & Lifecycle Marketing",
+      "provider": "Mailchimp Academy",
+      "type": "course",
+      "duration": "2 weeks",
+      "url": "#"
+    }
+  ],
+  "web_analytics": [
+    {
+      "title": "Google Analytics 4 (GA4) Certification",
+      "provider": "Google Skillshop",
+      "type": "certification",
+      "duration": "3 weeks",
+      "url": "https://skillshop.withgoogle.com"
+    }
+  ],
+  "comm_verbal": [
+    {
+      "title": "Executive Business Communication & Presentation",
+      "provider": "Corporate Partner Workshop",
+      "type": "workshop",
+      "duration": "2 weeks",
+      "url": "#"
+    }
+  ],
+  "team_collab": [
+    {
+      "title": "Agile Teamwork & Cross-Functional Collaboration",
+      "provider": "Atlassian University",
+      "type": "course",
+      "duration": "1 week",
+      "url": "#"
+    }
+  ],
+  "prob_solving": [
+    {
+      "title": "Structured Problem Solving & Critical Thinking",
+      "provider": "McKinsey Academy Free Track",
+      "type": "course",
+      "duration": "3 weeks",
+      "url": "#"
+    }
+  ],
+  "time_mgmt": [
+    {
+      "title": "High-Efficiency Time & Deliverable Management",
+      "provider": "Skillshare",
+      "type": "course",
+      "duration": "5 hours",
+      "url": "#"
+    }
+  ],
+  "adapt_agility": [
+    {
+      "title": "Continuous Learning & Agility in Tech Roles",
+      "provider": "Industry Partner Webinar",
+      "type": "workshop",
+      "duration": "1 week",
+      "url": "#"
+    }
+  ],
+  "proj_mgmt": [
+    {
+      "title": "Google Project Management Professional",
+      "provider": "Google / Coursera",
+      "type": "certification",
+      "duration": "6 weeks",
+      "url": "https://coursera.org"
+    }
+  ]
+}

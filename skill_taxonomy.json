@@ -1,0 +1,170 @@
+[
+  {
+    "id": "py_prog",
+    "name": "Python Programming",
+    "category": "technical",
+    "description": "Proficiency in Python syntax, standard libraries, and object-oriented programming concepts."
+  },
+  {
+    "id": "js_prog",
+    "name": "JavaScript & Modern Web",
+    "category": "technical",
+    "description": "Understanding of ES6+ JavaScript, DOM manipulation, asynchronous programming, and web APIs."
+  },
+  {
+    "id": "html_css",
+    "name": "HTML5 & CSS3 Styling",
+    "category": "technical",
+    "description": "Semantic markup markup, responsive design layout techniques, and modern CSS styling."
+  },
+  {
+    "id": "sql_db",
+    "name": "SQL & Relational Databases",
+    "category": "technical",
+    "description": "Ability to write relational queries, design schemas, and work with databases like PostgreSQL/SQLite."
+  },
+  {
+    "id": "git_vcs",
+    "name": "Git & Version Control",
+    "category": "technical",
+    "description": "Managing code repositories, branching strategies, merging, and collaborative workflows."
+  },
+  {
+    "id": "docker_container",
+    "name": "Docker & Containerization",
+    "category": "technical",
+    "description": "Packaging applications into containers and configuring deployment environments."
+  },
+  {
+    "id": "cloud_basics",
+    "name": "Cloud Platforms (AWS/GCP/Azure)",
+    "category": "technical",
+    "description": "Basic deployment, storage, serverless functions, and hosting on major cloud providers."
+  },
+  {
+    "id": "rest_api",
+    "name": "RESTful API Architecture",
+    "category": "technical",
+    "description": "Designing, building, and consuming HTTP REST APIs with JSON payloads."
+  },
+  {
+    "id": "linux_bash",
+    "name": "Linux Shell & Scripting",
+    "category": "technical",
+    "description": "Navigating terminal environments, using core Unix tools, and writing bash scripts."
+  },
+  {
+    "id": "data_struct",
+    "name": "Data Structures & Algorithms",
+    "category": "technical",
+    "description": "Core computer science fundamentals including arrays, trees, sorting, and time complexity."
+  },
+  {
+    "id": "software_arch",
+    "name": "Software Design & Architecture",
+    "category": "domain",
+    "description": "Applying design patterns, modular architecture, and clean code principles."
+  },
+  {
+    "id": "testing_qa",
+    "name": "Automated Testing & QA",
+    "category": "domain",
+    "description": "Writing unit tests, integration tests, and applying test-driven development methodologies."
+  },
+  {
+    "id": "machine_learning",
+    "name": "Machine Learning & Modeling",
+    "category": "domain",
+    "description": "Building, evaluating, and tuning supervised and unsupervised ML models using scikit-learn."
+  },
+  {
+    "id": "data_viz",
+    "name": "Data Visualization & BI",
+    "category": "domain",
+    "description": "Transforming complex datasets into visual dashboards using tools like Matplotlib, Seaborn, or Tableau."
+  },
+  {
+    "id": "stat_analysis",
+    "name": "Statistical Analysis & Inference",
+    "category": "domain",
+    "description": "Applying hypothesis testing, probability distributions, regression, and statistical modeling."
+  },
+  {
+    "id": "data_wrangling",
+    "name": "Data Preprocessing & Wrangling",
+    "category": "domain",
+    "description": "Cleaning messy data, handling missing values, feature engineering, and manipulating Pandas DataFrames."
+  },
+  {
+    "id": "seo_opt",
+    "name": "Search Engine Optimization (SEO)",
+    "category": "domain",
+    "description": "On-page, off-page, and technical SEO strategies to increase organic search visibility."
+  },
+  {
+    "id": "sem_ppc",
+    "name": "Search Engine Marketing & PPC",
+    "category": "domain",
+    "description": "Managing paid advertising campaigns on Google Ads and analyzing Cost-Per-Click (CPC) metrics."
+  },
+  {
+    "id": "content_strat",
+    "name": "Content Strategy & Copywriting",
+    "category": "domain",
+    "description": "Creating targeted marketing messaging, brand voice guidelines, and content distribution plans."
+  },
+  {
+    "id": "social_media_mkt",
+    "name": "Social Media Marketing",
+    "category": "domain",
+    "description": "Managing audience engagement, organic outreach, and campaign tracking across social platforms."
+  },
+  {
+    "id": "email_mkt",
+    "name": "Email Campaign Automation",
+    "category": "domain",
+    "description": "Designing automated lead nurturing sequences, newsletter campaigns, and A/B testing emails."
+  },
+  {
+    "id": "web_analytics",
+    "name": "Web Analytics & Tracking",
+    "category": "domain",
+    "description": "Tracking conversion funnels, user retention, bounce rates, and traffic sources using Google Analytics."
+  },
+  {
+    "id": "comm_verbal",
+    "name": "Verbal & Written Communication",
+    "category": "soft",
+    "description": "Articulating technical and business ideas clearly in documentation, presentations, and discussions."
+  },
+  {
+    "id": "team_collab",
+    "name": "Teamwork & Collaboration",
+    "category": "soft",
+    "description": "Working effectively in cross-functional teams, peer code reviews, and shared ownership."
+  },
+  {
+    "id": "prob_solving",
+    "name": "Problem Solving & Critical Thinking",
+    "category": "soft",
+    "description": "Deconstructing complex problems into actionable components and deriving logical solutions."
+  },
+  {
+    "id": "time_mgmt",
+    "name": "Time Management & Prioritization",
+    "category": "soft",
+    "description": "Managing deadlines, organizing task priorities, and executing deliverables efficiently."
+  },
+  {
+    "id": "adapt_agility",
+    "name": "Adaptability & Continuous Learning",
+    "category": "soft",
+    "description": "Quickly learning new tools, frameworks, and domain knowledge in dynamic environments."
+  },
+  {
+    "id": "proj_mgmt",
+    "name": "Agile & Project Management",
+    "category": "soft",
+    "description": "Understanding Scrum/Kanban frameworks, sprint planning, ticket tracking, and milestone delivery."
+  }
+]

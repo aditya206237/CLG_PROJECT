@@ -1,0 +1,48 @@
+{
+  "Software Development": [
+    { "skill_id": "py_prog", "required_level": 4 },
+    { "skill_id": "js_prog", "required_level": 3 },
+    { "skill_id": "sql_db", "required_level": 3 },
+    { "skill_id": "git_vcs", "required_level": 4 },
+    { "skill_id": "docker_container", "required_level": 3 },
+    { "skill_id": "rest_api", "required_level": 4 },
+    { "skill_id": "linux_bash", "required_level": 3 },
+    { "skill_id": "data_struct", "required_level": 4 },
+    { "skill_id": "software_arch", "required_level": 4 },
+    { "skill_id": "testing_qa", "required_level": 3 },
+    { "skill_id": "comm_verbal", "required_level": 3 },
+    { "skill_id": "team_collab", "required_level": 4 },
+    { "skill_id": "prob_solving", "required_level": 5 },
+    { "skill_id": "adapt_agility", "required_level": 4 },
+    { "skill_id": "proj_mgmt", "required_level": 3 }
+  ],
+  "Data Science": [
+    { "skill_id": "py_prog", "required_level": 5 },
+    { "skill_id": "sql_db", "required_level": 4 },
+    { "skill_id": "git_vcs", "required_level": 3 },
+    { "skill_id": "linux_bash", "required_level": 3 },
+    { "skill_id": "machine_learning", "required_level": 5 },
+    { "skill_id": "data_viz", "required_level": 4 },
+    { "skill_id": "stat_analysis", "required_level": 5 },
+    { "skill_id": "data_wrangling", "required_level": 5 },
+    { "skill_id": "comm_verbal", "required_level": 4 },
+    { "skill_id": "team_collab", "required_level": 3 },
+    { "skill_id": "prob_solving", "required_level": 5 },
+    { "skill_id": "adapt_agility", "required_level": 4 }
+  ],
+  "Digital Marketing": [
+    { "skill_id": "html_css", "required_level": 2 },
+    { "skill_id": "data_viz", "required_level": 3 },
+    { "skill_id": "seo_opt", "required_level": 5 },
+    { "skill_id": "sem_ppc", "required_level": 4 },
+    { "skill_id": "content_strat", "required_level": 5 },
+    { "skill_id": "social_media_mkt", "required_level": 4 },
+    { "skill_id": "email_mkt", "required_level": 4 },
+    { "skill_id": "web_analytics", "required_level": 5 },
+    { "skill_id": "comm_verbal", "required_level": 5 },
+    { "skill_id": "team_collab", "required_level": 4 },
+    { "skill_id": "prob_solving", "required_level": 4 },
+    { "skill_id": "time_mgmt", "required_level": 4 },
+    { "skill_id": "proj_mgmt", "required_level": 3 }
+  ]
+}
