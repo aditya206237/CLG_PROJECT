@@ -1,0 +1,92 @@
+[
+  {
+    "id": "opp_001",
+    "title": "Ayush Health Data Science Intern",
+    "company_name": "All India Institute of Ayurveda (AIIA) Research Center",
+    "type": "internship",
+    "duration": "6 Months",
+    "location": "New Delhi (Hybrid)",
+    "required_skills": ["py_prog", "stat_analysis", "data_viz", "data_wrangling", "prob_solving"],
+    "description": "Analyze clinical trial datasets and patient health records for traditional medicine interventions using Python and statistical inference techniques."
+  },
+  {
+    "id": "opp_002",
+    "title": "Ayurvedic Clinical NLP & Machine Learning Engineer",
+    "company_name": "Dabur R&D Innovation Labs",
+    "type": "job",
+    "duration": "Full-Time",
+    "location": "Ghaziabad / Remote",
+    "required_skills": ["py_prog", "machine_learning", "stat_analysis", "sql_db", "docker_container"],
+    "description": "Develop predictive ML models and natural language processing tools to mine classical Ayurvedic texts and structure plant compound databases."
+  },
+  {
+    "id": "opp_003",
+    "title": "Ayush Portal Full-Stack Web Developer",
+    "company_name": "Ministry of Ayush Digital e-Governance Cell",
+    "type": "job",
+    "duration": "Full-Time",
+    "location": "New Delhi",
+    "required_skills": ["js_prog", "html_css", "py_prog", "rest_api", "sql_db", "git_vcs"],
+    "description": "Build and maintain modern web portals and API services connecting academic institutions with national healthcare registries."
+  },
+  {
+    "id": "opp_004",
+    "title": "Herbal Medicine Informatics Apprentice",
+    "company_name": "Himalaya Wellness Research Institute",
+    "type": "apprenticeship",
+    "duration": "12 Months",
+    "location": "Bengaluru",
+    "required_skills": ["data_wrangling", "sql_db", "stat_analysis", "team_collab", "time_mgmt"],
+    "description": "Hands-on apprenticeship in managing botanical databases, herbal extract standardization data, and laboratory data management systems."
+  },
+  {
+    "id": "opp_005",
+    "title": "Ayush Brand Content & SEO Strategist",
+    "company_name": "Patanjali Organic Research Foundation",
+    "type": "job",
+    "duration": "Full-Time",
+    "location": "Haridwar",
+    "required_skills": ["seo_opt", "content_strat", "web_analytics", "social_media_mkt", "comm_verbal"],
+    "description": "Drive evidence-based content strategy, organic search visibility, and educational outreach for wellness products and clinical research."
+  },
+  {
+    "id": "opp_006",
+    "title": "Healthcare Cloud & DevOps Intern",
+    "company_name": "National Health Authority (NHA) Tech Division",
+    "type": "internship",
+    "duration": "3 Months",
+    "location": "Remote",
+    "required_skills": ["docker_container", "cloud_basics", "linux_bash", "git_vcs", "software_arch"],
+    "description": "Assist in deploying microservices, configuring cloud security parameters, and automating CI/CD pipelines for public health platforms."
+  },
+  {
+    "id": "opp_007",
+    "title": "Digital Health Product Management Apprentice",
+    "company_name": "AIIA Innovation & Entrepreneurship Hub",
+    "type": "apprenticeship",
+    "duration": "6 Months",
+    "location": "New Delhi",
+    "required_skills": ["proj_mgmt", "comm_verbal", "prob_solving", "team_collab", "adapt_agility"],
+    "description": "Work alongside healthcare startup founders to define product roadmap specs, coordinate sprint deliverables, and gather user feedback."
+  },
+  {
+    "id": "opp_008",
+    "title": "AIIA Clinical Software QA & Automated Testing Associate",
+    "company_name": "CCRAS Digital Infrastructure Wing",
+    "type": "job",
+    "duration": "Full-Time",
+    "location": "New Delhi",
+    "required_skills": ["testing_qa", "py_prog", "git_vcs", "data_struct", "time_mgmt"],
+    "description": "Design unit and integration testing suites for Ayurvedic clinical trial platforms and verify data accuracy across API endpoints."
+  },
+  {
+    "id": "opp_009",
+    "title": "Ayush Telemedicine API Engineer",
+    "company_name": "HealthTech Solutions India",
+    "type": "job",
+    "duration": "Full-Time",
+    "location": "Pune (Hybrid)",
+    "required_skills": ["rest_api", "py_prog", "sql_db", "docker_container", "prob_solving"],
+    "description": "Develop scalable RESTful microservices and secure video consultation APIs for remote Ayush consultation platforms."
+  }
+]

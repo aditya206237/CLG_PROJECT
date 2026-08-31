@@ -5,6 +5,7 @@ Unified Digital Student Portfolio & Verified Profile Page
 
 import streamlit as st
 import pandas as pd
+import time
 from typing import Dict, List, Any
 
 from load_taxonomy import get_role_requirements, get_all_skills
@@ -17,7 +18,7 @@ from charts import create_radar_chart
 # 1. Page Configuration & Custom Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Student Digital Portfolio",
+    page_title="My Portfolio - Student Skill Credentials",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -65,21 +66,17 @@ st.markdown(
         font-weight: 600;
         margin-right: 6px;
     }
-    .in-progress-badge {
-        display: inline-block;
-        background-color: #d97706;
-        color: #ffffff;
-        padding: 3px 10px;
-        border-radius: 12px;
-        font-size: 0.78rem;
-        font-weight: 600;
-    }
+    .score-badge-green { background-color: #10b981; color: white; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
+    .score-badge-amber { background-color: #f59e0b; color: white; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
+    .score-badge-red { background-color: #ef4444; color: white; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
+
     .portfolio-section-card {
         background: #f8fafc;
         border: 1px solid #e2e8f0;
         border-radius: 10px;
         padding: 1.2rem;
         margin-bottom: 1rem;
+        height: 100%;
     }
     </style>
     """,
@@ -87,13 +84,27 @@ st.markdown(
 )
 
 # -----------------------------------------------------------------------------
-# 2. Student Profile Data Loading
+# 2. Student Profile Data Loading & Intentional Empty State
 # -----------------------------------------------------------------------------
 all_students = get_all_students()
 
 if not all_students:
-    st.warning("⚠️ No student assessment records found in database (`portal.db`).")
-    st.info("👉 Please go to the **Assessment Questionnaire** page (`app.py`) to complete an assessment first.")
+    with st.container(border=True):
+        st.markdown(
+            """
+            <div style="text-align:center; padding:2rem;">
+                <h2 style="color:#0d3b66; margin-bottom:0.5rem;">⚠️ No Student Portfolios Found</h2>
+                <p style="color:#475569; font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
+                    There are currently no student records in the SQLite database (<code>portal.db</code>).
+                    Please complete a skill assessment questionnaire to generate your verified digital portfolio.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        col_e1, col_e2, col_e3 = st.columns([1, 2, 1])
+        with col_e2:
+            st.page_link("app.py", label="🚀 Launch Assessment Questionnaire", icon="📝", use_container_width=True)
     st.stop()
 
 # Sidebar Selector
@@ -124,33 +135,34 @@ with st.sidebar:
     target_role = selected_student["target_role"]
     created_at = selected_student.get("created_at", "N/A")
 
-# Load data & compute vectors
-student_vector = get_student_skill_vector(student_id)
-responses_full = get_student_responses_full(student_id)
-role_reqs = get_role_requirements(target_role)
-all_skills = get_all_skills()
-all_skills_map = {s["id"]: s["name"] for s in all_skills}
-skill_cat_map = {s["id"]: s["category"].upper() for s in all_skills}
+# Loading State Spinner
+with st.spinner("🎓 Assembling student digital portfolio & verified credentials..."):
+    # Load data & compute vectors
+    student_vector = get_student_skill_vector(student_id)
+    responses_full = get_student_responses_full(student_id)
+    role_reqs = get_role_requirements(target_role)
+    all_skills = get_all_skills()
+    all_skills_map = {s["id"]: s["name"] for s in all_skills}
+    skill_cat_map = {s["id"]: s["category"].upper() for s in all_skills}
 
-s_vec, r_vec = build_vectors(student_vector, target_role)
-match_score = compute_match_score(s_vec, r_vec)
-all_gaps = compute_skill_gaps(student_vector, target_role)
-top_gaps = get_top_gaps(student_vector, target_role, n=5)
+    s_vec, r_vec = build_vectors(student_vector, target_role)
+    match_score = compute_match_score(s_vec, r_vec)
+    all_gaps = compute_skill_gaps(student_vector, target_role)
+    top_gaps = get_top_gaps(student_vector, target_role, n=5)
 
-# Build verified skills list (quiz_adjusted_rating not downgraded from self_rating and rating >= 1)
-verified_skills_list = []
-for resp in responses_full:
-    sid = resp["skill_id"]
-    self_val = resp["self_rating"]
-    adj_val = resp["quiz_adjusted_rating"]
-    # If not downgraded by quiz verification
-    if adj_val >= self_val or adj_val >= 3:
-        verified_skills_list.append({
-            "skill_id": sid,
-            "name": all_skills_map.get(sid, sid),
-            "category": skill_cat_map.get(sid, "TECHNICAL"),
-            "rating": adj_val
-        })
+    # Build verified skills list
+    verified_skills_list = []
+    for resp in responses_full:
+        sid = resp["skill_id"]
+        self_val = resp["self_rating"]
+        adj_val = resp["quiz_adjusted_rating"]
+        if adj_val >= self_val or adj_val >= 3:
+            verified_skills_list.append({
+                "skill_id": sid,
+                "name": all_skills_map.get(sid, sid),
+                "category": skill_cat_map.get(sid, "TECHNICAL"),
+                "rating": adj_val
+            })
 
 # -----------------------------------------------------------------------------
 # 3. Executive Profile Header Layout
@@ -175,17 +187,22 @@ with col_prof_left:
 
 with col_prof_right:
     st.markdown("### 📊 Alignment Summary")
-    st.metric(
-        label="Target Role Match Score",
-        value=f"{match_score}%",
-        delta="Industry Aligned" if match_score >= 70 else "Actionable Deficits",
-        delta_color="normal" if match_score >= 70 else "inverse"
-    )
+    
+    if match_score >= 75.0:
+        badge_html = f'<span class="score-badge-green">🟢 {match_score}% Industry Aligned</span>'
+    elif match_score >= 50.0:
+        badge_html = f'<span class="score-badge-amber">🟠 {match_score}% Moderate Alignment</span>'
+    else:
+        badge_html = f'<span class="score-badge-red">🔴 {match_score}% Actionable Gap</span>'
+
+    st.markdown(badge_html, unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    
     col_sub1, col_sub2 = st.columns(2)
     with col_sub1:
         st.metric("Verified Skills", f"{len(verified_skills_list)}")
     with col_sub2:
-        st.metric("Actionable Gaps", f"{len(top_gaps)}")
+        st.metric("Actionable Deficits", f"{len(top_gaps)}")
 
 # -----------------------------------------------------------------------------
 # 4. Download Digital Portfolio (Markdown Export)
@@ -265,6 +282,7 @@ with tab_verified:
                     """,
                     unsafe_allow_html=True
                 )
+                st.markdown("<div style='margin-bottom:0.5rem;'></div>", unsafe_allow_html=True)
 
 # --- TAB 3: SKILLS IN PROGRESS & PATHWAYS ---
 with tab_progress:

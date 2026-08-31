@@ -5,6 +5,7 @@ Skill Gap Analysis Dashboard & Plotly Radar Visualization
 
 import streamlit as st
 import pandas as pd
+import time
 import plotly.graph_objects as go
 from typing import Dict, List, Any
 
@@ -19,7 +20,7 @@ from charts import create_radar_chart
 # 1. Page Configuration & Custom Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Skill Gap Analysis Dashboard",
+    page_title="My Results - Skill Gap Analysis",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -28,7 +29,7 @@ st.set_page_config(
 # Ensure DB tables exist
 init_db()
 
-# Custom CSS for polished UI
+# Custom CSS for polished UI & dynamic match score widget
 st.markdown(
     """
     <style>
@@ -38,7 +39,7 @@ st.markdown(
         max-width: 1150px;
     }
     .hero-container {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+        background: linear-gradient(135deg, #0d3b66 0%, #001e3d 100%);
         color: #ffffff;
         padding: 1.8rem 2rem;
         border-radius: 12px;
@@ -52,25 +53,67 @@ st.markdown(
     }
     .hero-subtitle {
         font-size: 1.05rem;
-        color: #93c5fd;
+        color: #d0e1f9;
         margin-top: 0.3rem;
         margin-bottom: 0.5rem;
     }
     .badge-tag {
         display: inline-block;
-        background-color: #3b82f6;
+        background-color: #2a9d8f;
         color: #ffffff;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
         font-size: 0.8rem;
         font-weight: 600;
     }
-    .metric-card {
+
+    /* Dynamic Match Score Cards */
+    .score-card-green {
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        border: 2px solid #10b981;
+        border-radius: 12px;
+        padding: 1.2rem;
+        text-align: center;
+    }
+    .score-card-amber {
+        background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        border: 2px solid #f59e0b;
+        border-radius: 12px;
+        padding: 1.2rem;
+        text-align: center;
+    }
+    .score-card-red {
+        background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        border: 2px solid #ef4444;
+        border-radius: 12px;
+        padding: 1.2rem;
+        text-align: center;
+    }
+    .score-val-green { font-size: 2.4rem; font-weight: 900; color: #047857; }
+    .score-val-amber { font-size: 2.4rem; font-weight: 900; color: #b45309; }
+    .score-val-red { font-size: 2.4rem; font-weight: 900; color: #b91c1c; }
+
+    .score-label { font-size: 0.88rem; font-weight: 700; color: #334155; text-transform: uppercase; }
+
+    .metric-card-box {
         background: #f8fafc;
-        border-left: 5px solid #3b82f6;
+        border: 1px solid #e2e8f0;
         padding: 1rem 1.2rem;
-        border-radius: 8px;
-        margin-bottom: 1rem;
+        border-radius: 10px;
+        height: 100%;
+    }
+    .severity-high { background-color: #fee2e2; color: #b91c1c; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .severity-mod { background-color: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .severity-low { background-color: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .severity-met { background-color: #d1fae5; color: #047857; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+
+    .type-pill {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: white;
     }
     </style>
     """,
@@ -83,7 +126,7 @@ st.markdown(
 st.markdown(
     """
     <div class="hero-container">
-        <span class="badge-tag">AIIA Academia-Industry Engine</span>
+        <span class="badge-tag">AIIA Vector Engine</span>
         <h1 class="hero-title">Skill Gap Analysis & Alignment Dashboard</h1>
         <p class="hero-subtitle">Interactive Plotly multi-dimensional radar comparison and targeted skill deficit analysis.</p>
     </div>
@@ -92,20 +135,33 @@ st.markdown(
 )
 
 # -----------------------------------------------------------------------------
-# 3. Student Selection & Data Loading
+# 3. Student Selection & Intentional Empty State Handling
 # -----------------------------------------------------------------------------
 all_students = get_all_students()
 
 if not all_students:
-    st.warning("⚠️ No student assessment submissions found in database (`portal.db`).")
-    st.info("👉 Please go to the **Assessment Questionnaire** page (`app.py`) to submit a skill assessment first.")
+    with st.container(border=True):
+        st.markdown(
+            """
+            <div style="text-align:center; padding:2rem;">
+                <h2 style="color:#0d3b66; margin-bottom:0.5rem;">⚠️ No Student Assessments Found</h2>
+                <p style="color:#475569; font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
+                    There are currently no student assessment records stored in the SQLite database (<code>portal.db</code>).
+                    Please complete a skill assessment first to generate multi-dimensional gap analysis reports.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        col_e1, col_e2, col_e3 = st.columns([1, 2, 1])
+        with col_e2:
+            st.page_link("app.py", label="🚀 Launch Assessment Questionnaire", icon="📝", use_container_width=True)
     st.stop()
 
 # Sidebar Student Selector
 with st.sidebar:
     st.header("👤 Student Selection")
     
-    # Pre-select student_id from session_state if available
     default_index = 0
     if "student_id" in st.session_state and st.session_state.student_id:
         for idx, s in enumerate(all_students):
@@ -129,38 +185,79 @@ with st.sidebar:
     student_name = selected_student["name"]
     target_role = selected_student["target_role"]
 
-# Fetch data for selected student
-student_vector = get_student_skill_vector(student_id)
-role_reqs = get_role_requirements(target_role)
-all_skills_list = get_all_skills()
-all_skills_map = {s["id"]: s["name"] for s in all_skills_list}
-skill_cat_map = {s["id"]: s["category"].upper() for s in all_skills_list}
+# Loading State Spinner
+with st.spinner("📊 Analyzing multi-dimensional skill vectors & generating gap recommendations..."):
+    # Fetch data for selected student
+    student_vector = get_student_skill_vector(student_id)
+    role_reqs = get_role_requirements(target_role)
+    all_skills_list = get_all_skills()
+    all_skills_map = {s["id"]: s["name"] for s in all_skills_list}
+    skill_cat_map = {s["id"]: s["category"].upper() for s in all_skills_list}
 
-# Compute vectors and match score
-s_vec, r_vec = build_vectors(student_vector, target_role)
-match_score = compute_match_score(s_vec, r_vec)
-all_gaps = compute_skill_gaps(student_vector, target_role)
-top_gaps = get_top_gaps(student_vector, target_role, n=5)
+    # Compute vectors and match score
+    s_vec, r_vec = build_vectors(student_vector, target_role)
+    match_score = compute_match_score(s_vec, r_vec)
+    all_gaps = compute_skill_gaps(student_vector, target_role)
+    top_gaps = get_top_gaps(student_vector, target_role, n=5)
+    actionable_gaps_count = len([g for g in all_gaps if g["gap"] > 0])
 
 # -----------------------------------------------------------------------------
-# 4. Profile Summary Metrics
+# 4. Large Color-Coded Match Score Widget & Summary
 # -----------------------------------------------------------------------------
-col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+col_m1, col_m2, col_m3, col_m4 = st.columns([1.5, 1, 1, 1])
 
 with col_m1:
-    st.metric(
-        label="Overall Role Match Score",
-        value=f"{match_score}%",
-        delta="Aligned" if match_score >= 70 else "Gap Identified",
-        delta_color="normal" if match_score >= 70 else "inverse"
-    )
+    if match_score >= 75.0:
+        st.markdown(
+            f"""
+            <div class="score-card-green">
+                <div class="score-label">Target Role Match Score</div>
+                <div class="score-val-green">{match_score}%</div>
+                <div style="color:#047857; font-weight:700; font-size:0.9rem;">🟢 Industry Aligned</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    elif match_score >= 50.0:
+        st.markdown(
+            f"""
+            <div class="score-card-amber">
+                <div class="score-label">Target Role Match Score</div>
+                <div class="score-val-amber">{match_score}%</div>
+                <div style="color:#b45309; font-weight:700; font-size:0.9rem;">🟠 Moderate Alignment</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.markdown(
+            f"""
+            <div class="score-card-red">
+                <div class="score-label">Target Role Match Score</div>
+                <div class="score-val-red">{match_score}%</div>
+                <div style="color:#b91c1c; font-weight:700; font-size:0.9rem;">🔴 Actionable Gap Identified</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
 with col_m2:
-    st.metric(label="Student Name", value=student_name)
+    with st.container(border=True):
+        st.caption("STUDENT NAME")
+        st.markdown(f"### {student_name}")
+        st.caption(f"ID: #{student_id}")
+
 with col_m3:
-    st.metric(label="Target Career Track", value=target_role)
+    with st.container(border=True):
+        st.caption("TARGET TRACK")
+        st.markdown(f"### {target_role}")
+        st.caption("Industry Baseline Profile")
+
 with col_m4:
-    actionable_gaps_count = len([g for g in all_gaps if g["gap"] > 0])
-    st.metric(label="Actionable Skill Deficits", value=f"{actionable_gaps_count} Skills")
+    with st.container(border=True):
+        st.caption("ACTIONABLE DEFICITS")
+        st.markdown(f"### {actionable_gaps_count} Skills")
+        st.caption("Target Improvement Priority")
 
 st.markdown("---")
 
@@ -169,18 +266,15 @@ st.markdown("---")
 # -----------------------------------------------------------------------------
 st.subheader("🕸️ Multi-Dimensional Skill Radar Vector")
 
-# Plain language explanation for judges
 st.info(
     f"💡 **How to Read This Radar Chart (For Hackathon Judges):**\n\n"
-    f"• **Teal Shape (Your Verified Skills)**: Represents {student_name}'s current proficiency ratings across target competencies.\n"
+    f"• **Teal Shape (Verified Skills)**: Represents {student_name}'s current proficiency ratings across target competencies.\n"
     f"• **Coral Shape (Role Benchmark)**: Represents the required industry standard vector for **{target_role}**.\n"
     f"• **Gap Visualization**: Any area where the Coral boundary extends beyond the Teal shape highlights an actionable skill gap."
 )
 
-# Prepare and render Plotly Figure via shared charts helper
 fig = create_radar_chart(student_vector, role_reqs, target_role, student_name)
 st.plotly_chart(fig, use_container_width=True)
-
 
 # -----------------------------------------------------------------------------
 # 6. Ranked Skill Gap Table & Priority Insights
@@ -194,15 +288,25 @@ else:
     col_t1, col_t2 = st.columns([1.8, 1])
 
     with col_t1:
-        st.markdown("**Ranked Skill Deficits (Sorted by Gap Size):**")
+        st.markdown("**Ranked Skill Deficits (Sorted by Gap Magnitude):**")
         gap_table_data = []
         for item in all_gaps:
+            gap_val = item['gap']
+            if gap_val >= 3:
+                severity_tag = "🔴 High Deficit (-" + str(gap_val) + ")"
+            elif gap_val == 2:
+                severity_tag = "🟠 Moderate Deficit (-2)"
+            elif gap_val == 1:
+                severity_tag = "🟡 Minor Deficit (-1)"
+            else:
+                severity_tag = "🟢 Target Met"
+
             gap_table_data.append({
                 "Skill Name": item["skill_name"],
                 "Category": skill_cat_map.get(item["skill_id"], "DOMAIN"),
-                "Your Level": f"{item['student_level']} / 5",
-                "Required Level": f"{item['required_level']} / 5",
-                "Deficit Gap": f"-{item['gap']}" if item['gap'] > 0 else "0 (Met)"
+                "Your Rating": f"{item['student_level']} / 5",
+                "Required Baseline": f"{item['required_level']} / 5",
+                "Deficit Severity": severity_tag
             })
         
         df_gaps = pd.DataFrame(gap_table_data)
@@ -218,20 +322,21 @@ else:
             cat = skill_cat_map.get(gap["skill_id"], "DOMAIN")
             st.markdown(
                 f"""
-                <div class="metric-card">
+                <div class="metric-card-box">
                     <b>#{idx}. {gap['skill_name']}</b> <span style="font-size:0.75rem; color:#64748b;">({cat})</span><br>
-                    Current: <code>{gap['student_level']}/5</code> | Required: <code>{gap['required_level']}/5</code><br>
+                    Current: <code>{gap['student_level']}/5</code> | Benchmark: <code>{gap['required_level']}/5</code><br>
                     <b style="color:#ef4444;">Deficit: -{gap['gap']} levels</b>
                 </div>
                 """,
                 unsafe_allow_html=True
             )
+            st.markdown("<div style='margin-bottom:0.5rem;'></div>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 7. Recommended Next Steps & Industry-Academia Learning Pathways
+# 7. Recommended Next Steps & Industry-Academia Product Cards
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("🎓 Recommended Next Steps & Learning Pathways")
+st.subheader("🎓 Recommended Next Steps & Industry Product Cards")
 
 st.caption(
     "💡 **Academia-Industry Collaboration Hub:** Recommendations combine open learning platforms "
@@ -247,7 +352,7 @@ if top_gaps:
         cat = skill_cat_map.get(sid, "DOMAIN")
 
         with st.expander(
-            f"📌 #{idx} Priority Gap: {gap['skill_name']} ({cat}) — Deficit: -{gap['gap']} levels "
+            f"📌 Priority #{idx} Deficit: {gap['skill_name']} ({cat}) — Gap: -{gap['gap']} levels "
             f"(Current: {gap['student_level']}/5 vs Target: {gap['required_level']}/5)",
             expanded=(idx <= 2)
         ):
@@ -266,11 +371,11 @@ if top_gaps:
                             )
                             st.markdown(
                                 f"""
-                                <span style="background-color:{type_color}; color:white; padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:bold;">
+                                <span class="type-pill" style="background-color:{type_color};">
                                     {res['type'].upper()}
                                 </span>
                                 <h4 style="margin-top:0.6rem; margin-bottom:0.3rem; font-size:1.05rem; color:#1e293b;">{res['title']}</h4>
-                                <p style="font-size:0.85rem; color:#475569; margin-bottom:0.6rem; line-height:1.4;">
+                                <p style="font-size:0.85rem; color:#475569; margin-bottom:0.8rem; line-height:1.4;">
                                     🏛️ <b>Provider:</b> {res['provider']}<br>
                                     ⏱️ <b>Duration:</b> {res['duration']}
                                 </p>

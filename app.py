@@ -4,6 +4,7 @@ Student Skill Assessment & Verification Questionnaire App with SQLite Storage
 """
 
 import streamlit as st
+import time
 from typing import Dict, Any
 from load_taxonomy import (
     get_all_skills,
@@ -23,7 +24,7 @@ from database import (
 # 1. Page Configuration & Custom Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="AIIA Skill Assessment Portal",
+    page_title="Assessment - AIIA Skill Portal",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -32,7 +33,7 @@ st.set_page_config(
 # Initialize database tables at application startup
 init_db()
 
-# Custom CSS for rich aesthetics and clean UI
+# Custom CSS for rich aesthetics, card styling, and clean UI
 st.markdown(
     """
     <style>
@@ -40,48 +41,67 @@ st.markdown(
     .main .block-container {
         padding-top: 1.5rem;
         padding-bottom: 3rem;
-        max-width: 1100px;
+        max-width: 1150px;
     }
     
     /* Hero Banner */
     .hero-container {
         background: linear-gradient(135deg, #0d3b66 0%, #001e3d 100%);
         color: #ffffff;
-        padding: 1.8rem 2rem;
-        border-radius: 12px;
-        margin-bottom: 2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        padding: 2rem 2.2rem;
+        border-radius: 14px;
+        margin-bottom: 1.8rem;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
     }
     .hero-title {
-        font-size: 2.1rem;
-        font-weight: 700;
+        font-size: 2.2rem;
+        font-weight: 800;
         margin: 0;
         letter-spacing: -0.5px;
     }
     .hero-subtitle {
-        font-size: 1.05rem;
+        font-size: 1.1rem;
         color: #d0e1f9;
         margin-top: 0.4rem;
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.5;
     }
     .badge-tag {
         display: inline-block;
         background-color: #2a9d8f;
         color: #ffffff;
-        padding: 0.25rem 0.75rem;
+        padding: 0.28rem 0.8rem;
         border-radius: 20px;
         font-size: 0.82rem;
         font-weight: 600;
     }
 
+    /* Stats Strip inside Hero */
+    .hero-stats-grid {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1.2rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .hero-stat-item {
+        font-size: 0.88rem;
+        color: #e2e8f0;
+        font-weight: 600;
+    }
+    .hero-stat-item span {
+        color: #38bdf8;
+        font-weight: 800;
+    }
+
     /* Section Cards & Headers */
     .section-header {
         font-size: 1.25rem;
-        font-weight: 600;
+        font-weight: 700;
         color: #0d3b66;
-        border-bottom: 2px solid #e0e0e0;
-        padding-bottom: 0.4rem;
-        margin-top: 1rem;
+        border-left: 4px solid #0d3b66;
+        padding-left: 10px;
+        margin-top: 0.8rem;
         margin-bottom: 1.2rem;
     }
     .quiz-box {
@@ -89,24 +109,35 @@ st.markdown(
         border: 1px solid #b8d4f4;
         border-radius: 10px;
         padding: 1.2rem 1.5rem;
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
     }
     
     /* Rating helper labels */
     .rating-legend {
         font-size: 0.85rem;
-        color: #555;
-        background-color: #e9ecef;
-        padding: 0.4rem 0.8rem;
-        border-radius: 6px;
-        margin-bottom: 1rem;
+        color: #334155;
+        background-color: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        padding: 0.5rem 0.9rem;
+        border-radius: 8px;
+        margin-bottom: 1.2rem;
+    }
+
+    /* Custom Button styling */
+    .stButton > button {
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+    .stButton > button:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(13, 59, 102, 0.2) !important;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
-
 
 # -----------------------------------------------------------------------------
 # 2. Session State Initialization
@@ -125,7 +156,6 @@ if "adjusted_skill_vector" not in st.session_state:
     st.session_state.adjusted_skill_vector = {}
 if "quiz_scores" not in st.session_state:
     st.session_state.quiz_scores = {}
-
 
 # -----------------------------------------------------------------------------
 # 3. Sidebar Information & Admin View
@@ -159,170 +189,181 @@ with st.sidebar:
         except Exception as err:
             st.error(f"Failed to fetch DB records: {err}")
 
+# -----------------------------------------------------------------------------
+# 4. Hero Header & Live Stats Strip
+# -----------------------------------------------------------------------------
+all_skills_count = len(get_all_skills())
+available_roles = get_available_roles()
+db_students = get_all_students()
 
-# -----------------------------------------------------------------------------
-# 4. Hero Header Section
-# -----------------------------------------------------------------------------
 st.markdown(
-    """
+    f"""
     <div class="hero-container">
         <span class="badge-tag">SIH 2026 Project</span>
         <h1 class="hero-title">Student Skill Assessment Questionnaire</h1>
-        <p class="hero-subtitle">Evaluate your technical, domain, and soft skills with verification quizzes and persistent database storage.</p>
+        <p class="hero-subtitle">Evaluate your technical, domain, and soft skills with verification micro-quizzes and persistent database storage.</p>
+        <div class="hero-stats-grid">
+            <div class="hero-stat-item">🎯 Skills Tracked: <span>{all_skills_count}</span></div>
+            <div class="hero-stat-item">🎯 Career Tracks: <span>{len(available_roles)}</span></div>
+            <div class="hero-stat-item">👥 Assessed Students: <span>{len(db_students)}</span></div>
+            <div class="hero-stat-item">⚡ Vector Engine: <span>Cosine Similarity</span></div>
+        </div>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-
 # -----------------------------------------------------------------------------
 # 5. Assessment Form Setup
 # -----------------------------------------------------------------------------
-available_roles = get_available_roles()
 tech_skills = get_skills_by_category("technical")
 domain_skills = get_skills_by_category("domain")
 soft_skills = get_skills_by_category("soft")
 
-# Render Form
+# Render Form enclosed in Container
 with st.form(key="assessment_form"):
-    st.markdown("<div class='section-header'>👤 Step 1: Student Information</div>", unsafe_allow_html=True)
     
-    col1, col2 = st.columns(2)
-    with col1:
-        student_name_input = st.text_input(
-            "Full Student Name *",
-            value=st.session_state.student_name,
-            placeholder="e.g. Aarav Sharma",
-            help="Enter your name as registered in the AIIA portal."
-        )
-    with col2:
-        target_role_input = st.selectbox(
-            "Target Career Role *",
-            options=available_roles,
-            index=0 if not st.session_state.target_role else available_roles.index(st.session_state.target_role),
-            help="Select the career track you are targeting for gap analysis."
-        )
-    
-    st.markdown("<div class='section-header'>📊 Step 2: Skill Self-Assessment & Verification</div>", unsafe_allow_html=True)
-    
-    st.markdown(
-        """
-        <div class="rating-legend">
-            <b>Rating Scale:</b> 1 = No Experience | 2 = Elementary | 3 = Intermediate | 4 = Advanced | 5 = Expert
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    
-    # Organize assessment into Category Tabs
-    tab_tech, tab_domain, tab_soft = st.tabs([
-        f"💻 Technical Skills ({len(tech_skills)})",
-        f"🎯 Domain Skills ({len(domain_skills)})",
-        f"🤝 Soft Skills ({len(soft_skills)})"
-    ])
-    
-    ratings_input: Dict[str, int] = {}
-    
-    # --- TAB 1: TECHNICAL SKILLS ---
-    with tab_tech:
-        st.markdown("#### Technical Skills Evaluation")
-        st.caption("Rate your proficiency with core programming, tooling, and backend concepts.")
+    with st.container(border=True):
+        st.markdown("<div class='section-header'>👤 Step 1: Student Profile & Career Target</div>", unsafe_allow_html=True)
         
-        for skill in tech_skills:
-            ratings_input[skill["id"]] = st.slider(
-                label=f"**{skill['name']}**",
-                min_value=1,
-                max_value=5,
-                value=3,
-                step=1,
-                help=skill["description"],
-                key=f"slider_{skill['id']}"
+        col1, col2 = st.columns(2)
+        with col1:
+            student_name_input = st.text_input(
+                "Full Student Name *",
+                value=st.session_state.student_name,
+                placeholder="e.g. Aarav Sharma",
+                help="Enter your name as registered in the AIIA portal."
             )
-            st.divider()
+        with col2:
+            target_role_input = st.selectbox(
+                "Target Career Role *",
+                options=available_roles,
+                index=0 if not st.session_state.target_role else available_roles.index(st.session_state.target_role),
+                help="Select the career track you are targeting for gap analysis."
+            )
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    with st.container(border=True):
+        st.markdown("<div class='section-header'>📊 Step 2: Skill Self-Assessment & Verification</div>", unsafe_allow_html=True)
         
-        # Technical Micro-Quiz Question
         st.markdown(
             """
-            <div class="quiz-box">
-                <h4>🛡️ Technical Verification Micro-Quiz</h4>
-                <p><b>Question:</b> Which data structure operates on a <b>First In, First Out (FIFO)</b> principle?</p>
+            <div class="rating-legend">
+                <b>Rating Scale:</b> 1 = No Experience &nbsp;|&nbsp; 2 = Elementary &nbsp;|&nbsp; 3 = Intermediate &nbsp;|&nbsp; 4 = Advanced &nbsp;|&nbsp; 5 = Expert
             </div>
             """,
             unsafe_allow_html=True
         )
-        tech_quiz_ans = st.radio(
-            "Select your answer:",
-            options=[
-                "Stack (LIFO)",
-                "Queue (FIFO)",
-                "Binary Search Tree",
-                "Hash Table"
-            ],
-            key="quiz_tech"
-        )
-
-    # --- TAB 2: DOMAIN SKILLS ---
-    with tab_domain:
-        st.markdown("#### Domain & Track-Specific Skills")
-        st.caption("Evaluate your expertise in domain methodologies and role-specific competencies.")
         
-        for skill in domain_skills:
-            ratings_input[skill["id"]] = st.slider(
-                label=f"**{skill['name']}**",
-                min_value=1,
-                max_value=5,
-                value=3,
-                step=1,
-                help=skill["description"],
-                key=f"slider_{skill['id']}"
-            )
-            st.divider()
-
-        # Domain Micro-Quiz Question
-        st.markdown(
-            """
-            <div class="quiz-box">
-                <h4>🛡️ Domain Verification Micro-Quiz</h4>
-                <p><b>Question:</b> What does <b>overfitting</b> mean in Machine Learning / Data Analysis?</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        domain_quiz_ans = st.radio(
-            "Select your answer:",
-            options=[
-                "The model performs well on training data but poorly on unseen test data.",
-                "The model is too simple to capture underlying patterns.",
-                "The dataset contains duplicate records across features.",
-                "The training process takes too long to converge."
-            ],
-            key="quiz_domain"
-        )
-
-    # --- TAB 3: SOFT SKILLS ---
-    with tab_soft:
-        st.markdown("#### Soft Skills & Work Ethic")
-        st.caption("Self-assess your interpersonal, collaborative, and problem-solving abilities.")
+        # Organize assessment into Category Tabs
+        tab_tech, tab_domain, tab_soft = st.tabs([
+            f"💻 Technical Skills ({len(tech_skills)})",
+            f"🎯 Domain Skills ({len(domain_skills)})",
+            f"🤝 Soft Skills ({len(soft_skills)})"
+        ])
         
-        for skill in soft_skills:
-            ratings_input[skill["id"]] = st.slider(
-                label=f"**{skill['name']}**",
-                min_value=1,
-                max_value=5,
-                value=3,
-                step=1,
-                help=skill["description"],
-                key=f"slider_{skill['id']}"
+        ratings_input: Dict[str, int] = {}
+        
+        # --- TAB 1: TECHNICAL SKILLS ---
+        with tab_tech:
+            st.markdown("#### Technical Skills Evaluation")
+            st.caption("Rate your proficiency with core programming, tooling, and backend concepts.")
+            
+            for skill in tech_skills:
+                ratings_input[skill["id"]] = st.slider(
+                    label=f"**{skill['name']}**",
+                    min_value=1,
+                    max_value=5,
+                    value=3,
+                    step=1,
+                    help=skill["description"],
+                    key=f"slider_{skill['id']}"
+                )
+                st.divider()
+            
+            # Technical Micro-Quiz Question
+            st.markdown(
+                """
+                <div class="quiz-box">
+                    <h4 style="margin-top:0;">🛡️ Technical Verification Micro-Quiz</h4>
+                    <p><b>Question:</b> Which data structure operates on a <b>First In, First Out (FIFO)</b> principle?</p>
+                </div>
+                """,
+                unsafe_allow_html=True
             )
-            st.divider()
+            tech_quiz_ans = st.radio(
+                "Select your answer:",
+                options=[
+                    "Stack (LIFO)",
+                    "Queue (FIFO)",
+                    "Binary Search Tree",
+                    "Hash Table"
+                ],
+                key="quiz_tech"
+            )
 
-    st.markdown("---")
+        # --- TAB 2: DOMAIN SKILLS ---
+        with tab_domain:
+            st.markdown("#### Domain & Track-Specific Skills")
+            st.caption("Evaluate your expertise in domain methodologies and role-specific competencies.")
+            
+            for skill in domain_skills:
+                ratings_input[skill["id"]] = st.slider(
+                    label=f"**{skill['name']}**",
+                    min_value=1,
+                    max_value=5,
+                    value=3,
+                    step=1,
+                    help=skill["description"],
+                    key=f"slider_{skill['id']}"
+                )
+                st.divider()
+
+            # Domain Micro-Quiz Question
+            st.markdown(
+                """
+                <div class="quiz-box">
+                    <h4 style="margin-top:0;">🛡️ Domain Verification Micro-Quiz</h4>
+                    <p><b>Question:</b> What does <b>overfitting</b> mean in Machine Learning / Data Analysis?</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+            domain_quiz_ans = st.radio(
+                "Select your answer:",
+                options=[
+                    "The model performs well on training data but poorly on unseen test data.",
+                    "The model is too simple to capture underlying patterns.",
+                    "The dataset contains duplicate records across features.",
+                    "The training process takes too long to converge."
+                ],
+                key="quiz_domain"
+            )
+
+        # --- TAB 3: SOFT SKILLS ---
+        with tab_soft:
+            st.markdown("#### Soft Skills & Work Ethic")
+            st.caption("Self-assess your interpersonal, collaborative, and problem-solving abilities.")
+            
+            for skill in soft_skills:
+                ratings_input[skill["id"]] = st.slider(
+                    label=f"**{skill['name']}**",
+                    min_value=1,
+                    max_value=5,
+                    value=3,
+                    step=1,
+                    help=skill["description"],
+                    key=f"slider_{skill['id']}"
+                )
+                st.divider()
+
+    st.markdown("<br>", unsafe_allow_html=True)
     submit_button = st.form_submit_button(
         label="🚀 Submit & Save Assessment",
         type="primary",
         use_container_width=True
     )
-
 
 # -----------------------------------------------------------------------------
 # 6. Form Submission, Quiz Adjustment & SQLite Persistence
@@ -331,49 +372,51 @@ if submit_button:
     if not student_name_input.strip():
         st.error("⚠️ Please enter your Full Student Name before submitting.")
     else:
-        # Check Quiz Correctness
-        tech_quiz_correct = (tech_quiz_ans == "Queue (FIFO)")
-        domain_quiz_correct = (domain_quiz_ans == "The model performs well on training data but poorly on unseen test data.")
-        
-        # Copy raw self-ratings into adjusted ratings vector
-        adjusted_ratings = dict(ratings_input)
-        
-        # Verification Adjustment Logic:
-        if not tech_quiz_correct:
-            for tech_skill_id in ["data_struct", "py_prog"]:
-                if adjusted_ratings.get(tech_skill_id, 0) > 3:
-                    adjusted_ratings[tech_skill_id] = 3
-
-        if not domain_quiz_correct:
-            for dom_skill_id in ["machine_learning", "stat_analysis", "seo_opt"]:
-                if adjusted_ratings.get(dom_skill_id, 0) > 3:
-                    adjusted_ratings[dom_skill_id] = 3
-
-        # Persistent Database Storage Operations
-        try:
-            # 1. Save student record
-            new_student_id = save_student(student_name_input, target_role_input)
+        with st.spinner("🔒 Calibrating skill ratings with verification quizzes & saving to database..."):
+            time.sleep(0.5)  # Subtle feedback delay
             
-            # 2. Save skill responses
-            save_skill_responses(new_student_id, ratings_input, adjusted_ratings)
+            # Check Quiz Correctness
+            tech_quiz_correct = (tech_quiz_ans == "Queue (FIFO)")
+            domain_quiz_correct = (domain_quiz_ans == "The model performs well on training data but poorly on unseen test data.")
             
-            # 3. Update session state
-            st.session_state.submitted = True
-            st.session_state.student_id = new_student_id
-            st.session_state.student_name = student_name_input.strip()
-            st.session_state.target_role = target_role_input
-            st.session_state.skill_vector = ratings_input
-            st.session_state.adjusted_skill_vector = adjusted_ratings
-            st.session_state.quiz_scores = {
-                "Technical Quiz": "Correct (+ Verified)" if tech_quiz_correct else "Incorrect (Ratings Adjusted)",
-                "Domain Quiz": "Correct (+ Verified)" if domain_quiz_correct else "Incorrect (Ratings Adjusted)"
-            }
+            # Copy raw self-ratings into adjusted ratings vector
+            adjusted_ratings = dict(ratings_input)
             
-            st.success(f"✅ Assessment successfully saved to database! Assigned Student ID: #{new_student_id}")
+            # Verification Adjustment Logic:
+            if not tech_quiz_correct:
+                for tech_skill_id in ["data_struct", "py_prog"]:
+                    if adjusted_ratings.get(tech_skill_id, 0) > 3:
+                        adjusted_ratings[tech_skill_id] = 3
 
-        except Exception as db_err:
-            st.error(f"❌ Database Error: Failed to record assessment. Detail: {db_err}")
+            if not domain_quiz_correct:
+                for dom_skill_id in ["machine_learning", "stat_analysis", "seo_opt"]:
+                    if adjusted_ratings.get(dom_skill_id, 0) > 3:
+                        adjusted_ratings[dom_skill_id] = 3
 
+            # Persistent Database Storage Operations
+            try:
+                # 1. Save student record
+                new_student_id = save_student(student_name_input, target_role_input)
+                
+                # 2. Save skill responses
+                save_skill_responses(new_student_id, ratings_input, adjusted_ratings)
+                
+                # 3. Update session state
+                st.session_state.submitted = True
+                st.session_state.student_id = new_student_id
+                st.session_state.student_name = student_name_input.strip()
+                st.session_state.target_role = target_role_input
+                st.session_state.skill_vector = ratings_input
+                st.session_state.adjusted_skill_vector = adjusted_ratings
+                st.session_state.quiz_scores = {
+                    "Technical Quiz": "Correct (+ Verified)" if tech_quiz_correct else "Incorrect (Ratings Adjusted)",
+                    "Domain Quiz": "Correct (+ Verified)" if domain_quiz_correct else "Incorrect (Ratings Adjusted)"
+                }
+                
+                st.success(f"✅ Assessment successfully saved to database! Assigned Student ID: #{new_student_id}")
+
+            except Exception as db_err:
+                st.error(f"❌ Database Error: Failed to record assessment. Detail: {db_err}")
 
 # -----------------------------------------------------------------------------
 # 7. Display Results & Persistent Output
@@ -385,14 +428,13 @@ if st.session_state.submitted and st.session_state.student_id:
     # Navigation links for results & portfolio
     nav_col1, nav_col2 = st.columns(2)
     with nav_col1:
-        st.page_link("pages/3_Portfolio.py", label="🎓 View Official Digital Student Portfolio", icon="🎓")
+        st.page_link("pages/3_Portfolio.py", label="🎓 View Official Digital Student Portfolio", icon="🎓", use_container_width=True)
     with nav_col2:
-        st.page_link("pages/2_Results.py", label="📊 View Multi-Dimensional Skill Radar & Gap Analysis", icon="📊")
+        st.page_link("pages/2_Results.py", label="📊 View Multi-Dimensional Skill Radar & Gap Analysis", icon="📊", use_container_width=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
     col_a, col_b, col_c, col_d = st.columns(4)
-
 
     with col_a:
         st.metric("Student ID", f"#{st.session_state.student_id}")
@@ -419,12 +461,10 @@ if st.session_state.submitted and st.session_state.student_id:
             st.warning(f"**Domain Quiz:** {domain_status}")
 
     with st.expander("🔍 View Skill Vector (Fetched from SQLite)", expanded=True):
-        # Verify database retrieval function get_student_skill_vector()
         db_vector = get_student_skill_vector(st.session_state.student_id)
         st.markdown(f"**Retrieved Vector for Student #{st.session_state.student_id}:**")
         st.json(db_vector)
 
-    # Required target role vector comparison preview
     role_reqs = get_role_requirements(st.session_state.target_role)
     with st.expander(f"📋 Target Role Requirements Baseline [{st.session_state.target_role}]"):
         st.dataframe(
