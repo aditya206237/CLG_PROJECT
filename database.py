@@ -12,6 +12,8 @@ from typing import List, Dict, Any
 BASE_DIR = Path(__file__).parent.resolve()
 DB_FILE = BASE_DIR / "portal.db"
 
+_db_initialized = False
+
 
 def get_connection(db_path: Path = DB_FILE) -> sqlite3.Connection:
     """Returns a SQLite database connection with Foreign Keys enabled."""
@@ -20,8 +22,12 @@ def get_connection(db_path: Path = DB_FILE) -> sqlite3.Connection:
     return conn
 
 
-def init_db(db_path: Path = DB_FILE) -> None:
+def init_db(db_path: Path = DB_FILE, force: bool = False) -> None:
     """Creates portal.db and required database tables if they do not exist."""
+    global _db_initialized
+    if _db_initialized and not force:
+        return
+
     with get_connection(db_path) as conn:
         cursor = conn.cursor()
 
@@ -48,6 +54,7 @@ def init_db(db_path: Path = DB_FILE) -> None:
         );
         """)
         conn.commit()
+    _db_initialized = True
 
 
 def save_student(name: str, target_role: str, db_path: Path = DB_FILE) -> int:

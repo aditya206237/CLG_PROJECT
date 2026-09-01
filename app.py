@@ -47,8 +47,10 @@ if not st.session_state.logged_in:
 
 render_logout_button()
 
-# Initialize database tables at application startup
-init_db()
+# Initialize database tables once per session
+if "db_initialized" not in st.session_state:
+    init_db()
+    st.session_state.db_initialized = True
 
 
 # Custom CSS for rich aesthetics, card styling, and clean UI

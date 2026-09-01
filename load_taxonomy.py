@@ -8,6 +8,7 @@ and role requirement profiles for assessment and gap analysis.
 import json
 from pathlib import Path
 from typing import Dict, List, Any, Optional
+import streamlit as st
 
 # Define default paths relative to this script directory
 BASE_DIR = Path(__file__).parent.resolve()
@@ -85,12 +86,14 @@ def load_dataset(
     _roles_cache = roles_data
 
 
+@st.cache_data
 def get_all_skills() -> List[Dict[str, Any]]:
     """Returns a list of all skills defined in the taxonomy."""
     load_dataset()
     return list(_skills_cache)  # type: ignore
 
 
+@st.cache_data
 def get_skills_by_category(category: str) -> List[Dict[str, Any]]:
     """
     Returns skills filtered by category ('technical', 'domain', or 'soft').
@@ -100,6 +103,7 @@ def get_skills_by_category(category: str) -> List[Dict[str, Any]]:
     return [s for s in _skills_cache if s["category"] == cat_clean]  # type: ignore
 
 
+@st.cache_data
 def get_role_requirements(role_name: str) -> List[Dict[str, Any]]:
     """
     Returns the required skill vector for a given role, enriched with skill metadata.
@@ -123,6 +127,7 @@ def get_role_requirements(role_name: str) -> List[Dict[str, Any]]:
     return requirements
 
 
+@st.cache_data
 def get_available_roles() -> List[str]:
     """Returns a list of all configured target roles."""
     load_dataset()

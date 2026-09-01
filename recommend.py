@@ -8,6 +8,7 @@ workshops, and mentorship programs.
 import json
 from pathlib import Path
 from typing import Dict, List, Any, Optional
+import streamlit as st
 
 # Resolve default path relative to recommend.py script location
 BASE_DIR = Path(__file__).parent.resolve()
@@ -16,6 +17,7 @@ RECOMMENDATIONS_FILE = BASE_DIR / "recommendations.json"
 _recommendations_cache: Optional[Dict[str, List[Dict[str, Any]]]] = None
 
 
+@st.cache_data
 def load_recommendations(
     file_path: Path = RECOMMENDATIONS_FILE,
     force_reload: bool = False

@@ -9,6 +9,7 @@ via data/quiz_usage.json.
 import json
 from pathlib import Path
 from typing import Dict, List, Any, Optional
+import streamlit as st
 
 BASE_DIR = Path(__file__).parent.resolve()
 DATA_DIR = BASE_DIR / "data"
@@ -16,6 +17,7 @@ QUIZ_BANK_FILE = DATA_DIR / "quiz_bank.json"
 QUIZ_USAGE_FILE = DATA_DIR / "quiz_usage.json"
 
 
+@st.cache_data
 def load_quiz_bank() -> Dict[str, List[Dict[str, Any]]]:
     """
     Loads and returns the quiz bank JSON dataset mapping skill_id to a list of question dicts.

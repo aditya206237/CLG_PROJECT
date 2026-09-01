@@ -316,7 +316,7 @@ with tab_progress:
     if not top_gaps:
         st.success("🎉 No active skill gaps! You fully meet all requirements for this role.")
     else:
-        gap_recs = get_recommendations_for_gaps(top_gaps, n_per_skill=2)
+        gap_recs = rec_data
         for idx, gap in enumerate(top_gaps, 1):
             sid = gap["skill_id"]
             res_list = gap_recs.get(sid, [])

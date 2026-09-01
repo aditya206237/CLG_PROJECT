@@ -15,6 +15,8 @@ from typing import Dict, Any, Tuple, Optional
 BASE_DIR = Path(__file__).parent.resolve()
 DB_FILE = BASE_DIR / "portal.db"
 
+_auth_db_initialized = False
+
 
 def get_db_connection():
     """Returns an active SQLite database connection."""
@@ -23,11 +25,15 @@ def get_db_connection():
     return conn
 
 
-def init_auth_db() -> None:
+def init_auth_db(force: bool = False) -> None:
     """
     Initializes the users table in portal.db if it does not already exist.
     Coexists cleanly with existing database tables (students, skill_responses).
     """
+    global _auth_db_initialized
+    if _auth_db_initialized and not force:
+        return
+
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
@@ -45,6 +51,7 @@ def init_auth_db() -> None:
     )
     conn.commit()
     conn.close()
+    _auth_db_initialized = True
 
 
 def _hash_password(password: str, salt: Optional[str] = None) -> Tuple[str, str]:
