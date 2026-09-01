@@ -1,5 +1,5 @@
 """
-Academia-Industry Collaboration Portal (Ministry of Ayush / AIIA)
+Oppenheimer Skill Portal (Team Oppenheimer)
 Skill Gap Analysis Dashboard & Plotly Radar Visualization
 """
 
@@ -14,20 +14,33 @@ from database import get_all_students, get_student_skill_vector, init_db
 from gap_analysis import build_vectors, compute_match_score, compute_skill_gaps, get_top_gaps
 from recommend import get_recommendations_for_gaps
 from charts import create_radar_chart
+from login_ui import render_login_page, render_logout_button
+from theme import apply_theme
 
 
 # -----------------------------------------------------------------------------
 # 1. Page Configuration & Custom Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="My Results - Skill Gap Analysis",
+    page_title="Results - Oppenheimer Skill Portal",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
+# Apply global dark futuristic theme
+apply_theme()
+
+# Authentication Gate
+if "logged_in" not in st.session_state or not st.session_state.logged_in:
+    render_login_page()
+    st.stop()
+
+render_logout_button()
+
 # Ensure DB tables exist
 init_db()
+
 
 # Custom CSS for polished UI & dynamic match score widget
 st.markdown(
@@ -39,73 +52,91 @@ st.markdown(
         max-width: 1150px;
     }
     .hero-container {
-        background: linear-gradient(135deg, #0d3b66 0%, #001e3d 100%);
-        color: #ffffff;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--border-glow);
+        color: var(--text-primary);
         padding: 1.8rem 2rem;
         border-radius: 12px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hero-container:hover {
+        border-color: var(--border-glow-hover);
+        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2);
     }
     .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 2rem;
         font-weight: 700;
         margin: 0;
+        color: var(--text-primary);
     }
     .hero-subtitle {
         font-size: 1.05rem;
-        color: #d0e1f9;
+        color: var(--text-muted);
         margin-top: 0.3rem;
         margin-bottom: 0.5rem;
     }
     .badge-tag {
         display: inline-block;
-        background-color: #2a9d8f;
+        background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
         color: #ffffff;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 0.8rem;
         font-weight: 600;
     }
 
     /* Dynamic Match Score Cards */
     .score-card-green {
-        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-        border: 2px solid #10b981;
+        background: rgba(16, 185, 129, 0.12);
+        border: 2px solid var(--success);
         border-radius: 12px;
         padding: 1.2rem;
         text-align: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
     }
     .score-card-amber {
-        background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-        border: 2px solid #f59e0b;
+        background: rgba(245, 158, 11, 0.12);
+        border: 2px solid var(--warning);
         border-radius: 12px;
         padding: 1.2rem;
         text-align: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(245, 158, 11, 0.15);
     }
     .score-card-red {
-        background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-        border: 2px solid #ef4444;
+        background: rgba(239, 68, 68, 0.12);
+        border: 2px solid var(--error);
         border-radius: 12px;
         padding: 1.2rem;
         text-align: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
     }
-    .score-val-green { font-size: 2.4rem; font-weight: 900; color: #047857; }
-    .score-val-amber { font-size: 2.4rem; font-weight: 900; color: #b45309; }
-    .score-val-red { font-size: 2.4rem; font-weight: 900; color: #b91c1c; }
+    .score-val-green { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 900; color: var(--success); }
+    .score-val-amber { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 900; color: var(--warning); }
+    .score-val-red { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 900; color: var(--error); }
 
-    .score-label { font-size: 0.88rem; font-weight: 700; color: #334155; text-transform: uppercase; }
+    .score-label { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
 
     .metric-card-box {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
+        background: rgba(30, 41, 59, 0.7);
+        border: 1px solid var(--border-glow);
         padding: 1rem 1.2rem;
         border-radius: 10px;
         height: 100%;
+        color: var(--text-primary);
     }
-    .severity-high { background-color: #fee2e2; color: #b91c1c; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
-    .severity-mod { background-color: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
-    .severity-low { background-color: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
-    .severity-met { background-color: #d1fae5; color: #047857; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .severity-high { background-color: rgba(239, 68, 68, 0.25); color: #f87171; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .severity-mod { background-color: rgba(245, 158, 11, 0.25); color: #fbbf24; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .severity-low { background-color: rgba(56, 189, 248, 0.25); color: #38bdf8; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .severity-met { background-color: rgba(16, 185, 129, 0.25); color: #34d399; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
 
     .type-pill {
         display: inline-block;
@@ -126,7 +157,7 @@ st.markdown(
 st.markdown(
     """
     <div class="hero-container">
-        <span class="badge-tag">AIIA Vector Engine</span>
+        <span class="badge-tag">Oppenheimer Vector Engine</span>
         <h1 class="hero-title">Skill Gap Analysis & Alignment Dashboard</h1>
         <p class="hero-subtitle">Interactive Plotly multi-dimensional radar comparison and targeted skill deficit analysis.</p>
     </div>
@@ -144,8 +175,8 @@ if not all_students:
         st.markdown(
             """
             <div style="text-align:center; padding:2rem;">
-                <h2 style="color:#0d3b66; margin-bottom:0.5rem;">⚠️ No Student Assessments Found</h2>
-                <p style="color:#475569; font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
+                <h2 style="color:var(--accent-cyan); margin-bottom:0.5rem;">⚠️ No Student Assessments Found</h2>
+                <p style="color:var(--text-secondary); font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
                     There are currently no student assessment records stored in the SQLite database (<code>portal.db</code>).
                     Please complete a skill assessment first to generate multi-dimensional gap analysis reports.
                 </p>
@@ -213,7 +244,7 @@ with col_m1:
             <div class="score-card-green">
                 <div class="score-label">Target Role Match Score</div>
                 <div class="score-val-green">{match_score}%</div>
-                <div style="color:#047857; font-weight:700; font-size:0.9rem;">🟢 Industry Aligned</div>
+                <div style="color:var(--success); font-weight:700; font-size:0.9rem;">🟢 Industry Aligned</div>
             </div>
             """,
             unsafe_allow_html=True
@@ -224,7 +255,7 @@ with col_m1:
             <div class="score-card-amber">
                 <div class="score-label">Target Role Match Score</div>
                 <div class="score-val-amber">{match_score}%</div>
-                <div style="color:#b45309; font-weight:700; font-size:0.9rem;">🟠 Moderate Alignment</div>
+                <div style="color:var(--warning); font-weight:700; font-size:0.9rem;">🟠 Moderate Alignment</div>
             </div>
             """,
             unsafe_allow_html=True
@@ -235,7 +266,7 @@ with col_m1:
             <div class="score-card-red">
                 <div class="score-label">Target Role Match Score</div>
                 <div class="score-val-red">{match_score}%</div>
-                <div style="color:#b91c1c; font-weight:700; font-size:0.9rem;">🔴 Actionable Gap Identified</div>
+                <div style="color:var(--error); font-weight:700; font-size:0.9rem;">🔴 Actionable Gap Identified</div>
             </div>
             """,
             unsafe_allow_html=True
@@ -267,10 +298,10 @@ st.markdown("---")
 st.subheader("🕸️ Multi-Dimensional Skill Radar Vector")
 
 st.info(
-    f"💡 **How to Read This Radar Chart (For Hackathon Judges):**\n\n"
-    f"• **Teal Shape (Verified Skills)**: Represents {student_name}'s current proficiency ratings across target competencies.\n"
+    f"💡 **How to Read This Radar Chart:**\n\n"
+    f"• **Cyan Shape (Verified Skills)**: Represents {student_name}'s current proficiency ratings across target competencies.\n"
     f"• **Coral Shape (Role Benchmark)**: Represents the required industry standard vector for **{target_role}**.\n"
-    f"• **Gap Visualization**: Any area where the Coral boundary extends beyond the Teal shape highlights an actionable skill gap."
+    f"• **Gap Visualization**: Any area where the Coral boundary extends beyond the Cyan shape highlights an actionable skill gap."
 )
 
 fig = create_radar_chart(student_vector, role_reqs, target_role, student_name)
@@ -323,9 +354,9 @@ else:
             st.markdown(
                 f"""
                 <div class="metric-card-box">
-                    <b>#{idx}. {gap['skill_name']}</b> <span style="font-size:0.75rem; color:#64748b;">({cat})</span><br>
+                    <b>#{idx}. {gap['skill_name']}</b> <span style="font-size:0.75rem; color:var(--text-muted);">({cat})</span><br>
                     Current: <code>{gap['student_level']}/5</code> | Benchmark: <code>{gap['required_level']}/5</code><br>
-                    <b style="color:#ef4444;">Deficit: -{gap['gap']} levels</b>
+                    <b style="color:var(--error);">Deficit: -{gap['gap']} levels</b>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -340,7 +371,7 @@ st.subheader("🎓 Recommended Next Steps & Industry Product Cards")
 
 st.caption(
     "💡 **Academia-Industry Collaboration Hub:** Recommendations combine open learning platforms "
-    "and specialized Industry Partner Programs tailored for the Ministry of Ayush / AIIA ecosystem."
+    "and specialized Industry Partner Programs tailored for career development."
 )
 
 if top_gaps:
@@ -364,7 +395,7 @@ if top_gaps:
                     with col:
                         with st.container(border=True):
                             type_color = (
-                                "#2563eb" if res["type"] == "certification"
+                                "#0284c7" if res["type"] == "certification"
                                 else "#059669" if res["type"] == "course"
                                 else "#d97706" if res["type"] == "workshop"
                                 else "#7c3aed"
@@ -374,8 +405,8 @@ if top_gaps:
                                 <span class="type-pill" style="background-color:{type_color};">
                                     {res['type'].upper()}
                                 </span>
-                                <h4 style="margin-top:0.6rem; margin-bottom:0.3rem; font-size:1.05rem; color:#1e293b;">{res['title']}</h4>
-                                <p style="font-size:0.85rem; color:#475569; margin-bottom:0.8rem; line-height:1.4;">
+                                <h4 style="margin-top:0.6rem; margin-bottom:0.3rem; font-size:1.05rem; color:var(--text-primary);">{res['title']}</h4>
+                                <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.8rem; line-height:1.4;">
                                     🏛️ <b>Provider:</b> {res['provider']}<br>
                                     ⏱️ <b>Duration:</b> {res['duration']}
                                 </p>
@@ -387,3 +418,4 @@ if top_gaps:
                                 url=res.get("url", "#"),
                                 use_container_width=True
                             )
+

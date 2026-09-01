@@ -11,19 +11,32 @@ from typing import Dict, List, Any
 from load_taxonomy import get_all_skills
 from database import get_all_students, get_student_skill_vector, init_db
 from gap_analysis import build_vectors, compute_match_score
+from login_ui import render_login_page, render_logout_button
+from theme import apply_theme
 
 # -----------------------------------------------------------------------------
 # 1. Page Configuration & Custom Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Industry Opportunities & Placement Engine",
+    page_title="Industry Opportunities - Oppenheimer Skill Portal",
     page_icon="💼",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
+# Apply global dark futuristic theme
+apply_theme()
+
+# Authentication Gate
+if "logged_in" not in st.session_state or not st.session_state.logged_in:
+    render_login_page()
+    st.stop()
+
+render_logout_button()
+
 # Ensure DB tables exist
 init_db()
+
 
 # Custom CSS matching theme
 st.markdown(
@@ -35,71 +48,87 @@ st.markdown(
         max-width: 1150px;
     }
     .hero-container {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-        color: #ffffff;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--border-glow);
+        color: var(--text-primary);
         padding: 1.8rem 2rem;
         border-radius: 12px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hero-container:hover {
+        border-color: var(--border-glow-hover);
+        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2);
     }
     .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 2rem;
         font-weight: 700;
         margin: 0;
+        color: var(--text-primary);
     }
     .hero-subtitle {
         font-size: 1.05rem;
-        color: #93c5fd;
+        color: var(--text-muted);
         margin-top: 0.3rem;
         margin-bottom: 0.5rem;
     }
     .badge-tag {
         display: inline-block;
-        background-color: #3b82f6;
+        background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
         color: #ffffff;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 0.8rem;
         font-weight: 600;
     }
     .match-badge-best {
-        background-color: #10b981;
-        color: #ffffff;
+        background-color: rgba(16, 185, 129, 0.25);
+        border: 1px solid #10b981;
+        color: #34d399;
         padding: 4px 12px;
         border-radius: 20px;
         font-size: 0.82rem;
         font-weight: bold;
     }
     .match-badge-good {
-        background-color: #0284c7;
-        color: #ffffff;
+        background-color: rgba(2, 132, 199, 0.25);
+        border: 1px solid #38bdf8;
+        color: #38bdf8;
         padding: 4px 12px;
         border-radius: 20px;
         font-size: 0.82rem;
         font-weight: bold;
     }
     .match-badge-moderate {
-        background-color: #f59e0b;
-        color: #ffffff;
+        background-color: rgba(245, 158, 11, 0.25);
+        border: 1px solid #f59e0b;
+        color: #fbbf24;
         padding: 4px 12px;
         border-radius: 20px;
         font-size: 0.82rem;
         font-weight: bold;
     }
     .type-badge {
-        background-color: #e2e8f0;
-        color: #334155;
+        background-color: rgba(30, 41, 59, 0.8);
+        border: 1px solid var(--border-glow);
+        color: var(--accent-cyan);
         padding: 2px 8px;
         border-radius: 6px;
         font-size: 0.78rem;
         font-weight: 600;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     .skill-chip {
         display: inline-block;
-        background-color: #eff6ff;
-        color: #1d4ed8;
-        border: 1px solid #bfdbfe;
+        background-color: rgba(56, 189, 248, 0.12);
+        color: var(--accent-cyan);
+        border: 1px solid rgba(56, 189, 248, 0.3);
         padding: 2px 8px;
         border-radius: 12px;
         font-size: 0.78rem;
@@ -278,10 +307,10 @@ else:
                 st.markdown(
                     f"""
                     <span class="type-badge">{opp['type']}</span>
-                    <h3 style="margin-top:0.3rem; margin-bottom:0.1rem; color:#0f172a; font-size:1.25rem;">
+                    <h3 style="margin-top:0.3rem; margin-bottom:0.1rem; color:var(--text-primary); font-size:1.25rem;">
                         {opp['title']}
                     </h3>
-                    <p style="color:#475569; font-weight:600; font-size:0.92rem; margin-bottom:0.4rem;">
+                    <p style="color:var(--text-muted); font-weight:600; font-size:0.92rem; margin-bottom:0.4rem;">
                         🏛️ {opp['company_name']} &nbsp;•&nbsp; 📍 {opp['location']} &nbsp;•&nbsp; ⏱️ {opp['duration']}
                     </p>
                     """,

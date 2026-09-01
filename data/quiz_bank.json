@@ -1,0 +1,522 @@
+{
+  "data_struct": [
+    {
+      "question": "Which data structure operates on a First In, First Out (FIFO) principle?",
+      "options": ["Stack (LIFO)", "Queue (FIFO)", "Binary Search Tree", "Hash Table"],
+      "correct": "Queue (FIFO)"
+    },
+    {
+      "question": "What is the worst-case time complexity of standard QuickSort when an improper pivot selection is used?",
+      "options": ["O(N log N)", "O(N)", "O(N^2)", "O(log N)"],
+      "correct": "O(N^2)"
+    },
+    {
+      "question": "Which algorithm is best suited for finding the shortest path in a weighted graph with non-negative edge weights?",
+      "options": ["Depth-First Search (DFS)", "Dijkstra's Algorithm", "Kruskal's Algorithm", "Bellman-Ford Algorithm"],
+      "correct": "Dijkstra's Algorithm"
+    },
+    {
+      "question": "In a self-balancing AVL Tree, what is the maximum permissible difference in height between the left and right subtrees of any node?",
+      "options": ["0", "1", "2", "3"],
+      "correct": "1"
+    },
+    {
+      "question": "Which data structure offers O(1) average time complexity for key insertion, deletion, and lookup operations?",
+      "options": ["Hash Table", "Binary Search Tree", "Linked List", "Min-Heap"],
+      "correct": "Hash Table"
+    },
+    {
+      "question": "What is the time complexity to access an arbitrary element in an array by its index?",
+      "options": ["O(1)", "O(N)", "O(log N)", "O(N^2)"],
+      "correct": "O(1)"
+    },
+    {
+      "question": "Which traversal of a Binary Search Tree (BST) visits nodes in strictly ascending sorted order?",
+      "options": ["Pre-order traversal", "In-order traversal", "Post-order traversal", "Level-order traversal"],
+      "correct": "In-order traversal"
+    },
+    {
+      "question": "What data structure is typically used to implement Breadth-First Search (BFS) on a graph?",
+      "options": ["Stack", "Queue", "Priority Queue", "Disjoint Set"],
+      "correct": "Queue"
+    },
+    {
+      "question": "In a Min-Heap containing N elements, what is the time complexity of deleting the root element and restoring the heap property?",
+      "options": ["O(1)", "O(log N)", "O(N)", "O(N log N)"],
+      "correct": "O(log N)"
+    },
+    {
+      "question": "Which algorithm design paradigm divides a problem into non-overlapping subproblems and solves them recursively?",
+      "options": ["Dynamic Programming", "Greedy Approach", "Divide and Conquer", "Backtracking"],
+      "correct": "Divide and Conquer"
+    }
+  ],
+  "py_prog": [
+    {
+      "question": "What will be the output of bool([]) and bool([0]) in Python?",
+      "options": ["False and True", "True and False", "False and False", "True and True"],
+      "correct": "False and True"
+    },
+    {
+      "question": "How does Python handle memory management and automatic cleanup of unused objects?",
+      "options": ["Manual deallocation using free()", "Reference counting with a generational garbage collector", "Static memory allocation at compile time", "RAII (Resource Acquisition Is Initialization)"],
+      "correct": "Reference counting with a generational garbage collector"
+    },
+    {
+      "question": "What is the purpose of Python's __slots__ attribute in a class definition?",
+      "options": ["To restrict attribute creation and save memory by avoiding __dict__", "To make all class methods private automatically", "To allow dynamic inheritance from multiple superclasses", "To enable multi-threading parallel execution"],
+      "correct": "To restrict attribute creation and save memory by avoiding __dict__"
+    },
+    {
+      "question": "What is the result of evaluating [x * 2 for x in range(5) if x % 2 == 0] in Python?",
+      "options": ["[0, 4, 8]", "[0, 2, 4, 6, 8]", "[2, 6, 10]", "[0, 2, 4]"],
+      "correct": "[0, 4, 8]"
+    },
+    {
+      "question": "Which built-in function returns an iterator of tuples pairing elements from multiple iterables?",
+      "options": ["map()", "enumerate()", "zip()", "filter()"],
+      "correct": "zip()"
+    },
+    {
+      "question": "What exception is raised in Python when attempting to access a key that does not exist in a standard dictionary?",
+      "options": ["IndexError", "KeyError", "ValueError", "AttributeError"],
+      "correct": "KeyError"
+    },
+    {
+      "question": "What does the Global Interpreter Lock (GIL) in CPython prevent?",
+      "options": ["Multiple native C threads from executing Python bytecode simultaneously", "Executing async functions in an event loop", "Importing external C extension modules", "Writing data to disk asynchronously"],
+      "correct": "Multiple native C threads from executing Python bytecode simultaneously"
+    },
+    {
+      "question": "In Python, what is the primary difference between a list and a tuple?",
+      "options": ["Lists are mutable while tuples are immutable", "Tuples hold only numeric data while lists hold any type", "Lists use key-value indexing while tuples use integer indexing", "Tuples cannot be iterated over in a for loop"],
+      "correct": "Lists are mutable while tuples are immutable"
+    },
+    {
+      "question": "What decorator is used in Python to define a method that is bound to the class rather than the instance?",
+      "options": ["@staticmethod", "@classmethod", "@property", "@abstractmethod"],
+      "correct": "@classmethod"
+    },
+    {
+      "question": "What function parameter syntax allows a Python function to accept an arbitrary number of keyword arguments?",
+      "options": ["*args", "**kwargs", "args[]", "...params"],
+      "correct": "**kwargs"
+    }
+  ],
+  "sql_db": [
+    {
+      "question": "Which SQL JOIN type returns all records from the left table and matched records from the right table, filling NULLs for unmatched right rows?",
+      "options": ["INNER JOIN", "LEFT JOIN (LEFT OUTER JOIN)", "RIGHT JOIN", "FULL OUTER JOIN"],
+      "correct": "LEFT JOIN (LEFT OUTER JOIN)"
+    },
+    {
+      "question": "What is the primary purpose of database normalization up to Third Normal Form (3NF)?",
+      "options": ["To eliminate data redundancy and prevent update anomalies", "To speed up full table scan read queries", "To encrypt sensitive column values at rest", "To automatically generate primary key indexes"],
+      "correct": "To eliminate data redundancy and prevent update anomalies"
+    },
+    {
+      "question": "Which SQL clause is used to filter aggregated group results produced by a GROUP BY statement?",
+      "options": ["WHERE", "HAVING", "ORDER BY", "FILTER"],
+      "correct": "HAVING"
+    },
+    {
+      "question": "In relational database transactions, what does the ACID acronym stand for?",
+      "options": ["Atomicity, Consistency, Isolation, Durability", "Authentication, Control, Integrity, Data", "Availability, Concurrency, Isolation, Distribution", "Accuracy, Consistency, Indexing, Dependency"],
+      "correct": "Atomicity, Consistency, Isolation, Durability"
+    },
+    {
+      "question": "What constraint guarantees that values in a column uniquely reference a primary key row in another table?",
+      "options": ["FOREIGN KEY", "UNIQUE", "CHECK", "NOT NULL"],
+      "correct": "FOREIGN KEY"
+    },
+    {
+      "question": "Which SQL window function assigns a unique sequential integer to rows within a partition starting from 1?",
+      "options": ["RANK()", "DENSE_RANK()", "ROW_NUMBER()", "NTILE()"],
+      "correct": "ROW_NUMBER()"
+    },
+    {
+      "question": "How does adding a B-Tree index on a frequently queried column impact database performance?",
+      "options": ["Speeds up SELECT queries but slightly slows down INSERT/UPDATE writes", "Speeds up both SELECT reads and INSERT writes equally", "Slows down SELECT queries but speeds up INSERT writes", "Has no effect on write operations or disk storage"],
+      "correct": "Speeds up SELECT queries but slightly slows down INSERT/UPDATE writes"
+    },
+    {
+      "question": "What SQL command is used to remove all rows from a table quickly without logging individual row deletions?",
+      "options": ["DELETE FROM table_name", "TRUNCATE TABLE table_name", "DROP TABLE table_name", "REMOVE TABLE table_name"],
+      "correct": "TRUNCATE TABLE table_name"
+    },
+    {
+      "question": "What is the main difference between RANK() and DENSE_RANK() SQL window functions when duplicate values occur?",
+      "options": ["RANK() skips position numbers after ties, whereas DENSE_RANK() produces consecutive ranks", "DENSE_RANK() skips position numbers after ties, whereas RANK() does not", "RANK() works only on string columns while DENSE_RANK() works on numeric columns", "There is no difference in behavior"],
+      "correct": "RANK() skips position numbers after ties, whereas DENSE_RANK() produces consecutive ranks"
+    },
+    {
+      "question": "Which SQL isolation level prevents dirty reads, non-repeatable reads, and phantom reads completely?",
+      "options": ["READ UNCOMMITTED", "READ COMMITTED", "REPEATABLE READ", "SERIALIZABLE"],
+      "correct": "SERIALIZABLE"
+    }
+  ],
+  "machine_learning": [
+    {
+      "question": "What does overfitting mean in Machine Learning / Data Analysis?",
+      "options": ["The model performs well on training data but poorly on unseen test data.", "The model is too simple to capture underlying patterns.", "The dataset contains duplicate records across features.", "The training process takes too long to converge."],
+      "correct": "The model performs well on training data but poorly on unseen test data."
+    },
+    {
+      "question": "Which evaluation metric is most appropriate for a highly imbalanced binary classification dataset?",
+      "options": ["Accuracy", "ROC-AUC / Precision-Recall AUC", "Mean Squared Error (MSE)", "R-Squared Score"],
+      "correct": "ROC-AUC / Precision-Recall AUC"
+    },
+    {
+      "question": "Which regularization technique adds the sum of absolute values of coefficients (L1 penalty) to the cost function?",
+      "options": ["Ridge Regression", "Lasso Regression", "ElasticNet", "Dropout"],
+      "correct": "Lasso Regression"
+    },
+    {
+      "question": "In decision trees and random forests, what metric measures the impurity or disorder of a split node?",
+      "options": ["Gini Impurity / Entropy", "Mean Absolute Error", "Euclidean Distance", "Log-Likelihood"],
+      "correct": "Gini Impurity / Entropy"
+    },
+    {
+      "question": "What is the primary difference between Bagging (e.g. Random Forest) and Boosting (e.g. XGBoost)?",
+      "options": ["Bagging builds models independently in parallel; Boosting builds models sequentially to correct prior errors.", "Bagging builds models sequentially; Boosting builds models independently in parallel.", "Bagging is for regression only; Boosting is for classification only.", "Bagging uses deep trees; Boosting uses linear models."],
+      "correct": "Bagging builds models independently in parallel; Boosting builds models sequentially to correct prior errors."
+    },
+    {
+      "question": "Which dimensionality reduction algorithm finds orthogonal axes that maximize the variance of the data?",
+      "options": ["Principal Component Analysis (PCA)", "t-SNE", "Linear Discriminant Analysis (LDA)", "K-Means"],
+      "correct": "Principal Component Analysis (PCA)"
+    },
+    {
+      "question": "What problem occurs when neural network gradients become extremely small during backpropagation through deep layers?",
+      "options": ["Exploding Gradient Problem", "Vanishing Gradient Problem", "Overfitting Problem", "Underfitting Problem"],
+      "correct": "Vanishing Gradient Problem"
+    },
+    {
+      "question": "Which activation function outputs values in the range (0, 1), making it suitable for binary classification output layers?",
+      "options": ["ReLU", "Sigmoid", "Tanh", "Leaky ReLU"],
+      "correct": "Sigmoid"
+    },
+    {
+      "question": "What is the main objective of K-Fold Cross-Validation during model evaluation?",
+      "options": ["To estimate model generalization performance and reduce variance in test metrics", "To automatically tune hyperparameter grid values", "To generate synthetic data samples for minority classes", "To speed up model training time on multi-core CPUs"],
+      "correct": "To estimate model generalization performance and reduce variance in test metrics"
+    },
+    {
+      "question": "In Gradient Descent optimization, what does the learning rate hyperparameter control?",
+      "options": ["The step size taken towards the minimum of the loss function at each iteration", "The number of hidden layers in a neural network", "The ratio of training data to validation data", "The maximum depth of decision tree branches"],
+      "correct": "The step size taken towards the minimum of the loss function at each iteration"
+    }
+  ],
+  "stat_analysis": [
+    {
+      "question": "What does a p-value less than 0.05 typically indicate in hypothesis testing?",
+      "options": ["Strong evidence against the null hypothesis, suggesting statistical significance", "Weak evidence against the null hypothesis, accepting the null", "The probability that the alternative hypothesis is 100% true", "That the sample size was too small to make a conclusion"],
+      "correct": "Strong evidence against the null hypothesis, suggesting statistical significance"
+    },
+    {
+      "question": "According to the Central Limit Theorem (CLT), what distribution does the sample mean approach as sample size increases?",
+      "options": ["Normal Distribution", "Uniform Distribution", "Binomial Distribution", "Poisson Distribution"],
+      "correct": "Normal Distribution"
+    },
+    {
+      "question": "What type of error occurs when a statistical test incorrectly rejects a true null hypothesis (False Positive)?",
+      "options": ["Type I Error", "Type II Error", "Standard Error", "Sampling Error"],
+      "correct": "Type I Error"
+    },
+    {
+      "question": "Which statistical test is used to compare the means of two independent sample groups?",
+      "options": ["Two-sample Student's t-test", "Chi-Square Test of Independence", "One-Way ANOVA", "Pearson Correlation Test"],
+      "correct": "Two-sample Student's t-test"
+    },
+    {
+      "question": "What metric measures the linear relationship strength and direction between two continuous variables, ranging from -1 to +1?",
+      "options": ["Pearson Correlation Coefficient (r)", "Variance Inflation Factor (VIF)", "Standard Deviation", "Covariance Matrix"],
+      "correct": "Pearson Correlation Coefficient (r)"
+    },
+    {
+      "question": "What does the R-squared statistic represent in a linear regression model?",
+      "options": ["The proportion of variance in the dependent variable explained by the independent variables", "The average prediction error in units of the response variable", "The probability that all coefficients are equal to zero", "The ratio of true positives to false positives"],
+      "correct": "The proportion of variance in the dependent variable explained by the independent variables"
+    },
+    {
+      "question": "Which statistical test assesses whether observed categorical frequency distributions differ significantly from expected distributions?",
+      "options": ["Chi-Square Goodness-of-Fit Test", "Paired t-test", "Mann-Whitney U Test", "Wilcoxon Signed-Rank Test"],
+      "correct": "Chi-Square Goodness-of-Fit Test"
+    },
+    {
+      "question": "What is the Interquartile Range (IQR) defined as in descriptive statistics?",
+      "options": ["The difference between the 75th percentile (Q3) and the 25th percentile (Q1)", "The difference between the maximum and minimum values in a dataset", "The distance between the mean and standard deviation", "The middle 90% range of values in a normal distribution"],
+      "correct": "The difference between the 75th percentile (Q3) and the 25th percentile (Q1)"
+    },
+    {
+      "question": "What does multicollinearity refer to in multiple linear regression analysis?",
+      "options": ["High correlation among two or more independent variables", "Non-constant variance of residual error terms", "Non-linear relationships between predictors and target", "Presence of extreme outlier observations in the dataset"],
+      "correct": "High correlation among two or more independent variables"
+    },
+    {
+      "question": "What statistical theorem relates conditional probabilities of events, allowing update of prior probabilities with new evidence?",
+      "options": ["Bayes' Theorem", "Law of Large Numbers", "Central Limit Theorem", "Gauss-Markov Theorem"],
+      "correct": "Bayes' Theorem"
+    }
+  ],
+  "seo_opt": [
+    {
+      "question": "Which HTML tag is considered the most critical on-page SEO element for search engine indexing and click-through rates?",
+      "options": ["<title> tag", "<h1> header tag", "<meta description> tag", "alt image attribute"],
+      "correct": "<title> tag"
+    },
+    {
+      "question": "What is the primary purpose of a robots.txt file on a website?",
+      "options": ["To give directives to web crawlers about which URLs they can or cannot access", "To speed up website rendering times on mobile devices", "To declare XML sitemap structures for search engines", "To prevent DDoS attacks from malicious bots"],
+      "correct": "To give directives to web crawlers about which URLs they can or cannot access"
+    },
+    {
+      "question": "Which HTTP status code indicates a permanent redirect from an old URL to a new URL for link equity transfer?",
+      "options": ["301 Moved Permanently", "302 Found (Temporary)", "404 Not Found", "500 Internal Server Error"],
+      "correct": "301 Moved Permanently"
+    },
+    {
+      "question": "What issue does the rel='canonical' attribute solve in technical SEO?",
+      "options": ["Duplicate content issues across multiple similar URLs", "Slow page loading speeds due to uncompressed images", "Missing alt text on product images", "Broken outbound hyperlinks"],
+      "correct": "Duplicate content issues across multiple similar URLs"
+    },
+    {
+      "question": "What Google performance framework measures user experience metrics including LCP, INP, and CLS?",
+      "options": ["Core Web Vitals", "Google Analytics 4", "Search Console Indexing", "PageRank Algorithm"],
+      "correct": "Core Web Vitals"
+    },
+    {
+      "question": "What does the term 'Search Intent' refer to in keyword research?",
+      "options": ["The underlying purpose or goal a user has when typing a query into a search engine", "The exact keyword density percentage on a webpage", "The number of backlinks linking to a specific article", "The total search volume per month for a given keyword"],
+      "correct": "The underlying purpose or goal a user has when typing a query into a search engine"
+    },
+    {
+      "question": "Which Schema.org format is recommended by Google for adding structured data markup to web pages?",
+      "options": ["JSON-LD", "Microdata", "RDFa", "Microformats"],
+      "correct": "JSON-LD"
+    },
+    {
+      "question": "What is 'Anchor Text' in the context of search engine optimization and link building?",
+      "options": ["The clickable, visible text displayed in a hyperlink", "The footer text at the bottom of every webpage", "The alt text description attached to an image", "The meta title tag displayed in Google search results"],
+      "correct": "The clickable, visible text displayed in a hyperlink"
+    },
+    {
+      "question": "What is the primary function of an XML Sitemap submitted to search engines?",
+      "options": ["To provide search engine crawlers with a structured list of indexable URLs on a site", "To style website navigation menus for mobile devices", "To block unauthorized users from viewing private admin pages", "To compress HTML and JavaScript file payloads"],
+      "correct": "To provide search engine crawlers with a structured list of indexable URLs on a site"
+    },
+    {
+      "question": "What black-hat SEO tactic involves showing different content to search engine crawlers than to human visitors?",
+      "options": ["Cloaking", "Keyword Stuffing", "Link Farming", "Domain Spoofing"],
+      "correct": "Cloaking"
+    }
+  ],
+  "rest_api": [
+    {
+      "question": "Which HTTP method is designed to be idempotent and used to replace an entire resource payload at a target URI?",
+      "options": ["PUT", "POST", "PATCH", "DELETE"],
+      "correct": "PUT"
+    },
+    {
+      "question": "What HTTP status code should a REST API return when a client request successfully creates a new resource?",
+      "options": ["200 OK", "201 Created", "204 No Content", "202 Accepted"],
+      "correct": "201 Created"
+    },
+    {
+      "question": "What header is sent by a client to request a specific response representation format (e.g. application/json)?",
+      "options": ["Accept", "Content-Type", "Authorization", "Host"],
+      "correct": "Accept"
+    },
+    {
+      "question": "In REST architecture, what does HATEOAS stand for?",
+      "options": ["Hypermedia As The Engine Of Application State", "HTTP Authorization & Token Encrypted Security", "Hierarchical API Transfer Protocol for Open Systems", "Header Authenticated Transport Engine for Object Systems"],
+      "correct": "Hypermedia As The Engine Of Application State"
+    },
+    {
+      "question": "What HTTP status code signifies that a client is unauthenticated (missing or invalid credentials)?",
+      "options": ["401 Unauthorized", "403 Forbidden", "404 Not Found", "400 Bad Request"],
+      "correct": "401 Unauthorized"
+    },
+    {
+      "question": "What is the key difference between HTTP POST and HTTP PUT requests in RESTful service design?",
+      "options": ["POST creates a new resource or submits data; PUT replaces a resource idempotently at a known URI.", "POST is idempotent while PUT is not idempotent.", "POST cannot send a JSON body while PUT requires JSON.", "POST is strictly for browser forms while PUT is for mobile apps."],
+      "correct": "POST creates a new resource or submits data; PUT replaces a resource idempotently at a known URI."
+    },
+    {
+      "question": "What authorization framework uses Access Tokens (like JWTs) to delegate scoping access without sharing user passwords?",
+      "options": ["OAuth 2.0", "Basic Auth", "API Key Auth", "SAML 2.0"],
+      "correct": "OAuth 2.0"
+    },
+    {
+      "question": "Which HTTP header prevents Cross-Origin Resource Sharing (CORS) security errors when calling APIs from browser apps?",
+      "options": ["Access-Control-Allow-Origin", "X-Frame-Options", "Content-Security-Policy", "Strict-Transport-Security"],
+      "correct": "Access-Control-Allow-Origin"
+    },
+    {
+      "question": "What HTTP method should be used for partial modifications of an existing resource without resending unchanged fields?",
+      "options": ["PATCH", "PUT", "POST", "UPDATE"],
+      "correct": "PATCH"
+    },
+    {
+      "question": "What HTTP response status code indicates that the client has sent too many requests in a given amount of time (Rate Limited)?",
+      "options": ["429 Too Many Requests", "408 Request Timeout", "503 Service Unavailable", "400 Bad Request"],
+      "correct": "429 Too Many Requests"
+    }
+  ],
+  "js_prog": [
+    {
+      "question": "What is the output of console.log(typeof NaN) in JavaScript?",
+      "options": ["\"number\"", "\"nan\"", "\"undefined\"", "\"object\""],
+      "correct": "\"number\""
+    },
+    {
+      "question": "Which feature introduced in ES6 allows extracting values from arrays or objects into distinct variables concisely?",
+      "options": ["Destructuring assignment", "Spread operator", "Template literals", "Arrow functions"],
+      "correct": "Destructuring assignment"
+    },
+    {
+      "question": "How does JavaScript handle asynchronous code execution non-blockingly?",
+      "options": ["Via an Event Loop with a Call Stack and Task Queues", "Using multi-threaded CPU thread pools natively", "By compiling code to WebAssembly at runtime", "Through synchronous blocking interrupt handlers"],
+      "correct": "Via an Event Loop with a Call Stack and Task Queues"
+    },
+    {
+      "question": "What will 0 == '0' and 0 === '0' evaluate to in JavaScript?",
+      "options": ["true and false", "true and true", "false and false", "false and true"],
+      "correct": "true and false"
+    },
+    {
+      "question": "What object method returns a Promise that resolves when all input Promises in an array have resolved?",
+      "options": ["Promise.all()", "Promise.race()", "Promise.allSettled()", "Promise.any()"],
+      "correct": "Promise.all()"
+    },
+    {
+      "question": "What is a Closure in JavaScript programming?",
+      "options": ["A function bundled together with references to its surrounding lexical environment", "A method that private-locks object properties permanently", "A syntax error handling block using try/catch/finally", "A callback function passed into Array.map()"],
+      "correct": "A function bundled together with references to its surrounding lexical environment"
+    },
+    {
+      "question": "Which array method creates a new array populated with the results of calling a provided function on every element?",
+      "options": ["map()", "forEach()", "filter()", "reduce()"],
+      "correct": "map()"
+    },
+    {
+      "question": "What keyword is used to declare a block-scoped variable that cannot be reassigned after initialization?",
+      "options": ["const", "let", "var", "static"],
+      "correct": "const"
+    },
+    {
+      "question": "What happens during Hoisting in JavaScript execution context?",
+      "options": ["Variable and function declarations are moved to the top of their containing scope prior to execution", "DOM elements are loaded before inline script execution", "Memory garbage collection is triggered automatically", "Asynchronous promises are elevated to microtask queues"],
+      "correct": "Variable and function declarations are moved to the top of their containing scope prior to execution"
+    },
+    {
+      "question": "Which modern Web API enables offline capability and asset caching for Progressive Web Apps (PWAs)?",
+      "options": ["Service Workers", "WebSockets", "LocalStorage", "IndexedDB"],
+      "correct": "Service Workers"
+    }
+  ],
+  "git_vcs": [
+    {
+      "question": "Which Git command creates a local copy of a remote repository?",
+      "options": ["git clone", "git pull", "git fetch", "git fork"],
+      "correct": "git clone"
+    },
+    {
+      "question": "What does git rebase main do when executed on a feature branch?",
+      "options": ["Re-applies commits from the feature branch on top of the latest main branch commit", "Merges main into feature branch creating a merge commit", "Deletes the feature branch and switches to main", "Reverts all uncommitted local working tree changes"],
+      "correct": "Re-applies commits from the feature branch on top of the latest main branch commit"
+    },
+    {
+      "question": "Which command stages modified files to prepare them for the next commit?",
+      "options": ["git add", "git commit", "git push", "git status"],
+      "correct": "git add"
+    },
+    {
+      "question": "What is the purpose of the .gitignore file in a Git repository root?",
+      "options": ["To specify intentionally untracked files that Git should ignore", "To store SSH keys and remote repository access passwords", "To disable git commit hooks for automated CI pipelines", "To list branch protection rules for remote main branch"],
+      "correct": "To specify intentionally untracked files that Git should ignore"
+    },
+    {
+      "question": "What is the difference between git fetch and git pull?",
+      "options": ["git fetch downloads remote changes without merging; git pull fetches and automatically merges.", "git pull downloads changes without merging; git fetch automatically merges.", "git fetch works only on local branches; git pull works on remote branches.", "There is no difference between them."],
+      "correct": "git fetch downloads remote changes without merging; git pull fetches and automatically merges."
+    },
+    {
+      "question": "Which command temporarily shelves uncommitted local changes so you can work on a clean working directory?",
+      "options": ["git stash", "git reset", "git checkout", "git clean"],
+      "correct": "git stash"
+    },
+    {
+      "question": "How do you undo the last commit while keeping its changes staged in your local working directory?",
+      "options": ["git reset --soft HEAD~1", "git reset --hard HEAD~1", "git revert HEAD", "git checkout HEAD~1"],
+      "correct": "git reset --soft HEAD~1"
+    },
+    {
+      "question": "What command displays the commit history log with hashes, authors, and commit messages?",
+      "options": ["git log", "git status", "git diff", "git show"],
+      "correct": "git log"
+    },
+    {
+      "question": "Which command creates a new tag pointing to the current HEAD commit?",
+      "options": ["git tag -a v1.0.0 -m 'Release v1.0.0'", "git branch v1.0.0", "git checkout -b v1.0.0", "git release v1.0.0"],
+      "correct": "git tag -a v1.0.0 -m 'Release v1.0.0'"
+    },
+    {
+      "question": "What command resolves a detached HEAD state by creating and switching to a new branch at that commit?",
+      "options": ["git switch -c new-branch-name", "git merge detached", "git rebase HEAD", "git push origin HEAD"],
+      "correct": "git switch -c new-branch-name"
+    }
+  ],
+  "data_wrangling": [
+    {
+      "question": "In Pandas, which method is used to fill missing (NaN) values with a specified default value or strategy?",
+      "options": ["fillna()", "dropna()", "isna()", "replace()"],
+      "correct": "fillna()"
+    },
+    {
+      "question": "What Pandas function converts categorical variable columns into dummy / one-hot encoded indicator variables?",
+      "options": ["pd.get_dummies()", "pd.concat()", "pd.pivot_table()", "pd.factorize()"],
+      "correct": "pd.get_dummies()"
+    },
+    {
+      "question": "Which method transforms a wide-format DataFrame into a long-format DataFrame by unpivoting columns?",
+      "options": ["pd.melt()", "df.pivot()", "df.stack()", "df.groupby()"],
+      "correct": "pd.melt()"
+    },
+    {
+      "question": "How does df.drop_duplicates() in Pandas behave by default when duplicate rows exist?",
+      "options": ["Keeps the first occurrence and removes subsequent duplicate rows", "Removes all occurrences including the first one", "Keeps the last occurrence and removes prior duplicate rows", "Raises a DuplicateValueError exception"],
+      "correct": "Keeps the first occurrence and removes subsequent duplicate rows"
+    },
+    {
+      "question": "Which method allows applying a custom function to every element or row in a Pandas Series / DataFrame?",
+      "options": ["apply()", "map()", "transform()", "aggregate()"],
+      "correct": "apply()"
+    },
+    {
+      "question": "What is the main purpose of feature scaling (such as MinMax or Z-Score Standardization) before training ML models?",
+      "options": ["To bring features onto a uniform scale so distance-based algorithms are not dominated by large values", "To convert continuous numerical values into text labels", "To automatically remove missing null records from dataset", "To reduce dataset row count for faster iteration"],
+      "correct": "To bring features onto a uniform scale so distance-based algorithms are not dominated by large values"
+    },
+    {
+      "question": "Which Pandas function merges two DataFrames along a common key column, similar to SQL JOINs?",
+      "options": ["pd.merge()", "pd.concat()", "df.join()", "df.append()"],
+      "correct": "pd.merge()"
+    },
+    {
+      "question": "What index accessor in Pandas is used for integer-location based indexing?",
+      "options": ["iloc[]", "loc[]", "at[]", "iat[]"],
+      "correct": "iloc[]"
+    },
+    {
+      "question": "What does df.memory_usage(deep=True) calculate in Pandas?",
+      "options": ["The total memory footprint of the DataFrame in bytes, including object types", "The CPU usage percentage during computation", "The disk space used when saving to CSV", "The count of non-null elements in memory"],
+      "correct": "df.memory_usage(deep=True)"
+    },
+    {
+      "question": "Which outlier detection method removes values outside Q1 - 1.5*IQR and Q3 + 1.5*IQR?",
+      "options": ["Tukey's IQR Fences Method", "Z-Score Method", "Min-Max Clipping Method", "Mahalanobis Distance Method"],
+      "correct": "Tukey's IQR Fences Method"
+    }
+  ]
+}

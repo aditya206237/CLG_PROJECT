@@ -1,5 +1,5 @@
 """
-Academia-Industry Collaboration Portal (Ministry of Ayush / AIIA)
+Oppenheimer Skill Portal (Team Oppenheimer)
 Student Skill Assessment & Verification Questionnaire App with SQLite Storage
 """
 
@@ -19,19 +19,37 @@ from database import (
     get_all_students,
     get_student_skill_vector
 )
+from quiz_bank import get_question_for_skill, mark_question_used
+from login_ui import render_login_page, render_logout_button
+from theme import apply_theme
+
 
 # -----------------------------------------------------------------------------
 # 1. Page Configuration & Custom Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Assessment - AIIA Skill Portal",
+    page_title="Assessment - Oppenheimer Skill Portal",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
+# Apply global dark futuristic theme
+apply_theme()
+
+# Authentication Gate
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if not st.session_state.logged_in:
+    render_login_page()
+    st.stop()
+
+render_logout_button()
+
 # Initialize database tables at application startup
 init_db()
+
 
 # Custom CSS for rich aesthetics, card styling, and clean UI
 st.markdown(
@@ -46,34 +64,46 @@ st.markdown(
     
     /* Hero Banner */
     .hero-container {
-        background: linear-gradient(135deg, #0d3b66 0%, #001e3d 100%);
-        color: #ffffff;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--border-glow);
+        color: var(--text-primary);
         padding: 2rem 2.2rem;
         border-radius: 14px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hero-container:hover {
+        border-color: var(--border-glow-hover);
+        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2), inset 0 0 25px rgba(168, 85, 247, 0.12);
     }
     .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 2.2rem;
         font-weight: 800;
         margin: 0;
         letter-spacing: -0.5px;
+        color: var(--text-primary);
     }
     .hero-subtitle {
         font-size: 1.1rem;
-        color: #d0e1f9;
+        color: var(--text-muted);
         margin-top: 0.4rem;
         margin-bottom: 0.8rem;
         line-height: 1.5;
     }
     .badge-tag {
         display: inline-block;
-        background-color: #2a9d8f;
+        background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
         color: #ffffff;
         padding: 0.28rem 0.8rem;
         border-radius: 20px;
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 0.82rem;
         font-weight: 600;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
     }
 
     /* Stats Strip inside Hero */
@@ -82,57 +112,57 @@ st.markdown(
         gap: 1.5rem;
         margin-top: 1.2rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
     }
     .hero-stat-item {
         font-size: 0.88rem;
-        color: #e2e8f0;
+        color: var(--text-secondary);
         font-weight: 600;
     }
     .hero-stat-item span {
-        color: #38bdf8;
+        color: var(--accent-cyan);
         font-weight: 800;
     }
 
     /* Section Cards & Headers */
     .section-header {
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 1.25rem;
         font-weight: 700;
-        color: #0d3b66;
-        border-left: 4px solid #0d3b66;
+        color: var(--accent-cyan);
+        border-left: 4px solid var(--accent-cyan);
         padding-left: 10px;
         margin-top: 0.8rem;
         margin-bottom: 1.2rem;
     }
     .quiz-box {
-        background-color: #eef4fb;
-        border: 1px solid #b8d4f4;
+        background-color: rgba(30, 41, 59, 0.7);
+        border: 1px solid var(--border-glow);
         border-radius: 10px;
         padding: 1.2rem 1.5rem;
         margin-top: 1rem;
         margin-bottom: 1rem;
+        color: var(--text-primary);
+    }
+    .quiz-box h4 {
+        color: var(--accent-cyan) !important;
+    }
+    .quiz-box p {
+        color: var(--text-primary) !important;
     }
     
     /* Rating helper labels */
     .rating-legend {
-        font-size: 0.85rem;
-        color: #334155;
-        background-color: #f1f5f9;
-        border: 1px solid #cbd5e1;
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        background-color: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(148, 163, 184, 0.25);
         padding: 0.5rem 0.9rem;
         border-radius: 8px;
         margin-bottom: 1.2rem;
     }
-
-    /* Custom Button styling */
-    .stButton > button {
-        border-radius: 8px !important;
-        font-weight: 600 !important;
-        transition: all 0.2s ease-in-out !important;
-    }
-    .stButton > button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: 0 4px 12px rgba(13, 59, 102, 0.2) !important;
+    .rating-legend b {
+        color: var(--text-primary);
     }
     </style>
     """,
@@ -162,7 +192,7 @@ if "quiz_scores" not in st.session_state:
 # -----------------------------------------------------------------------------
 with st.sidebar:
     st.image("https://img.icons8.com/color/96/graduation-cap.png", width=70)
-    st.title("Ayush / AIIA Portal")
+    st.title("Oppenheimer Skill Portal")
     st.caption("Academia-Industry Skill Assessment & Gap Engine")
     st.markdown("---")
     
@@ -199,7 +229,7 @@ db_students = get_all_students()
 st.markdown(
     f"""
     <div class="hero-container">
-        <span class="badge-tag">SIH 2026 Project</span>
+        <span class="badge-tag">Team Oppenheimer</span>
         <h1 class="hero-title">Student Skill Assessment Questionnaire</h1>
         <p class="hero-subtitle">Evaluate your technical, domain, and soft skills with verification micro-quizzes and persistent database storage.</p>
         <div class="hero-stats-grid">
@@ -232,7 +262,7 @@ with st.form(key="assessment_form"):
                 "Full Student Name *",
                 value=st.session_state.student_name,
                 placeholder="e.g. Aarav Sharma",
-                help="Enter your name as registered in the AIIA portal."
+                help="Enter your full name for skill verification."
             )
         with col2:
             target_role_input = st.selectbox(
@@ -282,24 +312,20 @@ with st.form(key="assessment_form"):
                 )
                 st.divider()
             
-            # Technical Micro-Quiz Question
+            # Technical Micro-Quiz Question (Dynamic Rotation from quiz_bank)
+            tech_q_data = get_question_for_skill("py_prog")
             st.markdown(
-                """
+                f"""
                 <div class="quiz-box">
                     <h4 style="margin-top:0;">🛡️ Technical Verification Micro-Quiz</h4>
-                    <p><b>Question:</b> Which data structure operates on a <b>First In, First Out (FIFO)</b> principle?</p>
+                    <p><b>Question:</b> {tech_q_data['question']}</p>
                 </div>
                 """,
                 unsafe_allow_html=True
             )
             tech_quiz_ans = st.radio(
                 "Select your answer:",
-                options=[
-                    "Stack (LIFO)",
-                    "Queue (FIFO)",
-                    "Binary Search Tree",
-                    "Hash Table"
-                ],
+                options=tech_q_data["options"],
                 key="quiz_tech"
             )
 
@@ -320,24 +346,20 @@ with st.form(key="assessment_form"):
                 )
                 st.divider()
 
-            # Domain Micro-Quiz Question
+            # Domain Micro-Quiz Question (Dynamic Rotation from quiz_bank)
+            domain_q_data = get_question_for_skill("machine_learning")
             st.markdown(
-                """
+                f"""
                 <div class="quiz-box">
                     <h4 style="margin-top:0;">🛡️ Domain Verification Micro-Quiz</h4>
-                    <p><b>Question:</b> What does <b>overfitting</b> mean in Machine Learning / Data Analysis?</p>
+                    <p><b>Question:</b> {domain_q_data['question']}</p>
                 </div>
                 """,
                 unsafe_allow_html=True
             )
             domain_quiz_ans = st.radio(
                 "Select your answer:",
-                options=[
-                    "The model performs well on training data but poorly on unseen test data.",
-                    "The model is too simple to capture underlying patterns.",
-                    "The dataset contains duplicate records across features.",
-                    "The training process takes too long to converge."
-                ],
+                options=domain_q_data["options"],
                 key="quiz_domain"
             )
 
@@ -376,9 +398,13 @@ if submit_button:
             time.sleep(0.5)  # Subtle feedback delay
             
             # Check Quiz Correctness
-            tech_quiz_correct = (tech_quiz_ans == "Queue (FIFO)")
-            domain_quiz_correct = (domain_quiz_ans == "The model performs well on training data but poorly on unseen test data.")
+            tech_quiz_correct = (tech_quiz_ans == tech_q_data["correct"])
+            domain_quiz_correct = (domain_quiz_ans == domain_q_data["correct"])
             
+            # Mark served questions as used on actual form submission
+            mark_question_used(tech_q_data["skill_id"], tech_q_data["index"])
+            mark_question_used(domain_q_data["skill_id"], domain_q_data["index"])
+
             # Copy raw self-ratings into adjusted ratings vector
             adjusted_ratings = dict(ratings_input)
             

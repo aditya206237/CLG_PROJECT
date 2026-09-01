@@ -13,19 +13,32 @@ from typing import Dict, List, Any
 from load_taxonomy import get_all_skills
 from database import get_all_students, get_student_skill_vector, init_db
 from gap_analysis import build_vectors, compute_match_score, compute_skill_gaps
+from login_ui import render_login_page, render_logout_button
+from theme import apply_theme
 
 # -----------------------------------------------------------------------------
 # 1. Page Configuration & Custom Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Institution Cohort Dashboard",
+    page_title="Institution Dashboard - Oppenheimer Skill Portal",
     page_icon="🏛️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
+# Apply global dark futuristic theme
+apply_theme()
+
+# Authentication Gate
+if "logged_in" not in st.session_state or not st.session_state.logged_in:
+    render_login_page()
+    st.stop()
+
+render_logout_button()
+
 # Ensure DB tables exist
 init_db()
+
 
 # Custom CSS matching theme
 st.markdown(
@@ -37,40 +50,52 @@ st.markdown(
         max-width: 1150px;
     }
     .hero-container {
-        background: linear-gradient(135deg, #0d3b66 0%, #001e3d 100%);
-        color: #ffffff;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--border-glow);
+        color: var(--text-primary);
         padding: 1.8rem 2rem;
         border-radius: 12px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hero-container:hover {
+        border-color: var(--border-glow-hover);
+        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2);
     }
     .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 2rem;
         font-weight: 700;
         margin: 0;
+        color: var(--text-primary);
     }
     .hero-subtitle {
         font-size: 1.05rem;
-        color: #d0e1f9;
+        color: var(--text-muted);
         margin-top: 0.3rem;
         margin-bottom: 0.5rem;
     }
     .badge-tag {
         display: inline-block;
-        background-color: #2a9d8f;
+        background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
         color: #ffffff;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 0.8rem;
         font-weight: 600;
     }
     .chart-box {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
+        background: rgba(30, 41, 59, 0.7);
+        border: 1px solid var(--border-glow);
         border-radius: 10px;
         padding: 1.2rem;
         margin-bottom: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        color: var(--text-primary);
     }
     </style>
     """,
@@ -206,7 +231,11 @@ with col_c1:
             text="Affected Students"
         )
         fig_gaps.update_layout(
-            yaxis=dict(autorange="reversed"),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            font=dict(color='#f8fafc', family='Inter, sans-serif'),
+            xaxis=dict(gridcolor='rgba(148, 163, 184, 0.25)', tickfont=dict(color='#cbd5e1')),
+            yaxis=dict(autorange="reversed", gridcolor='rgba(148, 163, 184, 0.25)', tickfont=dict(color='#f8fafc')),
             height=400,
             margin=dict(l=20, r=20, t=40, b=20),
             coloraxis_showscale=False
@@ -232,6 +261,9 @@ with col_c2:
         color_discrete_sequence=px.colors.qualitative.Set2
     )
     fig_roles.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(color='#f8fafc', family='Inter, sans-serif'),
         height=400,
         margin=dict(l=20, r=20, t=40, b=20)
     )
@@ -253,3 +285,4 @@ st.dataframe(
     use_container_width=True,
     hide_index=True
 )
+

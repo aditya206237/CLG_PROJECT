@@ -1,5 +1,5 @@
 """
-Academia-Industry Collaboration Portal (Ministry of Ayush / AIIA)
+Oppenheimer Skill Portal (Team Oppenheimer)
 Unified Digital Student Portfolio & Verified Profile Page
 """
 
@@ -13,18 +13,32 @@ from database import get_all_students, get_student_skill_vector, get_student_res
 from gap_analysis import build_vectors, compute_match_score, compute_skill_gaps, get_top_gaps
 from recommend import get_recommendations_for_gaps
 from charts import create_radar_chart
+from pdf_export import generate_portfolio_pdf
+from login_ui import render_login_page, render_logout_button
+from theme import apply_theme
 
 # -----------------------------------------------------------------------------
 # 1. Page Configuration & Custom Styling
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="My Portfolio - Student Skill Credentials",
+    page_title="Portfolio - Oppenheimer Skill Portal",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
+# Apply global dark futuristic theme
+apply_theme()
+
+# Authentication Gate
+if "logged_in" not in st.session_state or not st.session_state.logged_in:
+    render_login_page()
+    st.stop()
+
+render_logout_button()
+
 init_db()
+
 
 # Custom CSS for executive portfolio styling
 st.markdown(
@@ -36,47 +50,64 @@ st.markdown(
         max-width: 1150px;
     }
     .profile-card {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        color: #ffffff;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--border-glow);
+        color: var(--text-primary);
         padding: 1.8rem 2rem;
         border-radius: 14px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .profile-card:hover {
+        border-color: var(--border-glow-hover);
+        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2);
     }
     .profile-name {
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 2.2rem;
         font-weight: 700;
         margin: 0;
         letter-spacing: -0.5px;
+        color: var(--text-primary);
     }
     .profile-role {
         font-size: 1.1rem;
-        color: #38bdf8;
+        color: var(--accent-cyan);
         font-weight: 600;
         margin-top: 0.2rem;
         margin-bottom: 0.8rem;
     }
     .verified-badge {
         display: inline-block;
-        background-color: #059669;
-        color: #ffffff;
+        background-color: rgba(5, 150, 105, 0.25);
+        border: 1px solid #10b981;
+        color: #34d399;
         padding: 3px 10px;
         border-radius: 12px;
         font-size: 0.78rem;
         font-weight: 600;
         margin-right: 6px;
     }
-    .score-badge-green { background-color: #10b981; color: white; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
-    .score-badge-amber { background-color: #f59e0b; color: white; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
-    .score-badge-red { background-color: #ef4444; color: white; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
+    .score-badge-green { background-color: rgba(16, 185, 129, 0.25); border: 1px solid #10b981; color: #34d399; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
+    .score-badge-amber { background-color: rgba(245, 158, 11, 0.25); border: 1px solid #f59e0b; color: #fbbf24; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
+    .score-badge-red { background-color: rgba(239, 68, 68, 0.25); border: 1px solid #ef4444; color: #f87171; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
 
     .portfolio-section-card {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
+        background: rgba(30, 41, 59, 0.7);
+        border: 1px solid var(--border-glow);
         border-radius: 10px;
         padding: 1.2rem;
         margin-bottom: 1rem;
         height: 100%;
+        color: var(--text-primary);
+        transition: all 0.25s ease !important;
+    }
+    .portfolio-section-card:hover {
+        border-color: var(--border-glow-hover);
+        transform: translateY(-2px);
     }
     </style>
     """,
@@ -93,8 +124,8 @@ if not all_students:
         st.markdown(
             """
             <div style="text-align:center; padding:2rem;">
-                <h2 style="color:#0d3b66; margin-bottom:0.5rem;">⚠️ No Student Portfolios Found</h2>
-                <p style="color:#475569; font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
+                <h2 style="color:var(--accent-cyan); margin-bottom:0.5rem;">⚠️ No Student Portfolios Found</h2>
+                <p style="color:var(--text-secondary); font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
                     There are currently no student records in the SQLite database (<code>portal.db</code>).
                     Please complete a skill assessment questionnaire to generate your verified digital portfolio.
                 </p>
@@ -173,12 +204,12 @@ with col_prof_left:
     st.markdown(
         f"""
         <div class="profile-card">
-            <span class="verified-badge">✓ AIIA Verified Student Profile</span>
-            <span style="font-size:0.8rem; color:#94a3b8;">ID: #{student_id}</span>
+            <span class="verified-badge">✓ Verified Student Profile</span>
+            <span style="font-size:0.8rem; color:var(--text-muted);">ID: #{student_id}</span>
             <h1 class="profile-name">{student_name}</h1>
             <div class="profile-role">🎯 Target Track: {target_role}</div>
-            <p style="font-size:0.85rem; color:#cbd5e1; margin-bottom:0;">
-                📅 Assessment Verified: {created_at} | 🏛️ Ministry of Ayush / AIIA Portal
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0;">
+                📅 Assessment Verified: {created_at} | 🏛️ Oppenheimer Skill Portal
             </p>
         </div>
         """,
@@ -205,36 +236,29 @@ with col_prof_right:
         st.metric("Actionable Deficits", f"{len(top_gaps)}")
 
 # -----------------------------------------------------------------------------
-# 4. Download Digital Portfolio (Markdown Export)
+# 4. Download Digital Portfolio (PDF Export)
 # -----------------------------------------------------------------------------
-def generate_portfolio_markdown() -> str:
-    md = f"# Digital Skill Portfolio — {student_name}\n"
-    md += f"**Target Career Track:** {target_role}\n"
-    md += f"**Student ID:** #{student_id}\n"
-    md += f"**Target Role Alignment Score:** {match_score}%\n\n"
-    md += "---\n\n"
-    md += "## 1. Verified Skill Vector\n"
-    for v in verified_skills_list:
-        stars = "★" * v['rating'] + "☆" * (5 - v['rating'])
-        md += f"- **{v['name']}** ({v['category']}): {v['rating']}/5 [{stars}]\n"
-    md += "\n## 2. Priority Skill Gap Deficits\n"
-    for g in top_gaps:
-        md += f"- **{g['skill_name']}**: Current {g['student_level']}/5 vs Required {g['required_level']}/5 (Deficit: -{g['gap']})\n"
-    md += "\n## 3. Recommended Industry Learning Pathways\n"
-    recs = get_recommendations_for_gaps(top_gaps, n_per_skill=2)
-    for sid, res_list in recs.items():
-        s_name = all_skills_map.get(sid, sid)
-        md += f"### Skill: {s_name}\n"
-        for r in res_list:
-            md += f"  - [{r['type'].upper()}] {r['title']} ({r['provider']}) — {r['duration']}\n"
-    md += "\n---\n*Generated via Ministry of Ayush / AIIA Academia-Industry Portal*\n"
-    return md
+student_info = {
+    "student_id": student_id,
+    "name": student_name,
+    "target_role": target_role,
+    "created_at": created_at
+}
+rec_data = get_recommendations_for_gaps(top_gaps, n_per_skill=2)
+pdf_bytes = generate_portfolio_pdf(
+    student_info=student_info,
+    match_score=match_score,
+    verified_skills=verified_skills_list,
+    top_gaps=top_gaps,
+    recommendations=rec_data
+)
+safe_student_name = student_name.lower().replace(" ", "_")
 
 st.download_button(
-    label="📥 Download Digital Portfolio (Markdown Summary)",
-    data=generate_portfolio_markdown(),
-    file_name=f"portfolio_student_{student_id}_{student_name.lower().replace(' ', '_')}.md",
-    mime="text/markdown",
+    label="📥 Download Digital Portfolio (PDF Summary)",
+    data=pdf_bytes,
+    file_name=f"{safe_student_name}_portfolio.pdf",
+    mime="application/pdf",
     type="secondary",
     use_container_width=False
 )
@@ -275,9 +299,9 @@ with tab_verified:
                     f"""
                     <div class="portfolio-section-card">
                         <span class="verified-badge">✓ Verified</span>
-                        <span style="font-size:0.75rem; color:#64748b; font-weight:bold;">{item['category']}</span>
-                        <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; font-size:1.1rem;">{item['name']}</h4>
-                        <div style="color:#f59e0b; font-size:1.1rem;">{stars_str} <span style="color:#475569; font-size:0.9rem;">({item['rating']}/5)</span></div>
+                        <span style="font-size:0.75rem; color:var(--text-muted); font-weight:bold;">{item['category']}</span>
+                        <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; font-size:1.1rem; color:var(--text-primary);">{item['name']}</h4>
+                        <div style="color:#f59e0b; font-size:1.1rem;">{stars_str} <span style="color:var(--text-secondary); font-size:0.9rem;">({item['rating']}/5)</span></div>
                     </div>
                     """,
                     unsafe_allow_html=True
@@ -327,8 +351,8 @@ with tab_certs:
             st.success("✓ Verified Credential")
     with cert_col2:
         with st.container(border=True):
-            st.markdown("🏅 **Ayush Health Analytics Industry Partner Badge**")
-            st.caption("Issuer: AIIA Industry Portal | Issued: February 2026 | ID: AIIA-HP-2026")
+            st.markdown("🏅 **Health Analytics Industry Partner Badge**")
+            st.caption("Issuer: Industry Portal | Issued: February 2026 | ID: IND-HP-2026")
             st.success("✓ Verified Credential")
 
     with st.container(border=True):
@@ -343,7 +367,7 @@ with tab_projects:
     proj_col1, proj_col2 = st.columns(2)
     with proj_col1:
         with st.container(border=True):
-            st.markdown("🚀 **Ayush Clinical Knowledge Graph Platform**")
+            st.markdown("🚀 **Clinical Knowledge Graph Platform**")
             st.write("Built an end-to-end Python pipeline to extract, structure, and visualize clinical research datasets.")
             st.caption("Technologies: Python, SQL, Graph DB, Streamlit")
     with proj_col2:
