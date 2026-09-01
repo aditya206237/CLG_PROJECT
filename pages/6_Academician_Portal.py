@@ -135,7 +135,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
 # 3. Section 1: Faculty Development Programs (FDPs)
 # -----------------------------------------------------------------------------
-st.markdown("<div class='section-title'>📚 1. Faculty Development Programs (FDPs)</div>", unsafe_allow_html=True)
+st.markdown("<div class='section-title'>1. Faculty Development Programs (FDPs)</div>", unsafe_allow_html=True)
 st.caption("National workshops and skill enhancement programs for educators in Ayush & Health Tech.")
 
 fdp_col1, fdp_col2 = st.columns(2)
@@ -147,8 +147,8 @@ with fdp_col1:
             <span class="acad-tag">NATIONAL FDP</span>
             <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; color:var(--text-dark); font-family:'Playfair Display', serif;">Artificial Intelligence & Machine Learning in Ayush Research</h4>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">
-                🏛️ <b>Organizing Body:</b> AIIA New Delhi & IIT Delhi<br>
-                📅 <b>Dates:</b> October 15–22, 2026 (1 Week Hybrid)
+                <b>Organizing Body:</b> AIIA New Delhi & IIT Delhi<br>
+                <b>Dates:</b> October 15–22, 2026 (1 Week Hybrid)
             </p>
             <p style="font-size:0.9rem; color:var(--text-dark);">
                 Hands-on training for faculty on applying machine learning, graph neural networks, and clinical statistics to Ayurvedic clinical trial datasets.
@@ -156,7 +156,7 @@ with fdp_col1:
             """,
             unsafe_allow_html=True
         )
-        st.button("📝 Register Interest for FDP", key="fdp_1")
+        st.button("Register Interest for FDP", key="fdp_1")
 
 with fdp_col2:
     with st.container(border=True):
@@ -165,8 +165,8 @@ with fdp_col2:
             <span class="acad-tag">PEDAGOGY WORKSHOP</span>
             <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; color:var(--text-dark); font-family:'Playfair Display', serif;">Modern Curricular Design & Industry Competency Alignment</h4>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">
-                🏛️ <b>Organizing Body:</b> Ministry of Ayush Academic Council<br>
-                📅 <b>Dates:</b> November 5–8, 2026 (Online)
+                <b>Organizing Body:</b> Ministry of Ayush Academic Council<br>
+                <b>Dates:</b> November 5–8, 2026 (Online)
             </p>
             <p style="font-size:0.9rem; color:var(--text-dark);">
                 Frameworks for integrating real-time industry skill gap metrics directly into undergraduate and postgraduate Ayurvedic curricula.
@@ -174,12 +174,12 @@ with fdp_col2:
             """,
             unsafe_allow_html=True
         )
-        st.button("📝 Register Interest for FDP", key="fdp_2")
+        st.button("Register Interest for FDP", key="fdp_2")
 
 # -----------------------------------------------------------------------------
 # 4. Section 2: Industrial Training Opportunities
 # -----------------------------------------------------------------------------
-st.markdown("<div class='section-title'>🏭 2. Industrial Training Opportunities</div>", unsafe_allow_html=True)
+st.markdown("<div class='section-title'>2. Industrial Training Opportunities</div>", unsafe_allow_html=True)
 st.caption("Faculty sabbatical immersion & industrial exposure programs in partner organizations.")
 
 ind_col1, ind_col2 = st.columns(2)
@@ -191,8 +191,8 @@ with ind_col1:
             <span class="acad-tag">SABBATICAL IMMERSION</span>
             <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; color:var(--text-dark); font-family:'Playfair Display', serif;">Herbal Standardisation & Quality Control Lab Immersion</h4>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">
-                🏛️ <b>Host Company:</b> Dabur Research & Development Center<br>
-                📅 <b>Duration:</b> 4 Weeks (On-Site, Ghaziabad)
+                <b>Host Organization:</b> Dabur Research & Development Center<br>
+                <b>Duration:</b> 4 Weeks (On-Site, Ghaziabad)
             </p>
             <p style="font-size:0.9rem; color:var(--text-dark);">
                 Faculty exposure to industrial mass-spectrometry, chromatographic profiling, and regulatory compliance standards for herbal products.
@@ -200,7 +200,7 @@ with ind_col1:
             """,
             unsafe_allow_html=True
         )
-        st.button("💼 Apply for Industrial Sabbatical", key="ind_1")
+        st.button("Apply for Industrial Sabbatical", key="ind_1")
 
 with ind_col2:
     with st.container(border=True):
@@ -209,8 +209,8 @@ with ind_col2:
             <span class="acad-tag">PHARMA ANALYTICS</span>
             <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; color:var(--text-dark); font-family:'Playfair Display', serif;">Healthcare Data Analytics & Cloud Infrastructure Training</h4>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">
-                🏛️ <b>Host Organization:</b> National Health Authority (NHA)<br>
-                📅 <b>Duration:</b> 2 Weeks (Hybrid)
+                <b>Host Organization:</b> National Health Authority (NHA)<br>
+                <b>Duration:</b> 2 Weeks (Hybrid)
             </p>
             <p style="font-size:0.9rem; color:var(--text-dark);">
                 Practical training on managing large-scale electronic health records (EHR) and Ayush digital health registry standards.
@@ -218,12 +218,12 @@ with ind_col2:
             """,
             unsafe_allow_html=True
         )
-        st.button("💼 Apply for Industrial Sabbatical", key="ind_2")
+        st.button("Apply for Industrial Sabbatical", key="ind_2")
 
 # -----------------------------------------------------------------------------
 # 5. Section 3: Consultancy Opportunities
 # -----------------------------------------------------------------------------
-st.markdown("<div class='section-title'>💼 3. Consultancy Opportunities</div>", unsafe_allow_html=True)
+st.markdown("<div class='section-title'>3. Consultancy Opportunities</div>", unsafe_allow_html=True)
 st.caption("Industry expert consultancies and advisory roles for institution faculty.")
 
 con_col1, con_col2 = st.columns(2)
@@ -235,8 +235,8 @@ with con_col1:
             <span class="acad-tag">EXPERT CONSULTANCY</span>
             <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; color:var(--text-dark); font-family:'Playfair Display', serif;">Ayurvedic Formulations Clinical Trial Protocol Auditor</h4>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">
-                🏛️ <b>Client Organization:</b> Himalaya Wellness Company<br>
-                📅 <b>Engagement:</b> 6 Months Advisory Role
+                <b>Client Organization:</b> Himalaya Wellness Company<br>
+                <b>Engagement:</b> 6 Months Advisory Role
             </p>
             <p style="font-size:0.9rem; color:var(--text-dark);">
                 Seeking senior faculty experts to review clinical trial protocol designs and validate observational trial methodologies for herbal formulations.
@@ -244,7 +244,7 @@ with con_col1:
             """,
             unsafe_allow_html=True
         )
-        st.button("🤝 Express Consultancy Interest", key="con_1")
+        st.button("Submit Consultancy Interest", key="con_1")
 
 with con_col2:
     with st.container(border=True):
@@ -253,8 +253,8 @@ with con_col2:
             <span class="acad-tag">TECH GOVERNANCE</span>
             <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; color:var(--text-dark); font-family:'Playfair Display', serif;">AYUSH Clinical Knowledge Graph Domain Expert</h4>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">
-                🏛️ <b>Client Organization:</b> HealthTech Innovations India<br>
-                📅 <b>Engagement:</b> 3 Months Project Consultancy
+                <b>Client Organization:</b> HealthTech Innovations India<br>
+                <b>Engagement:</b> 3 Months Project Consultancy
             </p>
             <p style="font-size:0.9rem; color:var(--text-dark);">
                 Consultancy role to supervise ontological mappings between classical Ayurvedic disease classifications and ICD-11 codes.
@@ -262,12 +262,12 @@ with con_col2:
             """,
             unsafe_allow_html=True
         )
-        st.button("🤝 Express Consultancy Interest", key="con_2")
+        st.button("Submit Consultancy Interest", key="con_2")
 
 # -----------------------------------------------------------------------------
 # 6. Section 4: Collaborative Research Projects
 # -----------------------------------------------------------------------------
-st.markdown("<div class='section-title'>🔬 4. Collaborative Research Projects</div>", unsafe_allow_html=True)
+st.markdown("<div class='section-title'>4. Collaborative Research Projects</div>", unsafe_allow_html=True)
 st.caption("Joint grant calls and academia-industry collaborative research ventures.")
 
 res_col1, res_col2 = st.columns(2)
@@ -279,8 +279,8 @@ with res_col1:
             <span class="acad-tag">JOINT GRANT PROJECT</span>
             <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; color:var(--text-dark); font-family:'Playfair Display', serif;">AI-Based Genomic & Metabolomic Analysis of Medicinal Plants</h4>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">
-                🏛️ <b>Partners:</b> AIIA New Delhi & CSIR-IGIB<br>
-                💰 <b>Funding Budget:</b> ₹45 Lakhs &nbsp;•&nbsp; ⏱️ <b>Duration:</b> 2 Years
+                <b>Partners:</b> AIIA New Delhi & CSIR-IGIB<br>
+                <b>Funding Budget:</b> ₹45 Lakhs &nbsp;•&nbsp; <b>Duration:</b> 2 Years
             </p>
             <p style="font-size:0.9rem; color:var(--text-dark);">
                 Collaborative research project to sequence high-altitude medicinal plant genomes and apply machine learning for biomarker identification.
@@ -288,7 +288,7 @@ with res_col1:
             """,
             unsafe_allow_html=True
         )
-        st.button("🔬 Submit Joint Proposal", key="res_1")
+        st.button("Submit Joint Proposal", key="res_1")
 
 with res_col2:
     with st.container(border=True):
@@ -297,8 +297,8 @@ with res_col2:
             <span class="acad-tag">R&D PARTNERSHIP</span>
             <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; color:var(--text-dark); font-family:'Playfair Display', serif;">IoT Sensors for Automated Herbal Extract Quality Monitoring</h4>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">
-                🏛️ <b>Partners:</b> CCRAS & Patanjali Research Foundation<br>
-                💰 <b>Funding Budget:</b> ₹30 Lakhs &nbsp;•&nbsp; ⏱️ <b>Duration:</b> 18 Months
+                <b>Partners:</b> CCRAS & Patanjali Research Foundation<br>
+                <b>Funding Budget:</b> ₹30 Lakhs &nbsp;•&nbsp; <b>Duration:</b> 18 Months
             </p>
             <p style="font-size:0.9rem; color:var(--text-dark);">
                 Development of smart micro-controller sensors and real-time dashboard monitoring systems for Ayurvedic pharmaceutical manufacturing units.
@@ -306,4 +306,4 @@ with res_col2:
             """,
             unsafe_allow_html=True
         )
-        st.button("🔬 Submit Joint Proposal", key="res_2")
+        st.button("Submit Joint Proposal", key="res_2")

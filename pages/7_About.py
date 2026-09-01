@@ -112,13 +112,13 @@ st.markdown(
 st.markdown(
     """
     <div style="background-color:var(--bg-card); border:1px solid var(--border-subtle); border-left:5px solid var(--accent-primary); border-radius:8px; padding:1.5rem; margin-bottom:1.8rem;">
-        <h3 style="margin-top:0; color:var(--text-dark); font-size:1.3rem;">🚀 Built by Team <em class="italic-emphasis">Oppenheimer</em></h3>
+        <h3 style="margin-top:0; color:var(--text-dark); font-size:1.3rem;">Developed by Team <em class="italic-emphasis">Oppenheimer</em></h3>
         <p style="color:var(--text-dark); font-size:1rem; line-height:1.6; margin-bottom:0.8rem;">
-            <b>Oppenheimer Skill Portal</b> is a comprehensive academia-industry skill assessment and placement alignment platform.
-            Our solution bridges the gap between academic education and real-world industry requirements by providing objective, multi-dimensional skill evaluation, conceptual quiz verification, and vector-based placement matching.
+            <b>Oppenheimer Skill Portal</b> is an academia-industry skill assessment and placement alignment platform.
+            Our solution bridges the gap between academic education and real-world industry requirements by providing objective, multi-dimensional skill evaluation, conceptual verification, and vector-based placement matching.
         </p>
         <p style="color:var(--text-muted); font-size:0.92rem; line-height:1.5; margin-bottom:0;">
-            Developed with a focus on mathematical rigor (Cosine Similarity vector engines), clean data persistence (SQLite), and intuitive visual feedback (interactive Plotly radar charts), the portal empowers students, educators, and hiring managers alike.
+            Engineered with a focus on mathematical rigor (Cosine Similarity vector engines), clean data persistence (SQLite), and intuitive visual feedback (interactive Plotly radar charts), the portal empowers students, educators, and hiring managers alike.
         </p>
     </div>
     """,
@@ -128,27 +128,27 @@ st.markdown(
 # -----------------------------------------------------------------------------
 # 4. Solution Strategy & "Our Approach"
 # -----------------------------------------------------------------------------
-st.markdown("### 💡 Our Approach: Skill-Assessment-First <em class='italic-emphasis'>Strategy</em>", unsafe_allow_html=True)
+st.markdown("### Methodology: Competency-First <em class='italic-emphasis'>Architecture</em>", unsafe_allow_html=True)
 
 st.markdown(
     """
-    To build a truly impactful **Academia-Industry Collaboration Portal**, we prioritized an 
+    To build an impactful **Academia-Industry Collaboration Portal**, we prioritized an 
     **objective, mathematical foundation** rather than generic keyword matching:
 
-    1. **Skill Taxonomy & Multi-Dimensional Vectors**:
+    1. **Standardized Skill Taxonomy & Multi-Dimensional Vectors**:
        We defined 26 granular skills across **Technical**, **Domain**, and **Soft** categories, 
        mapped to real-world target career track baselines (Data Science, Full-Stack Web, Digital Marketing).
 
-    2. **Verification Micro-Quizzes & Rating Calibration**:
+    2. **Verification Micro-Assessments & Rating Calibration**:
        Self-assessment scores can often be inflated. Our engine incorporates conceptual verification questions 
-       that automatically calibrate self-ratings to prevent false skill claims.
+       that automatically calibrate self-ratings to prevent unverified skill claims.
 
     3. **Cosine Similarity Vector Math Engine**:
        We evaluate candidate readiness using Cosine Similarity math:
        $$\\text{Cosine Similarity} = \\frac{\\mathbf{A} \\cdot \\mathbf{B}}{\\|\\mathbf{A}\\| \\|\\mathbf{B}\\|}$$
        This measures proportional skill balance rather than harsh distance penalties.
 
-    4. **End-to-End Persistence & Stakeholder Dashboards**:
+    4. **Persistent Relational Layer & Stakeholder Dashboards**:
        All assessments persist in a local SQLite database (`portal.db`), powering real-time student portfolios, 
        candidate-opportunity matching, and cohort-wide institutional analytics.
     """
@@ -159,13 +159,13 @@ st.markdown("---")
 # -----------------------------------------------------------------------------
 # 5. Feature Implementation & Scope Matrix
 # -----------------------------------------------------------------------------
-st.markdown("### 🗺️ Feature Scope & Roadmap <em class='italic-emphasis'>Matrix</em>", unsafe_allow_html=True)
+st.markdown("### Feature Capability & <em class='italic-emphasis'>Operational Scope</em>", unsafe_allow_html=True)
 
 matrix_col1, matrix_col2 = st.columns(2)
 
 with matrix_col1:
     with st.container(border=True):
-        st.markdown("#### ✅ Working Production Features")
+        st.markdown("#### Verified Core Modules (Operational)")
         st.markdown(
             """
             - **Student Skill Assessment Questionnaire**: Interactive sliders and category tabs.
@@ -181,7 +181,7 @@ with matrix_col1:
 
 with matrix_col2:
     with st.container(border=True):
-        st.markdown("#### 🔍 Planned Roadmap Features (Preview Mode)")
+        st.markdown("#### Planned Roadmap Features (Demonstration Mode)")
         st.markdown(
             """
             - **Academician Collaboration Portal**: FDP registration, sabbatical applications, consultancy calls.
@@ -196,7 +196,7 @@ st.markdown("---")
 # -----------------------------------------------------------------------------
 # 6. Technology Stack Showcase
 # -----------------------------------------------------------------------------
-st.markdown("### 🛠️ Technology <em class='italic-emphasis'>Stack Showcase</em>", unsafe_allow_html=True)
+st.markdown("### Core Architecture & <em class='italic-emphasis'>Technology Stack</em>", unsafe_allow_html=True)
 
 t_col1, t_col2 = st.columns(2)
 
@@ -204,15 +204,15 @@ with t_col1:
     st.markdown(
         """
         <div class="tech-card">
-            <b>🐍 Python 3.10+</b><br>
+            <b>Python 3.10+ Analytics Core</b><br>
             <span style="font-size:0.88rem; color:var(--text-muted);">Core programming language powering data pipelines, taxonomy loaders, and vector engines.</span>
         </div>
         <div class="tech-card">
-            <b>👑 Streamlit Framework</b><br>
+            <b>Streamlit Enterprise UI</b><br>
             <span style="font-size:0.88rem; color:var(--text-muted);">Multi-page web application architecture, session state management, and custom CSS styling.</span>
         </div>
         <div class="tech-card">
-            <b>🗄️ SQLite 3</b><br>
+            <b>SQLite 3 Relational Database</b><br>
             <span style="font-size:0.88rem; color:var(--text-muted);">Zero-configuration relational database engine providing persistent storage for student profiles and skill vectors.</span>
         </div>
         """,
@@ -223,15 +223,15 @@ with t_col2:
     st.markdown(
         """
         <div class="tech-card">
-            <b>📐 Scikit-Learn & NumPy</b><br>
+            <b>Scikit-Learn & NumPy Vector Engine</b><br>
             <span style="font-size:0.88rem; color:var(--text-muted);">Vector transformation and high-performance Cosine Similarity mathematical computations.</span>
         </div>
         <div class="tech-card">
-            <b>📊 Plotly Express & Graph Objects</b><br>
+            <b>Plotly Visual Intelligence</b><br>
             <span style="font-size:0.88rem; color:var(--text-muted);">Interactive, high-definition Scatterpolar radar charts and cohort analytics visualizers.</span>
         </div>
         <div class="tech-card">
-            <b>🐼 Pandas & fpdf2</b><br>
+            <b>Pandas & FPDF2 Reporting Engine</b><br>
             <span style="font-size:0.88rem; color:var(--text-muted);">Data manipulation, structured DataFrame rendering, and PDF portfolio generation.</span>
         </div>
         """,

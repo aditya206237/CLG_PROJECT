@@ -162,7 +162,7 @@ top_deficit_skill = skill_gap_counts.most_common(1)[0][0] if skill_gap_counts el
 
 # Sidebar Quick View
 with st.sidebar:
-    st.header("🏛️ Cohort Summary")
+    st.header("Cohort Summary")
     st.markdown(f"**Total Assessed Students:** `{len(all_students)}`")
     st.markdown(f"**Cohort Avg Alignment:** `{avg_cohort_match}%`")
     st.markdown(f"**Active Career Tracks:** `{len(role_counts)}`")
@@ -228,11 +228,11 @@ st.markdown("---")
 col_c1, col_c2 = st.columns([1.6, 1])
 
 with col_c1:
-    st.subheader("📊 Most Common Skill Deficits Across All Students")
+    st.markdown("#### Primary Competency Deficits Across Cohort")
     st.caption("Aggregated count of students experiencing actionable skill deficits per competence.")
 
     if not skill_gap_counts:
-        st.success("🎉 All assessed students currently meet or exceed their target role requirements!")
+        st.success("All assessed students currently meet or exceed their target role requirements.")
     else:
         df_gaps = pd.DataFrame([
             {"Skill Name": k, "Affected Students": v, "Total Deficit Volume": skill_gap_magnitudes[k]}
@@ -263,7 +263,7 @@ with col_c1:
         st.plotly_chart(fig_gaps, use_container_width=True)
 
 with col_c2:
-    st.subheader("🎯 Target Role Track Breakdown")
+    st.markdown("#### Career Track Distribution")
     st.caption("Distribution of students across target industry career tracks.")
 
     df_roles = pd.DataFrame([
@@ -292,7 +292,7 @@ with col_c2:
 # 6. Interactive Student Records Table
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.markdown("### 📋 Student Assessment Roster & <em class='italic-emphasis'>Readiness Scores</em>", unsafe_allow_html=True)
+st.markdown("### Student Assessment Roster & <em class='italic-emphasis'>Readiness Index</em>", unsafe_allow_html=True)
 st.caption("Complete table of student assessments fetched from `portal.db`. Click table headers to sort.")
 
 df_students = pd.DataFrame(student_metrics_list)

@@ -225,13 +225,13 @@ st.markdown("---")
 # -----------------------------------------------------------------------------
 # 5. Plotly Radar Chart Generation Wrapped in Dark Panel
 # -----------------------------------------------------------------------------
-st.subheader("🕸️ Multi-Dimensional Skill Radar Vector")
+st.markdown("### Multi-Dimensional Competency <em class='italic-emphasis'>Radar Vector</em>", unsafe_allow_html=True)
 
 st.info(
-    f"💡 **How to Read This Radar Chart:**\n\n"
-    f"• **Mint Line (Verified Skills)**: Represents {student_name}'s current proficiency ratings across target competencies.\n"
-    f"• **Cream Line (Role Benchmark)**: Represents the required industry standard vector for **{target_role}**.\n"
-    f"• **Gap Visualization**: Any area where the Cream boundary extends beyond the Mint shape highlights an actionable skill gap."
+    f"**Interpretation Guide:**\n\n"
+    f"• **Mint Vector (Verified Profile)**: Represents {student_name}'s validated proficiency scores across target competencies.\n"
+    f"• **Cream Vector (Industry Baseline)**: Represents the benchmark standard required for **{target_role}**.\n"
+    f"• **Gap Identification**: Any region where the Industry Baseline exceeds the verified score highlights an actionable development area."
 )
 
 fig = create_radar_chart(student_vector, role_reqs, target_role, student_name)
@@ -241,10 +241,10 @@ st.plotly_chart(fig, use_container_width=True)
 # 6. Ranked Skill Gap Table & Priority Insights with Gold Badges
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.markdown("### 🔥 Top Actionable Skill Deficits & <em class='italic-emphasis'>Target Priorities</em>", unsafe_allow_html=True)
+st.markdown("### Priority Skill Deficits & <em class='italic-emphasis'>Target Priorities</em>", unsafe_allow_html=True)
 
 if not top_gaps:
-    st.success(f"🎉 Fantastic work! {student_name} meets or exceeds all required skill levels for **{target_role}**.")
+    st.success(f"Candidate {student_name} meets or exceeds all required proficiency standards for **{target_role}**.")
 else:
     col_t1, col_t2 = st.columns([1.8, 1])
 
@@ -273,13 +273,13 @@ else:
         )
 
     with col_t2:
-        st.markdown("**🎯 Immediate Recommendation Targets:**")
+        st.markdown("**Immediate Priority Targets:**")
         for idx, gap in enumerate(top_gaps, 1):
             cat = skill_cat_map.get(gap["skill_id"], "DOMAIN")
             gap_val = gap["gap"]
             is_high_demand = (gap_val >= 3)
             
-            badge_html = f'<span class="demand-badge-gold">⚡ HIGH DEMAND GAP</span>' if is_high_demand else f'<span class="demand-badge-neutral">STANDARD GAP</span>'
+            badge_html = f'<span class="demand-badge-gold">HIGH DEMAND GAP</span>' if is_high_demand else f'<span class="demand-badge-neutral">STANDARD GAP</span>'
             
             st.markdown(
                 f"""
@@ -301,11 +301,10 @@ else:
 # 7. Recommended Next Steps & Industry Product Cards
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.markdown("### 🎓 Recommended Next Steps & <em class='italic-emphasis'>Industry Partner Programs</em>", unsafe_allow_html=True)
+st.markdown("### Recommended Learning Pathways & <em class='italic-emphasis'>Partner Programs</em>", unsafe_allow_html=True)
 
 st.caption(
-    "💡 **Academia-Industry Collaboration Hub:** Recommendations combine open learning platforms "
-    "and specialized Industry Partner Programs tailored for career development."
+    "Curated development programs mapped directly to address priority competency deficits."
 )
 
 if top_gaps:
@@ -317,7 +316,7 @@ if top_gaps:
         cat = skill_cat_map.get(sid, "DOMAIN")
 
         with st.expander(
-            f"📌 Priority #{idx} Deficit: {gap['skill_name']} ({cat}) — Gap: -{gap['gap']} levels "
+            f"Priority #{idx} Deficit: {gap['skill_name']} ({cat}) — Gap: -{gap['gap']} levels "
             f"(Current: {gap['student_level']}/5 vs Target: {gap['required_level']}/5)",
             expanded=(idx <= 2)
         ):
@@ -335,14 +334,14 @@ if top_gaps:
                                 </span>
                                 <h4 style="margin-top:0.4rem; margin-bottom:0.3rem; font-size:1.05rem; color:var(--text-dark);">{res['title']}</h4>
                                 <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.8rem; line-height:1.4;">
-                                    🏛️ <b>Provider:</b> {res['provider']}<br>
-                                    ⏱️ <b>Duration:</b> {res['duration']}
+                                    <b>Institution:</b> {res['provider']}<br>
+                                    <b>Duration:</b> {res['duration']}
                                 </p>
                                 """,
                                 unsafe_allow_html=True
                             )
                             st.link_button(
-                                "🚀 View Program / Enroll",
+                                "View Program Details",
                                 url=res.get("url", "#"),
                                 use_container_width=True
                             )

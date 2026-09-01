@@ -247,7 +247,7 @@ pdf_bytes = generate_portfolio_pdf(
 safe_student_name = student_name.lower().replace(" ", "_")
 
 st.download_button(
-    label="📥 Download Digital Portfolio (PDF Summary)",
+    label="Download Verified Portfolio (PDF)",
     data=pdf_bytes,
     file_name=f"{safe_student_name}_portfolio.pdf",
     mime="application/pdf",
@@ -261,11 +261,11 @@ st.markdown("---")
 # 5. Multi-Tab Portfolio Content
 # -----------------------------------------------------------------------------
 tab_radar, tab_verified, tab_progress, tab_certs, tab_projects = st.tabs([
-    "🕸️ Skill Radar Vector",
-    f"✅ Verified Skills ({len(verified_skills_list)})",
-    f"🚀 Skills in Progress ({len(top_gaps)})",
-    "📜 Certifications & Badges",
-    "💻 Featured Projects"
+    "Competency Radar",
+    f"Verified Skills ({len(verified_skills_list)})",
+    f"Active Pathways ({len(top_gaps)})",
+    "Credentials & Badges",
+    "Applied Projects"
 ])
 
 # --- TAB 1: RADAR CHART ---
@@ -276,7 +276,7 @@ with tab_radar:
 
 # --- TAB 2: VERIFIED SKILLS ---
 with tab_verified:
-    st.markdown("### ✅ Verified Core <em class='italic-emphasis'>Competencies</em>", unsafe_allow_html=True)
+    st.markdown("### Verified Core <em class='italic-emphasis'>Competencies</em>", unsafe_allow_html=True)
     st.caption("Skills verified via self-assessment and objective micro-quiz conceptual checks.")
     
     if not verified_skills_list:
@@ -302,11 +302,11 @@ with tab_verified:
 
 # --- TAB 3: SKILLS IN PROGRESS & PATHWAYS ---
 with tab_progress:
-    st.markdown("### 🚀 Active Learning <em class='italic-emphasis'>Pathways</em> & Gap Recommendations", unsafe_allow_html=True)
+    st.markdown("### Active Learning <em class='italic-emphasis'>Pathways</em> & Recommendations", unsafe_allow_html=True)
     st.caption("Targeted learning resources mapped directly to your largest role deficits.")
     
     if not top_gaps:
-        st.success("🎉 No active skill gaps! You fully meet all requirements for this role.")
+        st.success("No active skill gaps. Candidate fully meets all benchmark requirements for this track.")
     else:
         gap_recs = rec_data
         for idx, gap in enumerate(top_gaps, 1):
@@ -330,44 +330,44 @@ with tab_progress:
                     with r_col:
                         with st.container(border=True):
                             st.markdown(f"**[{res['type'].upper()}] {res['title']}**")
-                            st.caption(f"🏛️ Provider: {res['provider']} | ⏱️ {res['duration']}")
-                            st.link_button("🚀 View Program", url=res.get("url", "#"), use_container_width=True)
+                            st.caption(f"Institution: {res['provider']} | Duration: {res['duration']}")
+                            st.link_button("View Program", url=res.get("url", "#"), use_container_width=True)
             st.divider()
 
 # --- TAB 4: CERTIFICATIONS & ACHIEVEMENTS ---
 with tab_certs:
-    st.markdown("### 📜 Industry Certifications & <em class='italic-emphasis'>Academic Badges</em>", unsafe_allow_html=True)
+    st.markdown("### Verified Credentials & <em class='italic-emphasis'>Certifications</em>", unsafe_allow_html=True)
     st.caption("Verified credentials issued by academic institutions and industry partner organizations.")
     
     cert_col1, cert_col2 = st.columns(2)
     with cert_col1:
         with st.container(border=True):
             st.markdown("<span class='verified-badge-gold'>✓ VERIFIED</span>", unsafe_allow_html=True)
-            st.markdown("🎖️ **Python for Data Science & AI Certification**")
-            st.caption("Issuer: NPTEL / IIT Madras | Issued: January 2026 | ID: NPTEL-PY-8849")
+            st.markdown("**Python for Data Science & AI Certification**")
+            st.caption("Issuer: NPTEL / IIT Madras | Issued: January 2026 | Credential ID: NPTEL-PY-8849")
     with cert_col2:
         with st.container(border=True):
             st.markdown("<span class='verified-badge-gold'>✓ VERIFIED</span>", unsafe_allow_html=True)
-            st.markdown("🏅 **Health Analytics Industry Partner Badge**")
-            st.caption("Issuer: Industry Portal | Issued: February 2026 | ID: IND-HP-2026")
+            st.markdown("**Health Analytics Industry Partner Badge**")
+            st.caption("Issuer: Industry Portal | Issued: February 2026 | Credential ID: IND-HP-2026")
 
     with st.container(border=True):
-        st.markdown("📂 **Upload Additional Certificate (Demo Placeholder)**")
+        st.markdown("**Upload Additional Certificate**")
         st.file_uploader("Upload Certificate PDF/Image", type=["pdf", "png", "jpg"], key="cert_uploader")
 
 # --- TAB 5: FEATURED PROJECTS ---
 with tab_projects:
-    st.markdown("### 💻 Featured Projects & <em class='italic-emphasis'>Capstone Work</em>", unsafe_allow_html=True)
-    st.caption("Applied projects demonstrating technical and domain skills in real-world scenarios.")
+    st.markdown("### Featured Projects & <em class='italic-emphasis'>Applied Work</em>", unsafe_allow_html=True)
+    st.caption("Applied projects demonstrating technical and domain competencies in real-world scenarios.")
 
     proj_col1, proj_col2 = st.columns(2)
     with proj_col1:
         with st.container(border=True):
-            st.markdown("🚀 **Clinical Knowledge Graph Platform**")
+            st.markdown("**Clinical Knowledge Graph Platform**")
             st.write("Built an end-to-end Python pipeline to extract, structure, and visualize clinical research datasets.")
             st.caption("Technologies: Python, SQL, Graph DB, Streamlit")
     with proj_col2:
         with st.container(border=True):
-            st.markdown("📊 **Student Skill Gap & Alignment Predictor**")
+            st.markdown("**Student Skill Gap & Alignment Predictor**")
             st.write("Developed a vector math engine powered by Cosine Similarity to evaluate candidate readiness for industry roles.")
             st.caption("Technologies: Streamlit, NumPy, Scikit-Learn, Plotly, SQLite")

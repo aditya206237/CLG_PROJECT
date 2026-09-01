@@ -98,7 +98,7 @@ def render_login_page() -> None:
         )
 
         with st.container(border=True):
-            tab_login, tab_signup = st.tabs(["🔑 Log In", "✨ Create Account"])
+            tab_login, tab_signup = st.tabs(["Sign In", "Create Account"])
 
             # --- TAB 1: LOG IN ---
             with tab_login:
@@ -119,24 +119,24 @@ def render_login_page() -> None:
                     )
                     
                     login_submitted = st.form_submit_button(
-                        label="Log In to Portal",
+                        label="Sign In to Portal",
                         type="primary",
                         use_container_width=True
                     )
 
                     if login_submitted:
                         if not login_username.strip() or not login_password:
-                            st.error("⚠️ Please fill in both Username and Password.")
+                            st.error("Please fill in both Username and Password.")
                         else:
                             user_data = verify_user(login_username, login_password)
                             if user_data:
                                 st.session_state.logged_in = True
                                 st.session_state.user = user_data
                                 st.session_state.student_name = user_data["full_name"]
-                                st.success(f"✅ Welcome back, {user_data['full_name']}!")
+                                st.success(f"Welcome back, {user_data['full_name']}.")
                                 st.rerun()
                             else:
-                                st.error("❌ Invalid username or password. Please try again.")
+                                st.error("Invalid username or password. Please try again.")
 
             # --- TAB 2: CREATE ACCOUNT ---
             with tab_signup:
@@ -174,14 +174,18 @@ def render_login_page() -> None:
                     )
 
                     signup_submitted = st.form_submit_button(
-                        label="Create Account & Register",
+                        label="Create Account Profile",
                         type="primary",
                         use_container_width=True
                     )
 
                     if signup_submitted:
-                        if signup_password != signup_confirm:
-                            st.error("⚠️ Passwords do not match. Please re-enter passwords.")
+                        if not signup_fullname.strip() or not signup_username.strip() or not signup_password:
+                            st.error("Please fill in all required registration fields.")
+                        elif len(signup_password) < 6:
+                            st.error("Password must be at least 6 characters in length.")
+                        elif signup_password != signup_confirm:
+                            st.error("Passwords do not match. Please re-enter passwords.")
                         else:
                             success, msg = register_user(
                                 username=signup_username,
@@ -190,10 +194,10 @@ def render_login_page() -> None:
                                 role=signup_role
                             )
                             if success:
-                                st.success(f"✅ {msg}")
-                                st.info("👉 You can now switch to the **Log In** tab above to access your account.")
+                                st.success(f"{msg}")
+                                st.info("You can now switch to the **Sign In** tab above to access your account.")
                             else:
-                                st.error(f"❌ {msg}")
+                                st.error(f"{msg}")
 
 
 def render_logout_button() -> None:
@@ -224,7 +228,7 @@ def render_logout_button() -> None:
                 """,
                 unsafe_allow_html=True
             )
-            if st.button("🔒 Log Out", key="sidebar_logout_btn", use_container_width=True):
+            if st.button("Sign Out", key="sidebar_logout_btn", use_container_width=True):
                 st.session_state.logged_in = False
                 st.session_state.user = None
                 st.session_state.submitted = False

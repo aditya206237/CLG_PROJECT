@@ -168,11 +168,11 @@ st.markdown(
 st.markdown(
     """
     <div class="problem-box" style="background-color:var(--bg-card-light); border:1px solid var(--border-subtle); border-left:4px solid var(--accent-primary); border-radius:8px; padding:1.4rem 1.6rem; margin-bottom:1.5rem;">
-        <h3 style="margin-top:0; color:var(--text-dark); font-size:1.3rem;">🚀 Platform Mission & <em class="italic-emphasis">Overview</em></h3>
+        <h3 style="margin-top:0; color:var(--text-dark); font-size:1.3rem;">Platform Mission & <em class="italic-emphasis">Architecture Overview</em></h3>
         <p style="margin-bottom:0.5rem; color:var(--text-dark); font-size:0.98rem; line-height:1.5;">
-            <b style="color:var(--accent-primary);">Built By:</b> Team Oppenheimer &nbsp;|&nbsp; 
-            <b style="color:var(--accent-primary);">Focus:</b> Skill Verification & Placement Alignment &nbsp;|&nbsp; 
-            <b style="color:var(--accent-primary);">Engine:</b> Cosine Similarity Vector Math
+            <b style="color:var(--accent-primary);">Developed By:</b> Team Oppenheimer &nbsp;|&nbsp; 
+            <b style="color:var(--accent-primary);">Scope:</b> Competency Verification & Placement Alignment &nbsp;|&nbsp; 
+            <b style="color:var(--accent-primary);">Engine:</b> Cosine Similarity Vector Mathematics
         </p>
         <p style="margin-bottom:0; color:var(--text-muted); font-size:0.93rem; line-height:1.6;">
             Traditional education curricula often lack real-time visibility into evolving industry demands. 
@@ -207,7 +207,7 @@ with col_s1:
     st.markdown(
         f"""
         <div class="metric-card-box" style="text-align:center; padding:1.1rem !important;">
-            <div class="mono-label" style="color:var(--text-muted);">SKILLS TRACKED</div>
+            <div class="mono-label" style="color:var(--text-muted);">SKILLS CATALOG</div>
             <div style="font-family:'JetBrains Mono', monospace; color:var(--accent-primary); font-weight:700; font-size:2.2rem; margin-top:0.3rem;">{len(all_skills)}</div>
         </div>
         """,
@@ -229,7 +229,7 @@ with col_s3:
     st.markdown(
         f"""
         <div class="metric-card-box" style="text-align:center; padding:1.1rem !important;">
-            <div class="mono-label" style="color:var(--text-muted);">STUDENTS ASSESSED</div>
+            <div class="mono-label" style="color:var(--text-muted);">ASSESSED PROFILES</div>
             <div style="font-family:'JetBrains Mono', monospace; color:var(--accent-primary); font-weight:700; font-size:2.2rem; margin-top:0.3rem;">{len(all_students)}</div>
         </div>
         """,
@@ -240,7 +240,7 @@ with col_s4:
     st.markdown(
         f"""
         <div class="metric-card-box" style="text-align:center; padding:1.1rem !important;">
-            <div class="mono-label" style="color:var(--text-muted);">INDUSTRY LISTINGS</div>
+            <div class="mono-label" style="color:var(--text-muted);">OPPORTUNITIES</div>
             <div style="font-family:'JetBrains Mono', monospace; color:var(--accent-primary); font-weight:700; font-size:2.2rem; margin-top:0.3rem;">{opp_count}</div>
         </div>
         """,
@@ -252,7 +252,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
 # 5. Stakeholder Portals Showcase
 # -----------------------------------------------------------------------------
-st.markdown("### 👥 Stakeholder Portals & <em class='italic-emphasis'>Capability Overview</em>", unsafe_allow_html=True)
+st.markdown("### Stakeholder Portals & <em class='italic-emphasis'>Capability Overview</em>", unsafe_allow_html=True)
 st.caption("Select a portal module below to navigate directly to its workspace.")
 
 card_col1, card_col2 = st.columns(2)
@@ -262,22 +262,22 @@ with card_col1:
         st.markdown(
             """
             <span class="scope-badge-live">✓ FULLY FUNCTIONAL CORE</span>
-            <div class="role-card-title">🎓 Student Assessment & Portfolio</div>
+            <div class="role-card-title">Student Competency Assessment & Portfolio</div>
             <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.5;">
-                Students evaluate technical, domain, and soft skills, pass verification quizzes, view Plotly radar gap 
+                Students evaluate technical, domain, and soft skills, pass verification checks, view Plotly radar gap 
                 visualizations against career baselines, and download verified digital portfolios.
             </p>
             """,
             unsafe_allow_html=True
         )
-        st.page_link("app.py", label="🚀 Launch Skill Assessment Questionnaire", icon="📝", use_container_width=True)
+        st.page_link("app.py", label="Launch Competency Assessment", icon="📝", use_container_width=True)
 
 with card_col2:
     with st.container(border=True):
         st.markdown(
             """
             <span class="scope-badge-live">✓ FULLY FUNCTIONAL ENGINE</span>
-            <div class="role-card-title">💼 Industry Opportunities & Matching</div>
+            <div class="role-card-title">Industry Opportunities & Placement Matching</div>
             <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.5;">
                 Industry partners post internships and job opportunities. Candidates are automatically matched using 
                 Cosine Similarity vector math based on their verified skill profiles.
@@ -285,7 +285,7 @@ with card_col2:
             """,
             unsafe_allow_html=True
         )
-        st.page_link("pages/4_Industry_Opportunities.py", label="💼 Explore Industry Opportunities", icon="💼", use_container_width=True)
+        st.page_link("pages/4_Industry_Opportunities.py", label="Explore Industry Opportunities", icon="💼", use_container_width=True)
 
 card_col3, card_col4 = st.columns(2)
 
@@ -294,7 +294,7 @@ with card_col3:
         st.markdown(
             """
             <span class="scope-badge-live">✓ COHORT ANALYTICS</span>
-            <div class="role-card-title">🏛️ Institution Dashboard</div>
+            <div class="role-card-title">Institution Cohort Analytics & Insights</div>
             <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.5;">
                 Academic leaders and department heads monitor cohort-wide readiness, aggregate skill deficits across 
                 all assessed students, and track role distribution metrics.
@@ -302,14 +302,14 @@ with card_col3:
             """,
             unsafe_allow_html=True
         )
-        st.page_link("pages/5_Institution_Dashboard.py", label="📊 View Institution Analytics", icon="📊", use_container_width=True)
+        st.page_link("pages/5_Institution_Dashboard.py", label="Open Institution Analytics", icon="📊", use_container_width=True)
 
 with card_col4:
     with st.container(border=True):
         st.markdown(
             """
             <span class="scope-badge-preview">🔍 DEMO PREVIEW & ROADMAP</span>
-            <div class="role-card-title">👨‍🏫 Academician Portal</div>
+            <div class="role-card-title">Academician & Faculty Portal</div>
             <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.5;">
                 Faculty members access Faculty Development Programs (FDPs), industrial training immersions, 
                 consultancy projects, and collaborative research initiatives.
@@ -317,29 +317,29 @@ with card_col4:
             """,
             unsafe_allow_html=True
         )
-        st.page_link("pages/6_Academician_Portal.py", label="👨‍🏫 View Academician Portal", icon="👨‍🏫", use_container_width=True)
+        st.page_link("pages/6_Academician_Portal.py", label="Open Academician Portal", icon="👨‍🏫", use_container_width=True)
 
 st.markdown("---")
 
 # -----------------------------------------------------------------------------
 # 6. Implementation Scoping Overview
 # -----------------------------------------------------------------------------
-st.markdown("### 🛡️ Implementation Scoping Notice <em class='italic-emphasis'>(Team Oppenheimer)</em>", unsafe_allow_html=True)
+st.markdown("### Implementation Architecture & <em class='italic-emphasis'>Scope Matrix</em>", unsafe_allow_html=True)
 
 st.info(
     """
-    📌 **Transparent System Scoping:**
+    📌 **System Architecture & Operational Scoping:**
     
-    • **Fully Functional Production Modules (End-to-End Working)**:
+    • **Production Operations (End-to-End Functional Modules)**:
       - **Student Assessment & Micro-Quiz Engine** (`app.py`)
-      - **SQLite Database Storage** (`database.py` / `portal.db`)
+      - **SQLite Relational Persistence** (`database.py` / `portal.db`)
       - **Cosine Similarity Vector Gap Analysis** (`gap_analysis.py`)
       - **Interactive Plotly Radar & Deficit Visualization** (`pages/2_Results.py`)
-      - **Verified Student Digital Portfolio** (`pages/3_Portfolio.py`)
+      - **Verified Student Digital Portfolio & PDF Generation** (`pages/3_Portfolio.py`)
       - **Candidate-Opportunity Cosine Vector Matcher** (`pages/4_Industry_Opportunities.py`)
-      - **Real Cohort Database Aggregations** (`pages/5_Institution_Dashboard.py`)
+      - **Cohort-Wide Statistical Aggregations** (`pages/5_Institution_Dashboard.py`)
       
-    • **Preview & Demo Roadmap Modules**:
-      - **Academician FDP & Consultancy Listings** (`pages/6_Academician_Portal.py` — static roadmap preview for demo complete flow).
+    • **Roadmap & Expansion Modules**:
+      - **Academician FDP & Consultancy Modules** (`pages/6_Academician_Portal.py` — operational demonstration).
     """
 )

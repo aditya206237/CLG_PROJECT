@@ -286,7 +286,7 @@ else:
                         {opp['title']}
                     </h3>
                     <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:0.4rem;">
-                        🏛️ {opp['company_name']} &nbsp;•&nbsp; 📍 {opp['location']} &nbsp;•&nbsp; ⏱️ {opp['duration']}
+                        <b>Organization:</b> {opp['company_name']} &nbsp;•&nbsp; <b>Location:</b> {opp['location']} &nbsp;•&nbsp; <b>Duration:</b> {opp['duration']}
                     </p>
                     """,
                     unsafe_allow_html=True
@@ -300,7 +300,7 @@ else:
                         st.markdown(
                             f"""
                             <div style="text-align:right;">
-                                <span class="demand-badge-gold">🌟 {score}% MATCH • TOP RECOMMENDATION</span>
+                                <span class="demand-badge-gold">✓ {score}% MATCH • TOP RECOMMENDATION</span>
                             </div>
                             """,
                             unsafe_allow_html=True
@@ -327,10 +327,10 @@ else:
             
             st.markdown("<br>", unsafe_allow_html=True)
             
-            col_act1, col_act2 = st.columns([1, 4])
+            col_act1, col_act2 = st.columns([1.2, 4])
             with col_act1:
-                if st.button(f"🚀 Apply Now", key=f"apply_{opp['id']}"):
+                if st.button(f"Submit Application", key=f"apply_{opp['id']}"):
                     if selected_student:
-                        st.success(f"✅ Application submitted for **{student_name}** to **{opp['company_name']}**!")
+                        st.success(f"Application submitted for **{student_name}** to **{opp['company_name']}**.")
                     else:
                         st.warning("Please select a student profile in the sidebar before applying.")

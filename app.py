@@ -253,7 +253,7 @@ soft_skills = get_skills_by_category("soft")
 with st.form(key="assessment_form"):
     
     with st.container(border=True):
-        st.markdown("<div class='section-header'>👤 Step 1: Student Profile & Career Target</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>Step 1: Student Profile & Career Target</div>", unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         with col1:
@@ -274,12 +274,12 @@ with st.form(key="assessment_form"):
     st.markdown("<br>", unsafe_allow_html=True)
 
     with st.container(border=True):
-        st.markdown("<div class='section-header'>📊 Step 2: Skill Self-Assessment & Verification</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>Step 2: Competency Assessment & Verification</div>", unsafe_allow_html=True)
         
         st.markdown(
             """
             <div class="rating-legend">
-                <b>Rating Scale:</b> 1 = No Experience &nbsp;|&nbsp; 2 = Elementary &nbsp;|&nbsp; 3 = Intermediate &nbsp;|&nbsp; 4 = Advanced &nbsp;|&nbsp; 5 = Expert
+                <b>Rating Scale:</b> 1 = Basic Awareness &nbsp;|&nbsp; 2 = Elementary &nbsp;|&nbsp; 3 = Intermediate &nbsp;|&nbsp; 4 = Advanced &nbsp;|&nbsp; 5 = Expert
             </div>
             """,
             unsafe_allow_html=True
@@ -287,9 +287,9 @@ with st.form(key="assessment_form"):
         
         # Organize assessment into Category Tabs
         tab_tech, tab_domain, tab_soft = st.tabs([
-            f"💻 Technical Skills ({len(tech_skills)})",
-            f"🎯 Domain Skills ({len(domain_skills)})",
-            f"🤝 Soft Skills ({len(soft_skills)})"
+            f"Technical Competencies ({len(tech_skills)})",
+            f"Domain & Applied Skills ({len(domain_skills)})",
+            f"Professional Aptitude ({len(soft_skills)})"
         ])
         
         ratings_input: Dict[str, int] = {}
@@ -316,8 +316,8 @@ with st.form(key="assessment_form"):
             st.markdown(
                 f"""
                 <div class="quiz-box">
-                    <h4 style="margin-top:0;">🛡️ Technical Verification Micro-Quiz</h4>
-                    <p><b>Question:</b> {tech_q_data['question']}</p>
+                    <h4 style="margin-top:0;">Technical Competency Verification</h4>
+                    <p><b>Verification Question:</b> {tech_q_data['question']}</p>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -350,8 +350,8 @@ with st.form(key="assessment_form"):
             st.markdown(
                 f"""
                 <div class="quiz-box">
-                    <h4 style="margin-top:0;">🛡️ Domain Verification Micro-Quiz</h4>
-                    <p><b>Question:</b> {domain_q_data['question']}</p>
+                    <h4 style="margin-top:0;">Domain Competency Verification</h4>
+                    <p><b>Verification Question:</b> {domain_q_data['question']}</p>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -364,7 +364,7 @@ with st.form(key="assessment_form"):
 
         # --- TAB 3: SOFT SKILLS ---
         with tab_soft:
-            st.markdown("#### Soft Skills & Work Ethic")
+            st.markdown("#### Professional Aptitude & Collaboration")
             st.caption("Self-assess your interpersonal, collaborative, and problem-solving abilities.")
             
             for skill in soft_skills:
@@ -381,7 +381,7 @@ with st.form(key="assessment_form"):
 
     st.markdown("<br>", unsafe_allow_html=True)
     submit_button = st.form_submit_button(
-        label="🚀 Submit & Save Assessment",
+        label="Submit Assessment & Generate Profile",
         type="primary",
         use_container_width=True
     )
@@ -391,9 +391,9 @@ with st.form(key="assessment_form"):
 # -----------------------------------------------------------------------------
 if submit_button:
     if not student_name_input.strip():
-        st.error("⚠️ Please enter your Full Student Name before submitting.")
+        st.error("Please enter your Full Student Name before submitting.")
     else:
-        with st.spinner("🔒 Calibrating skill ratings with verification quizzes & saving to database..."):
+        with st.spinner("Calibrating skill ratings with verification checks and recording profile..."):
             time.sleep(0.5)  # Subtle feedback delay
             
             # Check Quiz Correctness
@@ -434,28 +434,28 @@ if submit_button:
                 st.session_state.skill_vector = ratings_input
                 st.session_state.adjusted_skill_vector = adjusted_ratings
                 st.session_state.quiz_scores = {
-                    "Technical Quiz": "Correct (+ Verified)" if tech_quiz_correct else "Incorrect (Ratings Adjusted)",
-                    "Domain Quiz": "Correct (+ Verified)" if domain_quiz_correct else "Incorrect (Ratings Adjusted)"
+                    "Technical Quiz": "Verified" if tech_quiz_correct else "Calibrated (Benchmark Adjusted)",
+                    "Domain Quiz": "Verified" if domain_quiz_correct else "Calibrated (Benchmark Adjusted)"
                 }
                 
-                st.success(f"✅ Assessment successfully saved to database! Assigned Student ID: #{new_student_id}")
+                st.success(f"Assessment successfully recorded. Assigned Candidate ID: #{new_student_id}")
 
             except Exception as db_err:
-                st.error(f"❌ Database Error: Failed to record assessment. Detail: {db_err}")
+                st.error(f"Database Operation Failed: {db_err}")
 
 # -----------------------------------------------------------------------------
 # 7. Display Results & Persistent Output
 # -----------------------------------------------------------------------------
 if st.session_state.submitted and st.session_state.student_id:
     st.markdown("---")
-    st.markdown("<div class='section-header'>🎉 Assessment Summary & Next Steps</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-header'>Assessment Summary & Analytics Navigation</div>", unsafe_allow_html=True)
     
     # Navigation links for results & portfolio
     nav_col1, nav_col2 = st.columns(2)
     with nav_col1:
-        st.page_link("pages/3_Portfolio.py", label="🎓 View Official Digital Student Portfolio", icon="🎓", use_container_width=True)
+        st.page_link("pages/3_Portfolio.py", label="View Verified Student Portfolio", icon="🎓", use_container_width=True)
     with nav_col2:
-        st.page_link("pages/2_Results.py", label="📊 View Multi-Dimensional Skill Radar & Gap Analysis", icon="📊", use_container_width=True)
+        st.page_link("pages/2_Results.py", label="View Skill Gap & Alignment Report", icon="📊", use_container_width=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -470,7 +470,7 @@ if st.session_state.submitted and st.session_state.student_id:
     with col_d:
         st.metric("Total Skills Assessed", f"{len(st.session_state.skill_vector)} Skills")
 
-    st.markdown("#### 🛡️ Micro-Quiz Verification Results")
+    st.markdown("#### Competency Verification Summary")
     q_col1, q_col2 = st.columns(2)
     with q_col1:
         tech_status = st.session_state.quiz_scores.get("Technical Quiz", "")
