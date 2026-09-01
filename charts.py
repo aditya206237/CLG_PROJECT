@@ -2,6 +2,7 @@
 Plotly Chart Generators for Skill Gap Engine & Portfolio
 --------------------------------------------------------
 Shared charting module for rendering Plotly Scatterpolar radar charts.
+Editorial Data Analytics styling (Dark panel, Mint student trace, Cream benchmark trace).
 """
 
 import plotly.graph_objects as go
@@ -17,7 +18,12 @@ def create_radar_chart(
     """
     Generates an overlapping Plotly Scatterpolar radar chart comparing
     the student's verified skill vector against target role requirements.
-    Dark futuristic themed with high-contrast labels.
+    Editorial Dark Panel aesthetic with Mint student trace & Cream benchmark.
+    
+    Font color readability rules:
+    - Angular axis labels (skill names around the radar) sit outside on the cream background: #1C1A16 (dark near-black)
+    - Legend labels sit outside on the cream background: #1C1A16 (dark near-black)
+    - Radial axis tick labels (1-5 levels) sit INSIDE the dark #14120F panel: #EFEBDF (light cream)
     """
     role_skill_ids = [r["skill_id"] for r in role_requirements]
     radar_categories = [r["name"] for r in role_requirements]
@@ -32,28 +38,28 @@ def create_radar_chart(
 
     fig = go.Figure()
 
-    # Target Role Benchmark Trace (Neon Red/Coral)
+    # Target Role Benchmark Trace (Warm Cream / Off-white)
     fig.add_trace(go.Scatterpolar(
         r=required_scores_closed,
         theta=categories_closed,
         fill='toself',
         name=f'Required Benchmark ({target_role_name})',
-        fillcolor='rgba(244, 63, 94, 0.25)',
-        line=dict(color='#f43f5e', width=2.5, dash='dash'),
-        marker=dict(size=6, color='#f43f5e'),
+        fillcolor='rgba(239, 235, 223, 0.12)',
+        line=dict(color='#EFEBDF', width=2, dash='dash'),
+        marker=dict(size=6, color='#EFEBDF'),
         hoverinfo='text',
         text=[f"Skill: {c}<br>Required Level: {val}/5" for c, val in zip(categories_closed, required_scores_closed)]
     ))
 
-    # Student Verified Skill Trace (Neon Cyan)
+    # Student Verified Skill Trace (Warm Mint)
     fig.add_trace(go.Scatterpolar(
         r=student_scores_closed,
         theta=categories_closed,
         fill='toself',
         name=f'{student_name} (Verified Rating)',
-        fillcolor='rgba(56, 189, 248, 0.4)',
-        line=dict(color='#38bdf8', width=3),
-        marker=dict(size=8, color='#38bdf8'),
+        fillcolor='rgba(143, 224, 176, 0.3)',
+        line=dict(color='#8FE0B0', width=3),
+        marker=dict(size=8, color='#8FE0B0'),
         hoverinfo='text',
         text=[f"Skill: {c}<br>Student Rating: {val}/5" for c, val in zip(categories_closed, student_scores_closed)]
     ))
@@ -61,35 +67,34 @@ def create_radar_chart(
     fig.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(color='#f8fafc', family='Inter, sans-serif'),
+        font=dict(color='#1C1A16', family='JetBrains Mono, monospace'),
         polar=dict(
-            bgcolor='rgba(15, 23, 42, 0.65)',
+            bgcolor='#14120F',
             radialaxis=dict(
                 visible=True,
                 range=[0, 5.2],
                 tickvals=[1, 2, 3, 4, 5],
                 ticktext=['1 (Basic)', '2', '3 (Interm)', '4', '5 (Expert)'],
-                gridcolor='rgba(148, 163, 184, 0.25)',
-                tickfont=dict(color='#cbd5e1', size=10),
+                gridcolor='rgba(239, 235, 223, 0.2)',
+                tickfont=dict(color='#EFEBDF', size=10, family='JetBrains Mono, monospace'),
                 angle=0
             ),
             angularaxis=dict(
-                gridcolor='rgba(148, 163, 184, 0.25)',
-                linecolor='#38bdf8',
-                tickfont=dict(color='#f8fafc', size=11)
+                gridcolor='rgba(239, 235, 223, 0.2)',
+                linecolor='#14493D',
+                tickfont=dict(color='#1C1A16', size=12, family='JetBrains Mono, monospace')
             )
         ),
         showlegend=True,
         legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=-0.18,
+            y=-0.2,
             xanchor="center",
             x=0.5,
-            font=dict(size=12, color='#f8fafc')
+            font=dict(size=12, color='#1C1A16', family='JetBrains Mono, monospace')
         ),
-        margin=dict(l=60, r=60, t=30, b=70),
-        height=520
+        margin=dict(l=80, r=80, t=30, b=80),
+        height=540
     )
     return fig
-

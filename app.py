@@ -50,121 +50,118 @@ render_logout_button()
 # Initialize database tables once per session
 if "db_initialized" not in st.session_state:
     init_db()
-    st.session_state.db_initialized = True
-
-
-# Custom CSS for rich aesthetics, card styling, and clean UI
+    st.session_state.db_initialized = True# Custom CSS for rich editorial aesthetics
 st.markdown(
     """
     <style>
-    /* Main container styling */
     .main .block-container {
         padding-top: 1.5rem;
         padding-bottom: 3rem;
         max-width: 1150px;
     }
     
-    /* Hero Banner */
+    /* Editorial Dark Hero Panel */
     .hero-container {
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--border-glow);
-        color: var(--text-primary);
+        background-color: var(--bg-dark-panel);
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        border: 1px solid var(--border-dark-panel);
+        color: var(--text-cream);
         padding: 2rem 2.2rem;
-        border-radius: 14px;
+        border-radius: 12px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .hero-container:hover {
-        border-color: var(--border-glow-hover);
-        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2), inset 0 0 25px rgba(168, 85, 247, 0.12);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
     .hero-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 2.2rem;
-        font-weight: 800;
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 2.3rem;
+        font-weight: 700;
         margin: 0;
-        letter-spacing: -0.5px;
-        color: var(--text-primary);
+        color: var(--text-cream) !important;
+        letter-spacing: -0.015em;
     }
     .hero-subtitle {
-        font-size: 1.1rem;
-        color: var(--text-muted);
+        font-size: 1.05rem;
+        color: rgba(239, 235, 223, 0.8);
         margin-top: 0.4rem;
         margin-bottom: 0.8rem;
         line-height: 1.5;
+        font-family: 'Inter', sans-serif;
     }
     .badge-tag {
         display: inline-block;
-        background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
-        color: #ffffff;
-        padding: 0.28rem 0.8rem;
-        border-radius: 20px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.82rem;
+        background-color: rgba(143, 224, 176, 0.12);
+        border: 1px solid var(--accent-mint);
+        color: var(--accent-mint);
+        padding: 0.25rem 0.8rem;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
         font-weight: 600;
-        box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
 
     /* Stats Strip inside Hero */
     .hero-stats-grid {
         display: flex;
-        gap: 1.5rem;
+        gap: 1.8rem;
         margin-top: 1.2rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 1px solid rgba(239, 235, 223, 0.12);
     }
     .hero-stat-item {
-        font-size: 0.88rem;
-        color: var(--text-secondary);
-        font-weight: 600;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        color: var(--text-cream);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
     .hero-stat-item span {
-        color: var(--accent-cyan);
-        font-weight: 800;
+        color: var(--accent-mint);
+        font-weight: 700;
+        font-size: 13px;
     }
 
     /* Section Cards & Headers */
     .section-header {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.25rem;
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.35rem;
         font-weight: 700;
-        color: var(--accent-cyan);
-        border-left: 4px solid var(--accent-cyan);
+        color: var(--text-dark);
+        border-left: 4px solid var(--accent-primary);
         padding-left: 10px;
-        margin-top: 0.8rem;
-        margin-bottom: 1.2rem;
+        margin-top: 0.4rem;
+        margin-bottom: 1rem;
     }
     .quiz-box {
-        background-color: rgba(30, 41, 59, 0.7);
-        border: 1px solid var(--border-glow);
-        border-radius: 10px;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: 8px;
         padding: 1.2rem 1.5rem;
         margin-top: 1rem;
         margin-bottom: 1rem;
-        color: var(--text-primary);
+        color: var(--text-dark);
     }
     .quiz-box h4 {
-        color: var(--accent-cyan) !important;
+        color: var(--accent-primary) !important;
+        font-family: 'Playfair Display', Georgia, serif !important;
     }
     .quiz-box p {
-        color: var(--text-primary) !important;
+        color: var(--text-dark) !important;
     }
     
     /* Rating helper labels */
     .rating-legend {
         font-size: 0.88rem;
-        color: var(--text-secondary);
-        background-color: rgba(30, 41, 59, 0.6);
-        border: 1px solid rgba(148, 163, 184, 0.25);
+        color: var(--text-muted);
+        background-color: #F8F5EE;
+        border: 1px solid var(--border-subtle);
         padding: 0.5rem 0.9rem;
-        border-radius: 8px;
+        border-radius: 6px;
         margin-bottom: 1.2rem;
     }
     .rating-legend b {
-        color: var(--text-primary);
+        color: var(--text-dark);
     }
     </style>
     """,
@@ -218,8 +215,8 @@ with st.sidebar:
                 st.dataframe(records, use_container_width=True)
             else:
                 st.caption("No student assessments saved yet.")
-        except Exception as err:
-            st.error(f"Failed to fetch DB records: {err}")
+        except Exception as e:
+            st.error(f"Error loading records: {e}")
 
 # -----------------------------------------------------------------------------
 # 4. Hero Header & Live Stats Strip
@@ -231,14 +228,14 @@ db_students = get_all_students()
 st.markdown(
     f"""
     <div class="hero-container">
-        <span class="badge-tag">Team Oppenheimer</span>
-        <h1 class="hero-title">Student Skill Assessment Questionnaire</h1>
+        <span class="badge-tag"><span class="live-dot" style="background-color:var(--accent-primary);"></span>Team Oppenheimer</span>
+        <h1 class="hero-title">Student Skill <em class="italic-emphasis">Assessment</em> Questionnaire</h1>
         <p class="hero-subtitle">Evaluate your technical, domain, and soft skills with verification micro-quizzes and persistent database storage.</p>
-        <div class="hero-stats-grid">
-            <div class="hero-stat-item">🎯 Skills Tracked: <span>{all_skills_count}</span></div>
-            <div class="hero-stat-item">🎯 Career Tracks: <span>{len(available_roles)}</span></div>
-            <div class="hero-stat-item">👥 Assessed Students: <span>{len(db_students)}</span></div>
-            <div class="hero-stat-item">⚡ Vector Engine: <span>Cosine Similarity</span></div>
+        <div class="hero-stats-grid" style="border-top:1px solid var(--border-subtle);">
+            <div class="hero-stat-item" style="color:var(--text-muted);">Skills Tracked: <span style="color:var(--accent-primary);">+{all_skills_count}</span></div>
+            <div class="hero-stat-item" style="color:var(--text-muted);">Career Tracks: <span style="color:var(--accent-primary);">{len(available_roles)}</span></div>
+            <div class="hero-stat-item" style="color:var(--text-muted);">Assessed Students: <span style="color:var(--accent-primary);">{len(db_students)}</span></div>
+            <div class="hero-stat-item" style="color:var(--text-muted);">Vector Engine: <span style="color:var(--accent-primary);">Cosine Math</span></div>
         </div>
     </div>
     """,

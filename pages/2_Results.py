@@ -1,6 +1,7 @@
 """
 Oppenheimer Skill Portal (Team Oppenheimer)
 Skill Gap Analysis Dashboard & Plotly Radar Visualization
+(Editorial Data Analytics Design System)
 """
 
 import streamlit as st
@@ -28,7 +29,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Apply global dark futuristic theme
+# Apply global editorial theme
 apply_theme()
 
 # Authentication Gate
@@ -42,7 +43,7 @@ render_logout_button()
 init_db()
 
 
-# Custom CSS for polished UI & dynamic match score widget
+# Custom CSS matching editorial theme
 st.markdown(
     """
     <style>
@@ -52,99 +53,49 @@ st.markdown(
         max-width: 1150px;
     }
     .hero-container {
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--border-glow);
-        color: var(--text-primary);
+        background-color: var(--bg-dark-panel);
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        border: 1px solid var(--border-dark-panel);
+        color: var(--text-cream);
         padding: 1.8rem 2rem;
         border-radius: 12px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .hero-container:hover {
-        border-color: var(--border-glow-hover);
-        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
     .hero-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 2rem;
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 2.2rem;
         font-weight: 700;
         margin: 0;
-        color: var(--text-primary);
+        color: var(--text-cream) !important;
     }
     .hero-subtitle {
         font-size: 1.05rem;
-        color: var(--text-muted);
+        color: rgba(239, 235, 223, 0.8);
         margin-top: 0.3rem;
         margin-bottom: 0.5rem;
     }
     .badge-tag {
         display: inline-block;
-        background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
-        color: #ffffff;
+        background-color: rgba(143, 224, 176, 0.12);
+        border: 1px solid var(--accent-mint);
+        color: var(--accent-mint);
         padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.8rem;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
-
-    /* Dynamic Match Score Cards */
-    .score-card-green {
-        background: rgba(16, 185, 129, 0.12);
-        border: 2px solid var(--success);
-        border-radius: 12px;
-        padding: 1.2rem;
-        text-align: center;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
-    }
-    .score-card-amber {
-        background: rgba(245, 158, 11, 0.12);
-        border: 2px solid var(--warning);
-        border-radius: 12px;
-        padding: 1.2rem;
-        text-align: center;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 20px rgba(245, 158, 11, 0.15);
-    }
-    .score-card-red {
-        background: rgba(239, 68, 68, 0.12);
-        border: 2px solid var(--error);
-        border-radius: 12px;
-        padding: 1.2rem;
-        text-align: center;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
-    }
-    .score-val-green { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 900; color: var(--success); }
-    .score-val-amber { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 900; color: var(--warning); }
-    .score-val-red { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 900; color: var(--error); }
-
-    .score-label { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
 
     .metric-card-box {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid var(--border-glow);
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-subtle);
         padding: 1rem 1.2rem;
-        border-radius: 10px;
+        border-radius: 8px;
         height: 100%;
-        color: var(--text-primary);
-    }
-    .severity-high { background-color: rgba(239, 68, 68, 0.25); color: #f87171; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
-    .severity-mod { background-color: rgba(245, 158, 11, 0.25); color: #fbbf24; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
-    .severity-low { background-color: rgba(56, 189, 248, 0.25); color: #38bdf8; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
-    .severity-met { background-color: rgba(16, 185, 129, 0.25); color: #34d399; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
-
-    .type-pill {
-        display: inline-block;
-        padding: 3px 10px;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        font-weight: bold;
-        color: white;
+        color: var(--text-dark);
     }
     </style>
     """,
@@ -157,8 +108,8 @@ st.markdown(
 st.markdown(
     """
     <div class="hero-container">
-        <span class="badge-tag">Oppenheimer Vector Engine</span>
-        <h1 class="hero-title">Skill Gap Analysis & Alignment Dashboard</h1>
+        <span class="badge-tag"><span class="live-dot" style="background-color:var(--accent-primary);"></span>Oppenheimer Vector Engine</span>
+        <h1 class="hero-title">Skill Gap Analysis & <em class="italic-emphasis">Alignment Dashboard</em></h1>
         <p class="hero-subtitle">Interactive Plotly multi-dimensional radar comparison and targeted skill deficit analysis.</p>
     </div>
     """,
@@ -166,7 +117,7 @@ st.markdown(
 )
 
 # -----------------------------------------------------------------------------
-# 3. Student Selection & Intentional Empty State Handling
+# 3. Student Selection & Empty State Handling
 # -----------------------------------------------------------------------------
 all_students = get_all_students()
 
@@ -175,8 +126,8 @@ if not all_students:
         st.markdown(
             """
             <div style="text-align:center; padding:2rem;">
-                <h2 style="color:var(--accent-cyan); margin-bottom:0.5rem;">⚠️ No Student Assessments Found</h2>
-                <p style="color:var(--text-secondary); font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
+                <h2 style="color:var(--text-dark); margin-bottom:0.5rem;">⚠️ No Student Assessments Found</h2>
+                <p style="color:var(--text-muted); font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
                     There are currently no student assessment records stored in the SQLite database (<code>portal.db</code>).
                     Please complete a skill assessment first to generate multi-dimensional gap analysis reports.
                 </p>
@@ -233,44 +184,23 @@ with st.spinner("📊 Analyzing multi-dimensional skill vectors & generating gap
     actionable_gaps_count = len([g for g in all_gaps if g["gap"] > 0])
 
 # -----------------------------------------------------------------------------
-# 4. Large Color-Coded Match Score Widget & Summary
+# 4. Large Dark Data Panel Match Score Widget & Summary
 # -----------------------------------------------------------------------------
 col_m1, col_m2, col_m3, col_m4 = st.columns([1.5, 1, 1, 1])
 
 with col_m1:
-    if match_score >= 75.0:
-        st.markdown(
-            f"""
-            <div class="score-card-green">
-                <div class="score-label">Target Role Match Score</div>
-                <div class="score-val-green">{match_score}%</div>
-                <div style="color:var(--success); font-weight:700; font-size:0.9rem;">🟢 Industry Aligned</div>
+    st.markdown(
+        f"""
+        <div class="score-card-dark" style="text-align:center;">
+            <div class="dark-panel-label"><span class="live-dot"></span>MATCH SCORE • OVERALL</div>
+            <div class="dark-panel-number" style="margin-top:0.4rem; font-size:3rem;">{match_score}%</div>
+            <div style="font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--accent-mint); margin-top:0.4rem; text-transform:uppercase;">
+                {'✓ ALIGNED' if match_score >= 75 else '• MODERATE ALIGNMENT' if match_score >= 50 else '! ACTIONABLE GAP'}
             </div>
-            """,
-            unsafe_allow_html=True
-        )
-    elif match_score >= 50.0:
-        st.markdown(
-            f"""
-            <div class="score-card-amber">
-                <div class="score-label">Target Role Match Score</div>
-                <div class="score-val-amber">{match_score}%</div>
-                <div style="color:var(--warning); font-weight:700; font-size:0.9rem;">🟠 Moderate Alignment</div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-    else:
-        st.markdown(
-            f"""
-            <div class="score-card-red">
-                <div class="score-label">Target Role Match Score</div>
-                <div class="score-val-red">{match_score}%</div>
-                <div style="color:var(--error); font-weight:700; font-size:0.9rem;">🔴 Actionable Gap Identified</div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 with col_m2:
     with st.container(border=True):
@@ -293,25 +223,25 @@ with col_m4:
 st.markdown("---")
 
 # -----------------------------------------------------------------------------
-# 5. Plotly Radar Chart Generation
+# 5. Plotly Radar Chart Generation Wrapped in Dark Panel
 # -----------------------------------------------------------------------------
 st.subheader("🕸️ Multi-Dimensional Skill Radar Vector")
 
 st.info(
     f"💡 **How to Read This Radar Chart:**\n\n"
-    f"• **Cyan Shape (Verified Skills)**: Represents {student_name}'s current proficiency ratings across target competencies.\n"
-    f"• **Coral Shape (Role Benchmark)**: Represents the required industry standard vector for **{target_role}**.\n"
-    f"• **Gap Visualization**: Any area where the Coral boundary extends beyond the Cyan shape highlights an actionable skill gap."
+    f"• **Mint Line (Verified Skills)**: Represents {student_name}'s current proficiency ratings across target competencies.\n"
+    f"• **Cream Line (Role Benchmark)**: Represents the required industry standard vector for **{target_role}**.\n"
+    f"• **Gap Visualization**: Any area where the Cream boundary extends beyond the Mint shape highlights an actionable skill gap."
 )
 
 fig = create_radar_chart(student_vector, role_reqs, target_role, student_name)
 st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# 6. Ranked Skill Gap Table & Priority Insights
+# 6. Ranked Skill Gap Table & Priority Insights with Gold Badges
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("🔥 Top Actionable Skill Deficits & Target Priorities")
+st.markdown("### 🔥 Top Actionable Skill Deficits & <em class='italic-emphasis'>Target Priorities</em>", unsafe_allow_html=True)
 
 if not top_gaps:
     st.success(f"🎉 Fantastic work! {student_name} meets or exceeds all required skill levels for **{target_role}**.")
@@ -319,25 +249,20 @@ else:
     col_t1, col_t2 = st.columns([1.8, 1])
 
     with col_t1:
-        st.markdown("**Ranked Skill Deficits (Sorted by Gap Magnitude):**")
+        st.markdown("**Ranked Skill Deficits (Sorted by Gap Magnitude & Demand Weighting):**")
         gap_table_data = []
         for item in all_gaps:
             gap_val = item['gap']
-            if gap_val >= 3:
-                severity_tag = "🔴 High Deficit (-" + str(gap_val) + ")"
-            elif gap_val == 2:
-                severity_tag = "🟠 Moderate Deficit (-2)"
-            elif gap_val == 1:
-                severity_tag = "🟡 Minor Deficit (-1)"
-            else:
-                severity_tag = "🟢 Target Met"
+            is_high_demand = (gap_val >= 3)  # High demand weighting threshold
+            
+            severity_tag = "HIGH DEMAND DEFICIT (-" + str(gap_val) + ")" if is_high_demand else "STANDARD DEFICIT (-" + str(gap_val) + ")" if gap_val > 0 else "TARGET MET"
 
             gap_table_data.append({
                 "Skill Name": item["skill_name"],
                 "Category": skill_cat_map.get(item["skill_id"], "DOMAIN"),
                 "Your Rating": f"{item['student_level']} / 5",
                 "Required Baseline": f"{item['required_level']} / 5",
-                "Deficit Severity": severity_tag
+                "Priority Tag": severity_tag
             })
         
         df_gaps = pd.DataFrame(gap_table_data)
@@ -351,12 +276,21 @@ else:
         st.markdown("**🎯 Immediate Recommendation Targets:**")
         for idx, gap in enumerate(top_gaps, 1):
             cat = skill_cat_map.get(gap["skill_id"], "DOMAIN")
+            gap_val = gap["gap"]
+            is_high_demand = (gap_val >= 3)
+            
+            badge_html = f'<span class="demand-badge-gold">⚡ HIGH DEMAND GAP</span>' if is_high_demand else f'<span class="demand-badge-neutral">STANDARD GAP</span>'
+            
             st.markdown(
                 f"""
                 <div class="metric-card-box">
-                    <b>#{idx}. {gap['skill_name']}</b> <span style="font-size:0.75rem; color:var(--text-muted);">({cat})</span><br>
-                    Current: <code>{gap['student_level']}/5</code> | Benchmark: <code>{gap['required_level']}/5</code><br>
-                    <b style="color:var(--error);">Deficit: -{gap['gap']} levels</b>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                        <b>#{idx}. {gap['skill_name']}</b>
+                        {badge_html}
+                    </div>
+                    <div style="font-size:0.85rem; color:var(--text-muted);">
+                        Current: <code>{gap['student_level']}/5</code> | Benchmark: <code>{gap['required_level']}/5</code> | Deficit: <b>-{gap_val} levels</b>
+                    </div>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -364,10 +298,10 @@ else:
             st.markdown("<div style='margin-bottom:0.5rem;'></div>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 7. Recommended Next Steps & Industry-Academia Product Cards
+# 7. Recommended Next Steps & Industry Product Cards
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("🎓 Recommended Next Steps & Industry Product Cards")
+st.markdown("### 🎓 Recommended Next Steps & <em class='italic-emphasis'>Industry Partner Programs</em>", unsafe_allow_html=True)
 
 st.caption(
     "💡 **Academia-Industry Collaboration Hub:** Recommendations combine open learning platforms "
@@ -394,19 +328,13 @@ if top_gaps:
                 for col, res in zip(cols, res_list):
                     with col:
                         with st.container(border=True):
-                            type_color = (
-                                "#0284c7" if res["type"] == "certification"
-                                else "#059669" if res["type"] == "course"
-                                else "#d97706" if res["type"] == "workshop"
-                                else "#7c3aed"
-                            )
                             st.markdown(
                                 f"""
-                                <span class="type-pill" style="background-color:{type_color};">
-                                    {res['type'].upper()}
+                                <span class="badge-mono" style="color:var(--accent-primary);">
+                                    [{res['type'].upper()}]
                                 </span>
-                                <h4 style="margin-top:0.6rem; margin-bottom:0.3rem; font-size:1.05rem; color:var(--text-primary);">{res['title']}</h4>
-                                <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.8rem; line-height:1.4;">
+                                <h4 style="margin-top:0.4rem; margin-bottom:0.3rem; font-size:1.05rem; color:var(--text-dark);">{res['title']}</h4>
+                                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.8rem; line-height:1.4;">
                                     🏛️ <b>Provider:</b> {res['provider']}<br>
                                     ⏱️ <b>Duration:</b> {res['duration']}
                                 </p>
@@ -418,4 +346,3 @@ if top_gaps:
                                 url=res.get("url", "#"),
                                 use_container_width=True
                             )
-

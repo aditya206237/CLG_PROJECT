@@ -1,6 +1,6 @@
 """
 Oppenheimer Skill Portal (Team Oppenheimer)
-Futuristic Glassmorphism Login & Registration UI Component
+Editorial Data Analytics Login & Registration UI Component
 """
 
 import streamlit as st
@@ -8,7 +8,7 @@ from auth import verify_user, register_user
 
 
 def apply_login_styles():
-    """Injects futuristic glassmorphism and animated background CSS."""
+    """Injects editorial theme and background CSS for authentication."""
     st.markdown(
         """
         <style>
@@ -17,92 +17,58 @@ def apply_login_styles():
             display: none !important;
         }
 
-        /* Hide standard header decoration for full-screen immersive view */
+        /* Hide standard header decoration for full-screen view */
         header[data-testid="stHeader"] {
             background: transparent !important;
             border-bottom: none !important;
         }
 
-        /* Glassmorphism Card Container */
+        /* Flat Cream Card Container */
         .glass-hero {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
             padding: 2.2rem 2.4rem;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.55), inset 0 0 20px rgba(56, 189, 248, 0.1);
+            box-shadow: 0 4px 20px rgba(28, 26, 22, 0.06);
             margin: 1.5rem auto 2rem auto;
             max-width: 540px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
         }
         .glass-hero:hover {
-            border-color: var(--border-glow-hover);
-            box-shadow: 0 15px 45px rgba(56, 189, 248, 0.2), inset 0 0 25px rgba(168, 85, 247, 0.15);
+            border-color: #C4BEB0;
+            box-shadow: 0 6px 24px rgba(28, 26, 22, 0.1);
         }
 
         .auth-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
-            color: #ffffff;
+            background-color: rgba(20, 73, 61, 0.1);
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
             padding: 0.25rem 0.8rem;
-            border-radius: 20px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.78rem;
+            border-radius: 999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
         }
 
         .auth-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, #c084fc 50%, #f472b6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
             margin-top: 0.5rem;
             margin-bottom: 0.2rem;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.02em;
         }
 
         .auth-subtitle {
             font-size: 0.95rem;
             color: var(--text-muted);
             margin-bottom: 1.5rem;
-            line-height: 1.4;
-        }
-
-        /* Form Inputs Neon Glow */
-        .stTextInput input, .stSelectbox select {
-            background-color: rgba(30, 41, 59, 0.85) !important;
-            color: var(--text-primary) !important;
-            border: 1px solid rgba(148, 163, 184, 0.3) !important;
-            border-radius: 10px !important;
-            transition: all 0.3s ease-in-out !important;
-        }
-        .stTextInput input:focus, .stSelectbox select:focus {
-            border-color: var(--accent-cyan) !important;
-            box-shadow: 0 0 14px rgba(56, 189, 248, 0.45) !important;
-        }
-
-        /* Glowing Submit Buttons */
-        .stButton > button {
-            background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%) !important;
-            color: #ffffff !important;
-            border: none !important;
-            border-radius: 10px !important;
-            font-family: 'Space Grotesk', sans-serif !important;
-            font-weight: 700 !important;
-            font-size: 1rem !important;
-            padding: 0.6rem 1.2rem !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-            box-shadow: 0 4px 15px rgba(126, 34, 206, 0.35) !important;
-        }
-        .stButton > button:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 22px rgba(56, 189, 248, 0.55) !important;
+            line-height: 1.45;
+            font-family: 'Inter', sans-serif;
         }
         </style>
         """,
@@ -112,7 +78,7 @@ def apply_login_styles():
 
 def render_login_page() -> None:
     """
-    Renders the full-screen glassmorphism login and signup view.
+    Renders the full-screen editorial login and signup view.
     Stops execution until authentication succeeds.
     """
     apply_login_styles()
@@ -124,8 +90,8 @@ def render_login_page() -> None:
             """
             <div class="glass-hero" style="text-align: center;">
                 <span class="auth-badge">Team Oppenheimer</span>
-                <h1 class="auth-title">Oppenheimer Skill Portal</h1>
-                <p class="auth-subtitle">Secure Access Portal for Students, Educators & Industry Partners</p>
+                <h1 class="auth-title">Oppenheimer <em class="italic-emphasis">Skill Portal</em></h1>
+                <p class="auth-subtitle">Academia-Industry Collaboration & Competency Matching Infrastructure</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -136,7 +102,7 @@ def render_login_page() -> None:
 
             # --- TAB 1: LOG IN ---
             with tab_login:
-                st.markdown("<h4 style='color:var(--accent-cyan); margin-top:0.4rem;'>Welcome Back</h4>", unsafe_allow_html=True)
+                st.markdown("<h4 style='color:var(--text-dark); margin-top:0.4rem;'>Welcome <em class='italic-emphasis'>Back</em></h4>", unsafe_allow_html=True)
                 st.caption("Enter your credentials to access your verified assessment dashboard.")
 
                 with st.form(key="login_form"):
@@ -153,7 +119,7 @@ def render_login_page() -> None:
                     )
                     
                     login_submitted = st.form_submit_button(
-                        label="🚀 Log In to Portal",
+                        label="Log In to Portal",
                         type="primary",
                         use_container_width=True
                     )
@@ -174,7 +140,7 @@ def render_login_page() -> None:
 
             # --- TAB 2: CREATE ACCOUNT ---
             with tab_signup:
-                st.markdown("<h4 style='color:var(--accent-purple); margin-top:0.4rem;'>New Account Registration</h4>", unsafe_allow_html=True)
+                st.markdown("<h4 style='color:var(--text-dark); margin-top:0.4rem;'>Account <em class='italic-emphasis'>Registration</em></h4>", unsafe_allow_html=True)
                 st.caption("Create a new persistent profile in the Oppenheimer Skill Portal database.")
 
                 with st.form(key="signup_form"):
@@ -208,7 +174,7 @@ def render_login_page() -> None:
                     )
 
                     signup_submitted = st.form_submit_button(
-                        label="✨ Create Account & Register",
+                        label="Create Account & Register",
                         type="primary",
                         use_container_width=True
                     )
@@ -244,10 +210,16 @@ def render_logout_button() -> None:
             st.markdown("---")
             st.markdown(
                 f"""
-                <div style="background:rgba(15, 23, 42, 0.85); border:1px solid var(--border-glow); border-radius:12px; padding:0.85rem; margin-bottom:0.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-                    <div style="font-size:0.75rem; color:var(--text-muted); font-weight:bold; text-transform:uppercase; letter-spacing:0.5px;">Active Account</div>
-                    <div style="font-size:1.05rem; font-weight:bold; color:var(--text-primary); margin-top:2px;">👤 {full_name}</div>
-                    <div style="font-size:0.82rem; color:var(--accent-cyan); font-weight:600; margin-top:2px;">🏷️ {role} Track (@{username})</div>
+                <div style="background-color:var(--bg-card-light); border:1px solid var(--border-subtle); border-radius:8px; padding:0.9rem 1.1rem !important; margin-bottom:0.8rem;">
+                    <div style="font-size:10px; color:var(--accent-primary); font-family:'JetBrains Mono', monospace; text-transform:uppercase; letter-spacing:0.08em; font-weight:700;">
+                        <span class="live-dot" style="background-color:var(--accent-primary);"></span>Active Session
+                    </div>
+                    <div style="font-size:1.05rem; font-weight:700; color:var(--text-dark); font-family:'Playfair Display', serif; margin-top:3px;">
+                        {full_name}
+                    </div>
+                    <div style="font-size:11px; color:var(--text-muted); font-family:'JetBrains Mono', monospace; margin-top:2px;">
+                        {role} Track (@{username})
+                    </div>
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -258,4 +230,3 @@ def render_logout_button() -> None:
                 st.session_state.submitted = False
                 st.session_state.student_id = None
                 st.rerun()
-

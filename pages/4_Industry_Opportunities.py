@@ -1,6 +1,7 @@
 """
 Academia-Industry Collaboration Portal (Ministry of Ayush / AIIA)
 Industry Opportunities & Candidate Vector Matching Engine
+(Editorial Data Analytics Design System)
 """
 
 import streamlit as st
@@ -24,7 +25,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Apply global dark futuristic theme
+# Apply global editorial theme
 apply_theme()
 
 # Authentication Gate
@@ -48,92 +49,66 @@ st.markdown(
         max-width: 1150px;
     }
     .hero-container {
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--border-glow);
-        color: var(--text-primary);
+        background-color: var(--bg-dark-panel);
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        border: 1px solid var(--border-dark-panel);
+        color: var(--text-cream);
         padding: 1.8rem 2rem;
         border-radius: 12px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .hero-container:hover {
-        border-color: var(--border-glow-hover);
-        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
     .hero-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 2rem;
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 2.2rem;
         font-weight: 700;
         margin: 0;
-        color: var(--text-primary);
+        color: var(--text-cream) !important;
     }
     .hero-subtitle {
         font-size: 1.05rem;
-        color: var(--text-muted);
+        color: rgba(239, 235, 223, 0.8);
         margin-top: 0.3rem;
         margin-bottom: 0.5rem;
     }
     .badge-tag {
         display: inline-block;
-        background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
-        color: #ffffff;
+        background-color: rgba(143, 224, 176, 0.12);
+        border: 1px solid var(--accent-mint);
+        color: var(--accent-mint);
         padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-    .match-badge-best {
-        background-color: rgba(16, 185, 129, 0.25);
-        border: 1px solid #10b981;
-        color: #34d399;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.82rem;
-        font-weight: bold;
-    }
-    .match-badge-good {
-        background-color: rgba(2, 132, 199, 0.25);
-        border: 1px solid #38bdf8;
-        color: #38bdf8;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.82rem;
-        font-weight: bold;
-    }
-    .match-badge-moderate {
-        background-color: rgba(245, 158, 11, 0.25);
-        border: 1px solid #f59e0b;
-        color: #fbbf24;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.82rem;
-        font-weight: bold;
-    }
-    .type-badge {
-        background-color: rgba(30, 41, 59, 0.8);
-        border: 1px solid var(--border-glow);
-        color: var(--accent-cyan);
-        padding: 2px 8px;
-        border-radius: 6px;
-        font-size: 0.78rem;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.08em;
+    }
+    .type-badge {
+        display: inline-block;
+        background-color: rgba(20, 73, 61, 0.1);
+        border: 1px solid var(--accent-primary);
+        color: var(--accent-primary);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
     .skill-chip {
         display: inline-block;
-        background-color: rgba(56, 189, 248, 0.12);
-        color: var(--accent-cyan);
-        border: 1px solid rgba(56, 189, 248, 0.3);
+        background-color: rgba(20, 73, 61, 0.08);
+        color: var(--accent-primary);
+        border: 1px solid rgba(20, 73, 61, 0.25);
         padding: 2px 8px;
-        border-radius: 12px;
-        font-size: 0.78rem;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
         margin-right: 4px;
         margin-bottom: 4px;
+        font-weight: 500;
     }
     </style>
     """,
@@ -146,8 +121,8 @@ st.markdown(
 st.markdown(
     """
     <div class="hero-container">
-        <span class="badge-tag">Cosine Vector Matcher</span>
-        <h1 class="hero-title">Industry Opportunities & Placement Portal</h1>
+        <span class="badge-tag"><span class="live-dot" style="background-color:var(--accent-primary);"></span>Cosine Vector Matcher</span>
+        <h1 class="hero-title">Industry Opportunities & <em class="italic-emphasis">Placement Portal</em></h1>
         <p class="hero-subtitle">Discover internships, jobs, and apprenticeships dynamically ranked by skill vector alignment.</p>
     </div>
     """,
@@ -226,7 +201,7 @@ for opp in opportunities:
     opp_copy = dict(opp)
     
     if student_vector and len(student_vector) > 0:
-        # Construct required benchmark vector dictionary for opportunity (level 4 for required skills)
+        # Construct required benchmark vector dictionary for opportunity
         opp_req_dict = {sid: 4 for sid in opp["required_skills"]}
         
         # Build aligned vectors and calculate match score using cosine similarity
@@ -307,10 +282,10 @@ else:
                 st.markdown(
                     f"""
                     <span class="type-badge">{opp['type']}</span>
-                    <h3 style="margin-top:0.3rem; margin-bottom:0.1rem; color:var(--text-primary); font-size:1.25rem;">
+                    <h3 style="margin-top:0.3rem; margin-bottom:0.1rem; color:var(--text-dark); font-family:'Playfair Display', serif; font-size:1.25rem;">
                         {opp['title']}
                     </h3>
-                    <p style="color:var(--text-muted); font-weight:600; font-size:0.92rem; margin-bottom:0.4rem;">
+                    <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:0.4rem;">
                         🏛️ {opp['company_name']} &nbsp;•&nbsp; 📍 {opp['location']} &nbsp;•&nbsp; ⏱️ {opp['duration']}
                     </p>
                     """,
@@ -325,16 +300,7 @@ else:
                         st.markdown(
                             f"""
                             <div style="text-align:right;">
-                                <span class="match-badge-best">🌟 {score}% Match &nbsp;•&nbsp; Best Match</span>
-                            </div>
-                            """,
-                            unsafe_allow_html=True
-                        )
-                    elif score >= 70:
-                        st.markdown(
-                            f"""
-                            <div style="text-align:right;">
-                                <span class="match-badge-good">✓ {score}% Match</span>
+                                <span class="demand-badge-gold">🌟 {score}% MATCH • TOP RECOMMENDATION</span>
                             </div>
                             """,
                             unsafe_allow_html=True
@@ -343,7 +309,7 @@ else:
                         st.markdown(
                             f"""
                             <div style="text-align:right;">
-                                <span class="match-badge-moderate">{score}% Match</span>
+                                <span class="demand-badge-neutral">{score}% MATCH ALIGNMENT</span>
                             </div>
                             """,
                             unsafe_allow_html=True

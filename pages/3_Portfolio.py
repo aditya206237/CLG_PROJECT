@@ -1,6 +1,7 @@
 """
 Oppenheimer Skill Portal (Team Oppenheimer)
 Unified Digital Student Portfolio & Verified Profile Page
+(Editorial Data Analytics Design System)
 """
 
 import streamlit as st
@@ -27,7 +28,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Apply global dark futuristic theme
+# Apply global editorial theme
 apply_theme()
 
 # Authentication Gate
@@ -49,65 +50,53 @@ st.markdown(
         padding-bottom: 3rem;
         max-width: 1150px;
     }
-    .profile-card {
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--border-glow);
-        color: var(--text-primary);
+    .profile-card-dark {
+        background-color: var(--bg-dark-panel);
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        border: 1px solid var(--border-dark-panel);
+        color: var(--text-cream);
         padding: 1.8rem 2rem;
-        border-radius: 14px;
+        border-radius: 12px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .profile-card:hover {
-        border-color: var(--border-glow-hover);
-        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
     .profile-name {
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: 'Playfair Display', Georgia, serif;
         font-size: 2.2rem;
         font-weight: 700;
         margin: 0;
-        letter-spacing: -0.5px;
-        color: var(--text-primary);
+        letter-spacing: -0.015em;
+        color: var(--text-cream) !important;
     }
     .profile-role {
         font-size: 1.1rem;
-        color: var(--accent-cyan);
+        color: var(--accent-mint);
         font-weight: 600;
         margin-top: 0.2rem;
         margin-bottom: 0.8rem;
+        font-family: 'Inter', sans-serif;
     }
-    .verified-badge {
+    .verified-badge-gold {
         display: inline-block;
-        background-color: rgba(5, 150, 105, 0.25);
-        border: 1px solid #10b981;
-        color: #34d399;
+        background-color: rgba(201, 162, 39, 0.12);
+        border: 1px solid var(--accent-gold);
+        color: var(--accent-gold);
         padding: 3px 10px;
-        border-radius: 12px;
-        font-size: 0.78rem;
-        font-weight: 600;
-        margin-right: 6px;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
-    .score-badge-green { background-color: rgba(16, 185, 129, 0.25); border: 1px solid #10b981; color: #34d399; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
-    .score-badge-amber { background-color: rgba(245, 158, 11, 0.25); border: 1px solid #f59e0b; color: #fbbf24; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
-    .score-badge-red { background-color: rgba(239, 68, 68, 0.25); border: 1px solid #ef4444; color: #f87171; padding: 4px 12px; border-radius: 12px; font-weight: bold; }
-
     .portfolio-section-card {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid var(--border-glow);
-        border-radius: 10px;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: 8px;
         padding: 1.2rem;
         margin-bottom: 1rem;
         height: 100%;
-        color: var(--text-primary);
-        transition: all 0.25s ease !important;
-    }
-    .portfolio-section-card:hover {
-        border-color: var(--border-glow-hover);
-        transform: translateY(-2px);
+        color: var(--text-dark);
     }
     </style>
     """,
@@ -124,8 +113,8 @@ if not all_students:
         st.markdown(
             """
             <div style="text-align:center; padding:2rem;">
-                <h2 style="color:var(--accent-cyan); margin-bottom:0.5rem;">⚠️ No Student Portfolios Found</h2>
-                <p style="color:var(--text-secondary); font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
+                <h2 style="color:var(--text-dark); margin-bottom:0.5rem;">⚠️ No Student Portfolios Found</h2>
+                <p style="color:var(--text-muted); font-size:1.05rem; max-width:600px; margin:0 auto 1.5rem auto;">
                     There are currently no student records in the SQLite database (<code>portal.db</code>).
                     Please complete a skill assessment questionnaire to generate your verified digital portfolio.
                 </p>
@@ -196,19 +185,21 @@ with st.spinner("🎓 Assembling student digital portfolio & verified credential
             })
 
 # -----------------------------------------------------------------------------
-# 3. Executive Profile Header Layout
+# 3. Executive Profile Dark Panel Header Layout
 # -----------------------------------------------------------------------------
 col_prof_left, col_prof_right = st.columns([1.6, 1])
 
 with col_prof_left:
     st.markdown(
         f"""
-        <div class="profile-card">
-            <span class="verified-badge">✓ Verified Student Profile</span>
-            <span style="font-size:0.8rem; color:var(--text-muted);">ID: #{student_id}</span>
-            <h1 class="profile-name">{student_name}</h1>
-            <div class="profile-role">🎯 Target Track: {target_role}</div>
-            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0;">
+        <div class="hero-container" style="padding:1.6rem 1.8rem !important; margin-bottom:0 !important;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="verified-badge-gold">✓ VERIFIED STUDENT PROFILE</span>
+                <span style="font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--text-muted);">ID: #{student_id}</span>
+            </div>
+            <h1 class="profile-name" style="margin-top:0.4rem; color:var(--text-dark) !important;">{student_name}</h1>
+            <div class="profile-role" style="color:var(--accent-primary); font-weight:600; font-size:1.05rem;">🎯 Target Track: {target_role}</div>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0; font-family:'Inter', sans-serif;">
                 📅 Assessment Verified: {created_at} | 🏛️ Oppenheimer Skill Portal
             </p>
         </div>
@@ -217,16 +208,17 @@ with col_prof_left:
     )
 
 with col_prof_right:
-    st.markdown("### 📊 Alignment Summary")
+    st.markdown("### 📊 Alignment <em class='italic-emphasis'>Summary</em>", unsafe_allow_html=True)
     
-    if match_score >= 75.0:
-        badge_html = f'<span class="score-badge-green">🟢 {match_score}% Industry Aligned</span>'
-    elif match_score >= 50.0:
-        badge_html = f'<span class="score-badge-amber">🟠 {match_score}% Moderate Alignment</span>'
-    else:
-        badge_html = f'<span class="score-badge-red">🔴 {match_score}% Actionable Gap</span>'
-
-    st.markdown(badge_html, unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div class="metric-card-dark" style="text-align:center; padding:1rem !important;">
+            <div class="dark-panel-label"><span class="live-dot"></span>ROLE ALIGNMENT</div>
+            <div class="dark-panel-number" style="margin-top:0.2rem; font-size:2.2rem;">{match_score}%</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     st.markdown("<br>", unsafe_allow_html=True)
     
     col_sub1, col_sub2 = st.columns(2)
@@ -284,7 +276,7 @@ with tab_radar:
 
 # --- TAB 2: VERIFIED SKILLS ---
 with tab_verified:
-    st.subheader("✅ Verified Core Competencies")
+    st.markdown("### ✅ Verified Core <em class='italic-emphasis'>Competencies</em>", unsafe_allow_html=True)
     st.caption("Skills verified via self-assessment and objective micro-quiz conceptual checks.")
     
     if not verified_skills_list:
@@ -298,10 +290,10 @@ with tab_verified:
                 st.markdown(
                     f"""
                     <div class="portfolio-section-card">
-                        <span class="verified-badge">✓ Verified</span>
-                        <span style="font-size:0.75rem; color:var(--text-muted); font-weight:bold;">{item['category']}</span>
-                        <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; font-size:1.1rem; color:var(--text-primary);">{item['name']}</h4>
-                        <div style="color:#f59e0b; font-size:1.1rem;">{stars_str} <span style="color:var(--text-secondary); font-size:0.9rem;">({item['rating']}/5)</span></div>
+                        <span class="verified-badge-gold">✓ VERIFIED</span>
+                        <span style="font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--text-muted); text-transform:uppercase; margin-left:6px;">{item['category']}</span>
+                        <h4 style="margin-top:0.4rem; margin-bottom:0.2rem; font-size:1.1rem; color:var(--text-dark); font-family:'Playfair Display', serif;">{item['name']}</h4>
+                        <div style="color:var(--accent-gold); font-size:1.1rem;">{stars_str} <span style="color:var(--text-muted); font-size:0.85rem; font-family:'JetBrains Mono', monospace;">({item['rating']}/5)</span></div>
                     </div>
                     """,
                     unsafe_allow_html=True
@@ -310,7 +302,7 @@ with tab_verified:
 
 # --- TAB 3: SKILLS IN PROGRESS & PATHWAYS ---
 with tab_progress:
-    st.subheader("🚀 Active Learning Pathways & Gap Recommendations")
+    st.markdown("### 🚀 Active Learning <em class='italic-emphasis'>Pathways</em> & Gap Recommendations", unsafe_allow_html=True)
     st.caption("Targeted learning resources mapped directly to your largest role deficits.")
     
     if not top_gaps:
@@ -321,9 +313,13 @@ with tab_progress:
             sid = gap["skill_id"]
             res_list = gap_recs.get(sid, [])
             cat = skill_cat_map.get(sid, "DOMAIN")
+            gap_val = gap["gap"]
+            is_high_demand = (gap_val >= 3)
+            
+            badge_html = f'<span class="demand-badge-gold">HIGH DEMAND GAP</span>' if is_high_demand else f'<span class="demand-badge-neutral">STANDARD GAP</span>'
 
             st.markdown(
-                f"##### #{idx}. {gap['skill_name']} <span style='font-size:0.8rem; color:#d97706;'>[{cat}]</span>",
+                f"##### #{idx}. {gap['skill_name']} {badge_html}",
                 unsafe_allow_html=True
             )
             st.caption(f"Current Rating: **{gap['student_level']}/5** | Target Level: **{gap['required_level']}/5** | Deficit: **-{gap['gap']} levels**")
@@ -338,30 +334,30 @@ with tab_progress:
                             st.link_button("🚀 View Program", url=res.get("url", "#"), use_container_width=True)
             st.divider()
 
-# --- TAB 4: CERTIFICATIONS & ACHIEVEMENTS (STATIC DEMO PLACEHOLDER) ---
+# --- TAB 4: CERTIFICATIONS & ACHIEVEMENTS ---
 with tab_certs:
-    st.subheader("📜 Industry Certifications & Academic Badges")
+    st.markdown("### 📜 Industry Certifications & <em class='italic-emphasis'>Academic Badges</em>", unsafe_allow_html=True)
     st.caption("Verified credentials issued by academic institutions and industry partner organizations.")
     
     cert_col1, cert_col2 = st.columns(2)
     with cert_col1:
         with st.container(border=True):
+            st.markdown("<span class='verified-badge-gold'>✓ VERIFIED</span>", unsafe_allow_html=True)
             st.markdown("🎖️ **Python for Data Science & AI Certification**")
             st.caption("Issuer: NPTEL / IIT Madras | Issued: January 2026 | ID: NPTEL-PY-8849")
-            st.success("✓ Verified Credential")
     with cert_col2:
         with st.container(border=True):
+            st.markdown("<span class='verified-badge-gold'>✓ VERIFIED</span>", unsafe_allow_html=True)
             st.markdown("🏅 **Health Analytics Industry Partner Badge**")
             st.caption("Issuer: Industry Portal | Issued: February 2026 | ID: IND-HP-2026")
-            st.success("✓ Verified Credential")
 
     with st.container(border=True):
         st.markdown("📂 **Upload Additional Certificate (Demo Placeholder)**")
         st.file_uploader("Upload Certificate PDF/Image", type=["pdf", "png", "jpg"], key="cert_uploader")
 
-# --- TAB 5: FEATURED PROJECTS (STATIC DEMO PLACEHOLDER) ---
+# --- TAB 5: FEATURED PROJECTS ---
 with tab_projects:
-    st.subheader("💻 Featured Projects & Capstone Work")
+    st.markdown("### 💻 Featured Projects & <em class='italic-emphasis'>Capstone Work</em>", unsafe_allow_html=True)
     st.caption("Applied projects demonstrating technical and domain skills in real-world scenarios.")
 
     proj_col1, proj_col2 = st.columns(2)

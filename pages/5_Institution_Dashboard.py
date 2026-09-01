@@ -1,16 +1,15 @@
 """
-Academia-Industry Collaboration Portal (Ministry of Ayush / AIIA)
-Institutional Cohort Skill Analytics & Dashboard
+Oppenheimer Skill Portal (Team Oppenheimer)
+Institution Cohort Analytics Dashboard
+(Editorial Data Analytics Design System)
 """
 
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
 from collections import Counter
-from typing import Dict, List, Any
+import plotly.express as px
 
-from load_taxonomy import get_all_skills
+from load_taxonomy import get_all_skills, get_available_roles
 from database import get_all_students, get_student_skill_vector, init_db
 from gap_analysis import build_vectors, compute_match_score, compute_skill_gaps
 from login_ui import render_login_page, render_logout_button
@@ -26,7 +25,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Apply global dark futuristic theme
+# Apply global editorial theme
 apply_theme()
 
 # Authentication Gate
@@ -50,52 +49,40 @@ st.markdown(
         max-width: 1150px;
     }
     .hero-container {
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--border-glow);
-        color: var(--text-primary);
+        background-color: var(--bg-dark-panel);
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        border: 1px solid var(--border-dark-panel);
+        color: var(--text-cream);
         padding: 1.8rem 2rem;
         border-radius: 12px;
         margin-bottom: 1.8rem;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.08);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .hero-container:hover {
-        border-color: var(--border-glow-hover);
-        box-shadow: 0 12px 40px rgba(56, 189, 248, 0.2);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
     .hero-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 2rem;
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 2.2rem;
         font-weight: 700;
         margin: 0;
-        color: var(--text-primary);
+        color: var(--text-cream) !important;
     }
     .hero-subtitle {
         font-size: 1.05rem;
-        color: var(--text-muted);
+        color: rgba(239, 235, 223, 0.8);
         margin-top: 0.3rem;
         margin-bottom: 0.5rem;
     }
     .badge-tag {
         display: inline-block;
-        background: linear-gradient(135deg, #0284c7 0%, #7e22ce 100%);
-        color: #ffffff;
+        background-color: rgba(143, 224, 176, 0.12);
+        border: 1px solid var(--accent-mint);
+        color: var(--accent-mint);
         padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.8rem;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
         font-weight: 600;
-    }
-    .chart-box {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid var(--border-glow);
-        border-radius: 10px;
-        padding: 1.2rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        color: var(--text-primary);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
     </style>
     """,
@@ -108,8 +95,8 @@ st.markdown(
 st.markdown(
     """
     <div class="hero-container">
-        <span class="badge-tag">Institutional Intelligence</span>
-        <h1 class="hero-title">Institution Cohort Analytics Dashboard</h1>
+        <span class="badge-tag"><span class="live-dot" style="background-color:var(--accent-primary);"></span>Institutional Intelligence</span>
+        <h1 class="hero-title">Institution Cohort <em class="italic-emphasis">Analytics Dashboard</em></h1>
         <p class="hero-subtitle">Macro-level readiness metrics, aggregate curriculum skill gaps, and role track distribution.</p>
     </div>
     """,
@@ -183,28 +170,60 @@ with st.sidebar:
     st.caption("Data source: Persistent SQLite DB (`portal.db`)")
 
 # -----------------------------------------------------------------------------
-# 4. Summary Metric Cards
+# 4. Summary Metric Cards as Mini Dark Data Panels
 # -----------------------------------------------------------------------------
 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
 
 with col_m1:
-    st.metric(label="Total Students Assessed", value=f"{len(all_students)} Students")
-with col_m2:
-    st.metric(
-        label="Cohort Average Match Score",
-        value=f"{avg_cohort_match}%",
-        delta="Industry Target: 75%",
-        delta_color="normal" if avg_cohort_match >= 75 else "inverse"
+    st.markdown(
+        f"""
+        <div class="metric-card-dark" style="text-align:center;">
+            <div class="dark-panel-label"><span class="live-dot"></span>TOTAL STUDENTS</div>
+            <div class="dark-panel-number" style="margin-top:0.3rem;">{len(all_students)}</div>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
+
+with col_m2:
+    st.markdown(
+        f"""
+        <div class="metric-card-dark" style="text-align:center;">
+            <div class="dark-panel-label"><span class="live-dot"></span>AVG MATCH SCORE</div>
+            <div class="dark-panel-number" style="margin-top:0.3rem;">{avg_cohort_match}%</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 with col_m3:
-    st.metric(label="Top Cohort Deficit Skill", value=top_deficit_skill)
+    st.markdown(
+        f"""
+        <div class="metric-card-dark" style="text-align:center;">
+            <div class="dark-panel-label"><span class="live-dot"></span>TOP DEFICIT SKILL</div>
+            <div style="font-family:'JetBrains Mono', monospace; color:var(--accent-mint); font-weight:700; font-size:1rem; margin-top:0.5rem; text-transform:uppercase;">
+                {top_deficit_skill[:18]}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 with col_m4:
-    st.metric(label="Configured Target Roles", value=f"{len(role_counts)} Tracks")
+    st.markdown(
+        f"""
+        <div class="metric-card-dark" style="text-align:center;">
+            <div class="dark-panel-label"><span class="live-dot"></span>TARGET TRACKS</div>
+            <div class="dark-panel-number" style="margin-top:0.3rem;">{len(role_counts)}</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 st.markdown("---")
 
 # -----------------------------------------------------------------------------
-# 5. Cohort Analytics Charts (Plotly)
+# 5. Cohort Analytics Charts (Plotly Dark Theme)
 # -----------------------------------------------------------------------------
 col_c1, col_c2 = st.columns([1.6, 1])
 
@@ -226,16 +245,16 @@ with col_c1:
             y="Skill Name",
             orientation="h",
             color="Total Deficit Volume",
-            color_continuous_scale="Reds",
+            color_continuous_scale=["#14493D", "#8FE0B0"],
             title="Top 10 Actionable Skill Deficits across Cohort",
             text="Affected Students"
         )
         fig_gaps.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#f8fafc', family='Inter, sans-serif'),
-            xaxis=dict(gridcolor='rgba(148, 163, 184, 0.25)', tickfont=dict(color='#cbd5e1')),
-            yaxis=dict(autorange="reversed", gridcolor='rgba(148, 163, 184, 0.25)', tickfont=dict(color='#f8fafc')),
+            paper_bgcolor='#14120F',
+            plot_bgcolor='#14120F',
+            font=dict(color='#EFEBDF', family='JetBrains Mono, monospace'),
+            xaxis=dict(gridcolor='rgba(239, 235, 223, 0.15)', tickfont=dict(color='#EFEBDF')),
+            yaxis=dict(autorange="reversed", gridcolor='rgba(239, 235, 223, 0.15)', tickfont=dict(color='#EFEBDF')),
             height=400,
             margin=dict(l=20, r=20, t=40, b=20),
             coloraxis_showscale=False
@@ -258,12 +277,12 @@ with col_c2:
         names="Target Role Track",
         title="Student Distribution by Target Track",
         hole=0.4,
-        color_discrete_sequence=px.colors.qualitative.Set2
+        color_discrete_sequence=["#14493D", "#8FE0B0", "#C9A227", "#6E695C"]
     )
     fig_roles.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(color='#f8fafc', family='Inter, sans-serif'),
+        paper_bgcolor='#14120F',
+        plot_bgcolor='#14120F',
+        font=dict(color='#EFEBDF', family='JetBrains Mono, monospace'),
         height=400,
         margin=dict(l=20, r=20, t=40, b=20)
     )
@@ -273,7 +292,7 @@ with col_c2:
 # 6. Interactive Student Records Table
 # -----------------------------------------------------------------------------
 st.markdown("---")
-st.subheader("📋 Student Assessment Roster & Readiness Scores")
+st.markdown("### 📋 Student Assessment Roster & <em class='italic-emphasis'>Readiness Scores</em>", unsafe_allow_html=True)
 st.caption("Complete table of student assessments fetched from `portal.db`. Click table headers to sort.")
 
 df_students = pd.DataFrame(student_metrics_list)
@@ -285,4 +304,3 @@ st.dataframe(
     use_container_width=True,
     hide_index=True
 )
-
